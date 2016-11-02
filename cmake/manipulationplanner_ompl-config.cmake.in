@@ -1,0 +1,54 @@
+# ManipulationPlanner_OMPL CMake config file
+#
+# This file sets the following variables:
+# ManipulationPlanner_OMPL_FOUND - Always TRUE.
+# ManipulationPlanner_OMPL_INCLUDE_DIRS - Directories containing the ManipulationPlanner_OMPL include files.
+# ManipulationPlanner_OMPL_IDL_DIRS - Directories containing the ManipulationPlanner_OMPL IDL files.
+# ManipulationPlanner_OMPL_LIBRARIES - Libraries needed to use ManipulationPlanner_OMPL.
+# ManipulationPlanner_OMPL_DEFINITIONS - Compiler flags for ManipulationPlanner_OMPL.
+# ManipulationPlanner_OMPL_VERSION - The version of ManipulationPlanner_OMPL found.
+# ManipulationPlanner_OMPL_VERSION_MAJOR - The major version of ManipulationPlanner_OMPL found.
+# ManipulationPlanner_OMPL_VERSION_MINOR - The minor version of ManipulationPlanner_OMPL found.
+# ManipulationPlanner_OMPL_VERSION_REVISION - The revision version of ManipulationPlanner_OMPL found.
+# ManipulationPlanner_OMPL_VERSION_CANDIDATE - The candidate version of ManipulationPlanner_OMPL found.
+
+message(STATUS "Found ManipulationPlanner_OMPL-@PROJECT_VERSION@")
+set(ManipulationPlanner_OMPL_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(ManipulationPlanner_OMPL_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(ManipulationPlanner_OMPL_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(ManipulationPlanner_OMPL_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(ManipulationPlanner_OMPL_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(ManipulationPlanner_OMPL_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(ManipulationPlanner_OMPL_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(ManipulationPlanner_OMPL_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(ManipulationPlanner_OMPL_VERSION @PROJECT_VERSION@)
+set(ManipulationPlanner_OMPL_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(ManipulationPlanner_OMPL_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(ManipulationPlanner_OMPL_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(ManipulationPlanner_OMPL_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
