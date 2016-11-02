@@ -1,0 +1,27 @@
+#ifndef TrajectoryPlanner_idl
+#define TrajectoryPlanner_idl
+
+#include "BasicDataType.idl"
+#include "ExtendedDataTypes.idl"
+#include "InterfaceDataTypes.idl"
+
+module RTC {
+
+  enum RETURN_VALUE {
+    RETVAL_OK,
+    RETVAL_INVALID_PARAMETER,
+    RETVAL_EMPTY_MAP,
+    RETVAL_INVALID_PRECONDITION,
+    RETVAL_NOT_IMPL,
+    RETVAL_UNKNOWN_ERROR
+  };
+
+  interface TrajectoryPlanner {
+    RETURN_VALUE planTrajectory(out Waypoint3D trajectory);
+  };
+  
+
+};
+
+
+#endif
