@@ -1,0 +1,42 @@
+// -*-C++-*-
+/*!
+ * @file  TrajectoryPlannerSVC_impl.cpp
+ * @brief Service implementation code of TrajectoryPlanner.idl
+ *
+ */
+
+#include "TrajectoryPlannerSVC_impl.h"
+
+/*
+ * Example implementational code for IDL interface RTC::TrajectoryPlanner
+ */
+RTC_TrajectoryPlannerSVC_impl::RTC_TrajectoryPlannerSVC_impl()
+{
+  // Please add extra constructor code here.
+}
+
+
+RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
+{
+  // Please add extra destructor code here.
+}
+
+
+/*
+ * Methods corresponding to IDL attributes and operations
+ */
+RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(RTC::Waypoint3D& trajectory)
+{
+  // Please insert your code here and remove the following warning pragma
+#ifndef WIN32
+  #warning "Code missing in function <RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(RTC::Waypoint3D& trajectory)>"
+#endif
+  return 0;
+}
+
+
+
+// End of example implementational code
+
+
+

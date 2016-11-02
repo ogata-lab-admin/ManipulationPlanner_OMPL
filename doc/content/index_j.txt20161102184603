@@ -98,7 +98,6 @@ ManipulationPlanner_OMPLは ``ManipulationPlanner_OMPLComp`` を実行（ ``${pr
 ================ ================== ================ ====
 パラメータ       データ型           デフォルト値     意味
 ================ ================== ================ ====
-PlanningMethod   int                (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST) 
 ================ ================== ================ ====
 
 ポート

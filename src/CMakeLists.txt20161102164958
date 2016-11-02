@@ -1,4 +1,4 @@
-set(comp_srcs ManipulationPlanner_OMPL.cpp TrajectoryPlannerSVC_impl.cpp )
+set(comp_srcs ManipulationPlanner_OMPL.cpp )
 set(standalone_srcs ManipulationPlanner_OMPLComp.cpp)
 
 if (DEFINED OPENRTM_INCLUDE_DIRS)

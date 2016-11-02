@@ -229,12 +229,6 @@ class ManipulationPlanner_OMPL
 
   // Configuration variable declaration
   // <rtc-template block="config_declare">
-  /*!
-   * 
-   * - Name:  PlanningMethod
-   * - DefaultValue: (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST)
-   */
-  int m_PlanningMethod;
 
   // </rtc-template>
 

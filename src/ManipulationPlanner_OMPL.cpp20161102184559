@@ -24,16 +24,6 @@ static const char* manipulationplanner_ompl_spec[] =
     "max_instance",      "1",
     "language",          "C++",
     "lang_type",         "compile",
-    // Configuration variables
-    "conf.default.PlanningMethod", "(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST)",
-
-    // Widget
-    "conf.__widget__.PlanningMethod", "radio",
-    // Constraints
-    "conf.__constraints__.PlanningMethod", "(0,1,2,3,4,5,6,7,8)",
-
-    "conf.__type__.PlanningMethod", "int",
-
     ""
   };
 // </rtc-template>
@@ -79,8 +69,6 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   // </rtc-template>
 
   // <rtc-template block="bind_config">
-  // Bind variables and configuration variable
-  bindParameter("PlanningMethod", m_PlanningMethod, "(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST)");
   // </rtc-template>
   
   return RTC::RTC_OK;

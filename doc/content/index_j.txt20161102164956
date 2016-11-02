@@ -98,7 +98,6 @@ ManipulationPlanner_OMPLは ``ManipulationPlanner_OMPLComp`` を実行（ ``${pr
 ================ ================== ================ ====
 パラメータ       データ型           デフォルト値     意味
 ================ ================== ================ ====
-PlanningMethod   int                (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST) 
 ================ ================== ================ ====
 
 ポート
@@ -109,7 +108,6 @@ PlanningMethod   int                (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,T
 =============== =========== ============================== ====
 ポート名        ポート型    データ型                       意味
 =============== =========== ============================== ====
-TrajectoryPlanner ServicePort RTC::TrajectoryPlanner         
 =============== =========== ============================== ====
 
 例

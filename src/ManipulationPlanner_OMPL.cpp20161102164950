@@ -24,16 +24,6 @@ static const char* manipulationplanner_ompl_spec[] =
     "max_instance",      "1",
     "language",          "C++",
     "lang_type",         "compile",
-    // Configuration variables
-    "conf.default.PlanningMethod", "(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST)",
-
-    // Widget
-    "conf.__widget__.PlanningMethod", "radio",
-    // Constraints
-    "conf.__constraints__.PlanningMethod", "(0,1,2,3,4,5,6,7,8)",
-
-    "conf.__type__.PlanningMethod", "int",
-
     ""
   };
 // </rtc-template>
@@ -44,8 +34,7 @@ static const char* manipulationplanner_ompl_spec[] =
  */
 ManipulationPlanner_OMPL::ManipulationPlanner_OMPL(RTC::Manager* manager)
     // <rtc-template block="initializer">
-  : RTC::DataFlowComponentBase(manager),
-    m_TrajectoryPlannerPort("TrajectoryPlanner")
+  : RTC::DataFlowComponentBase(manager)
 
     // </rtc-template>
 {
@@ -69,18 +58,14 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   // Set OutPort buffer
   
   // Set service provider to Ports
-  m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "RTC::TrajectoryPlanner", m_TrajectoryPlanner);
   
   // Set service consumers to Ports
   
   // Set CORBA Service Ports
-  addPort(m_TrajectoryPlannerPort);
   
   // </rtc-template>
 
   // <rtc-template block="bind_config">
-  // Bind variables and configuration variable
-  bindParameter("PlanningMethod", m_PlanningMethod, "(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST)");
   // </rtc-template>
   
   return RTC::RTC_OK;

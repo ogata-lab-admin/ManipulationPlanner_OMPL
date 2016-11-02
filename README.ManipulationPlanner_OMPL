@@ -10,6 +10,9 @@
 #   --module-desc='ModuleDescription' --module-version=1.0.0 --module-vendor=ogata-lab 
 #   --module-category=Category --module-comp-type=STATIC 
 #   --module-act-type=PERIODIC --module-max-inst=1 
+#   --config=PlanningMethod:int:(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST) 
+#   --service-idl=/home/ogata/workspace/idl/TrajectoryPlanner.idl 
+#   --service=TrajectoryPlanner:TrajectoryPlanner:RTC::TrajectoryPlanner 
 
 
 ======================================================================
@@ -80,12 +83,33 @@ Lang Type:
     Service Port definition
 ======================================================================
 # <rtc-template block="serviceport">
+	PortName:    TrajectoryPlanner
+	Description: 
+	Interface:   
+		[Service Provider Interfaces]
+		Name:          TrajectoryPlanner
+		Type:          RTC::TrajectoryPlanner
+		Description:   
+		Argument:      
+		Return Value:  
+		Exception:     
+		PreCondition:  
+		PostCondition: 
 # </rtc-template> 
 
 ======================================================================
     Configuration definition
 ======================================================================
 # <rtc-template block="configuration">
+	Configuration:
+		Name:             PlanningMethod
+		Description:     
+		Type:            int
+		DefaultValue:     (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST)
+		Unit:            
+		Range:           
+		Constraint:      
+
 # </rtc-template> 
 
 This software is developed at the National Institute of Advanced

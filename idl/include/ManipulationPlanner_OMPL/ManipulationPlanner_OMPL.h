@@ -16,7 +16,6 @@
 
 // Service implementation headers
 // <rtc-template block="service_impl_h">
-#include "TrajectoryPlannerSVC_impl.h"
 
 // </rtc-template>
 
@@ -229,12 +228,6 @@ class ManipulationPlanner_OMPL
 
   // Configuration variable declaration
   // <rtc-template block="config_declare">
-  /*!
-   * 
-   * - Name:  PlanningMethod
-   * - DefaultValue: (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST)
-   */
-  int m_PlanningMethod;
 
   // </rtc-template>
 
@@ -251,17 +244,11 @@ class ManipulationPlanner_OMPL
 
   // CORBA Port declaration
   // <rtc-template block="corbaport_declare">
-  /*!
-   */
-  RTC::CorbaPort m_TrajectoryPlannerPort;
   
   // </rtc-template>
 
   // Service declaration
   // <rtc-template block="service_declare">
-  /*!
-   */
-  TrajectoryPlannerSVC_impl m_TrajectoryPlanner;
   
   // </rtc-template>
 
