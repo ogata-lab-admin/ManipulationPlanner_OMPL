@@ -57,6 +57,11 @@ else(${OpenRTM_FOUND})
   find_package(OpenRTM REQUIRED)
 endif(${OpenRTM_FOUND})
 
+find_package(OMPL REQUIRED)
+include_directories(${OMPL_INCLUDE_DIRS})
+link_directories(${OMPL_LIBRARY_DIRS})
+add_definitions(${OMPL_DEFINITIONS})
+
 # Universal settings
 #enable_testing()
 
