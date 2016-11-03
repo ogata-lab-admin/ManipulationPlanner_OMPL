@@ -1,6 +1,8 @@
 set(comp_srcs ManipulationPlanner_OMPL.cpp TrajectoryPlannerSVC_impl.cpp )
 set(standalone_srcs ManipulationPlanner_OMPLComp.cpp)
 
+add_definitions(-Wall -g -O2 -std=c++11)
+
 if (DEFINED OPENRTM_INCLUDE_DIRS)
   string(REGEX REPLACE "-I" ";"
     OPENRTM_INCLUDE_DIRS "${OPENRTM_INCLUDE_DIRS}")
