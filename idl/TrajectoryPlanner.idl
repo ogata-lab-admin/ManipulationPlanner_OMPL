@@ -17,7 +17,7 @@ module RTC {
   };
 
   interface TrajectoryPlanner {
-    RETURN_VALUE planTrajectory(out Waypoint3D trajectory);
+    RETURN_VALUE planTrajectory(out Path3D trajectory);
   };
   
 

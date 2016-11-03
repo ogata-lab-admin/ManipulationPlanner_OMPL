@@ -38,7 +38,7 @@ class RTC_TrajectoryPlannerSVC_impl
    virtual ~RTC_TrajectoryPlannerSVC_impl();
 
    // attributes and operations
-   RTC::RETURN_VALUE planTrajectory(RTC::Waypoint3D& trajectory);
+   RTC::RETURN_VALUE planTrajectory(RTC::Path3D_out trajectory);
 
 };
 
