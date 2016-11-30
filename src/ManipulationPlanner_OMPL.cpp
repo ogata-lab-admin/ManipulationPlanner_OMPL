@@ -38,7 +38,7 @@ static const char* manipulationplanner_ompl_spec[] =
     ""
   };
 // </rtc-template>
-StateSampler m_spl("../plot/test_arm1.dat");
+Planning planner("../plot/test_arm1.dat");
 
 /*!
  * @brief constructor
@@ -46,8 +46,7 @@ StateSampler m_spl("../plot/test_arm1.dat");
  */
 ManipulationPlanner_OMPL::ManipulationPlanner_OMPL(RTC::Manager* manager)
     // <rtc-template block="initializer">
-  : RTC::DataFlowComponentBase(manager),
-    m_TrajectoryPlannerPort("TrajectoryPlanner")
+  : RTC::DataFlowComponentBase(manager)
 
     // </rtc-template>
 {
@@ -71,12 +70,10 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   // Set OutPort buffer
   
   // Set service provider to Ports
-  m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "RTC::TrajectoryPlanner", m_TrajectoryPlanner);
   
   // Set service consumers to Ports
   
   // Set CORBA Service Ports
-  addPort(m_TrajectoryPlannerPort);
   
   // </rtc-template>
 
@@ -113,22 +110,24 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onShutdown(RTC::UniqueId ec_id)
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
 {
   printf("start setting");
-  m_spl.setPlanningMethod(m_PlanningMethod);
+  planner.setPlanningMethod(m_PlanningMethod);
   return RTC::RTC_OK;
 }
 
-/*
+
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onDeactivated(RTC::UniqueId ec_id)
 {
+	printf("exit");
   return RTC::RTC_OK;
 }
-*/
+
 
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onExecute(RTC::UniqueId ec_id)
 {
   //std::cin >> "Plese press any key";
   //std::cout << "start planning" << std::endl;
-  m_spl.planWithSimpleSetup();
+	scanf("enter");
+  planner.planWithSimpleSetup();
   //std::cout << "finished" << std::endl;
   return RTC::RTC_OK;
 }
