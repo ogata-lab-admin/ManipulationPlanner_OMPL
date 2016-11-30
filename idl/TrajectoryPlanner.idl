@@ -15,10 +15,15 @@ module RTC {
     RETVAL_NOT_IMPL,
     RETVAL_UNKNOWN_ERROR
   };
+  
+  const long jointNum = 7;
+  const long maxWayPoints = 100;
+
+  typedef double jointPos[jointNum];
+  typedef double jPosTraj[maxWayPoints][jointNum];
 
   interface TrajectoryPlanner {
-    //RETURN_VALUE planTrajectory(out Path3D trajectory);
-    void test();  
+    RETURN_VALUE planTrajectory(in jointPos start, in jointPos goal, out jPosTraj trajectory);
 };
   
 

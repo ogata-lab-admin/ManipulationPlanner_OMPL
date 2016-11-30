@@ -34,7 +34,7 @@ class RTC_TrajectoryPlannerSVC_impl
    virtual ~RTC_TrajectoryPlannerSVC_impl();
 
    // attributes and operations
-   void test();
+   RTC::RETURN_VALUE planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory);
 
 };
 

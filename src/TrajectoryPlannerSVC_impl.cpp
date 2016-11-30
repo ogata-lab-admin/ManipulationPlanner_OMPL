@@ -26,9 +26,11 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
 /*
  * Methods corresponding to IDL attributes and operations
  */
-void RTC_TrajectoryPlannerSVC_impl::test()
+RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory)
 {
-   std::cout << "test" << std::endl;
+  // Please insert your code here and remove the following warning pragma
+  std::cout << "not impled yet" << std::endl;
+  return RTC::RETVAL_OK;
 }
 
 
