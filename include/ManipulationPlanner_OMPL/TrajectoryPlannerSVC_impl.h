@@ -23,7 +23,10 @@ class RTC_TrajectoryPlannerSVC_impl
    // Make sure all instances are built on the heap by making the
    // destructor non-public
    //virtual ~TrajectoryPlannerSVC_impl();
-   int planningMethod = 1;
+
+  std::string config = "../plot/test_arm1.dat";
+  int method = 1;
+  Planning* planner;
 
  public:
   /*!
@@ -35,10 +38,16 @@ class RTC_TrajectoryPlannerSVC_impl
    */
    virtual ~RTC_TrajectoryPlannerSVC_impl();
 
+   void instantiatePlanner(){
+	   planner = new Planning(config);
+   }
+
    // attributes and operations
    RTC::RETURN_VALUE planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory);
 
-   void setPlanningMethod(int m){planningMethod=m;}
+   void passPlanningMethod(int m){method=m;}
+   void setConfig(std::string c){config = c;}
+
 };
 
 

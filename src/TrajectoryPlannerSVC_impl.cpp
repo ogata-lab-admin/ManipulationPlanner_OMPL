@@ -6,22 +6,19 @@
  */
 
 #include "TrajectoryPlannerSVC_impl.h"
-#include "iostream"
-
-Planning planner("../plot/test_arm1.dat");
 
 /*
  * Example implementational code for IDL interface RTC::TrajectoryPlanner
  */
 RTC_TrajectoryPlannerSVC_impl::RTC_TrajectoryPlannerSVC_impl()
 {
-  // Please add extra destructor code here.
+  instantiatePlanner();
 }
 
 
 RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
 {
-  // Please add extra destructor code here.
+  delete planner;
 }
 
 
@@ -30,9 +27,9 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
  */
 RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory)
 {
-  planner.setPlanningMethod(this.planningMethod);
+  planner->setPlanningMethod(method);
   //not passed arguments(start, goal, trajectory) yet
-  planner.planWithSimpleSetup();
+  planner->planWithSimpleSetup();
   return RTC::RETVAL_OK;
 }
 

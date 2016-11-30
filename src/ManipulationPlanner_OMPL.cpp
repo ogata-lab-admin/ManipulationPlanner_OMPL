@@ -87,13 +87,12 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   return RTC::RTC_OK;
 }
 
-/*
+
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onFinalize()
 {
-  //planner.planWithSimpleSetup();
-  return RTC::RTC_OK;
+	  return RTC::RTC_OK;
 }
-*/
+
 
 /*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onStartup(RTC::UniqueId ec_id)
@@ -112,8 +111,8 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onShutdown(RTC::UniqueId ec_id)
 
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
 {
-  printf("start setting");
-  m_trajectoryPlanner.setPlanningMethod(m_PlanningMethod);
+  //send config param to m_trajectoryPlanner
+  m_trajectoryPlanner.passPlanningMethod(m_PlanningMethod);
   return RTC::RTC_OK;
 }
 
