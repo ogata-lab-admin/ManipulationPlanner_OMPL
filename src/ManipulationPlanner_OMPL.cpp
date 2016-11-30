@@ -85,12 +85,13 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   return RTC::RTC_OK;
 }
 
-/*
+
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onFinalize()
 {
+  planner.planWithSimpleSetup();
   return RTC::RTC_OK;
 }
-*/
+
 
 /*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onStartup(RTC::UniqueId ec_id)
@@ -117,7 +118,6 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
 
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onDeactivated(RTC::UniqueId ec_id)
 {
-	printf("exit");
   return RTC::RTC_OK;
 }
 
@@ -126,8 +126,6 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onExecute(RTC::UniqueId ec_id)
 {
   //std::cin >> "Plese press any key";
   //std::cout << "start planning" << std::endl;
-	scanf("enter");
-  planner.planWithSimpleSetup();
   //std::cout << "finished" << std::endl;
   return RTC::RTC_OK;
 }

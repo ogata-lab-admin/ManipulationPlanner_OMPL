@@ -84,7 +84,7 @@ class ManipulationPlanner_OMPL
    * 
    * 
    */
-  // virtual RTC::ReturnCode_t onFinalize();
+   virtual RTC::ReturnCode_t onFinalize();
 
   /***
    *
