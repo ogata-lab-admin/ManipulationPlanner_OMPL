@@ -27,10 +27,7 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
  */
 RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(RTC::Path3D_out trajectory)
 {
-  // Please insert your code here and remove the following warning pragma
-#ifndef WIN32
-  #warning "Code missing in function <RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(RTC::Path3D_out trajectory)>"
-#endif
+	printf("test");
   return 0;
 }
 

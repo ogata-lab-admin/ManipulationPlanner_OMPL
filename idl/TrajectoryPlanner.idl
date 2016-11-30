@@ -18,12 +18,14 @@ module RTC {
 
   struct ArmPosition{
     //not defined yet
+    double test;
   };
 
   interface TrajectoryPlanner {
     RETURN_VALUE planTrajectory(in ArmPosition start, in ArmPosition goal, out Path3D trajectory);
+  //void test();
   };
-  
+ 
 
 };
 

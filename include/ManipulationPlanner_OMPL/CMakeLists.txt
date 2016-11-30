@@ -1,4 +1,4 @@
-set(hdrs ManipulationPlanner_OMPL.h
+set(hdrs ManipulationPlanner_OMPL.h MotionPlanner.h
     PARENT_SCOPE
     TrajectoryPlannerSVC_impl.h
     )
