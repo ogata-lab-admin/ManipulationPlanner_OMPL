@@ -46,7 +46,8 @@ Planning planner("../plot/test_arm1.dat");
  */
 ManipulationPlanner_OMPL::ManipulationPlanner_OMPL(RTC::Manager* manager)
     // <rtc-template block="initializer">
-  : RTC::DataFlowComponentBase(manager)
+  : RTC::DataFlowComponentBase(manager),
+    m_TrajectoryPlannerPort("TrajectoryPlanner")
 
     // </rtc-template>
 {
@@ -70,10 +71,12 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   // Set OutPort buffer
   
   // Set service provider to Ports
+  m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "RTC::TrajectoryPlanner", m_trajectoryPlanner);
   
   // Set service consumers to Ports
   
   // Set CORBA Service Ports
+  addPort(m_TrajectoryPlannerPort);
   
   // </rtc-template>
 

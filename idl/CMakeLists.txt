@@ -1,4 +1,4 @@
-set(idls )
+set(idls ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryPlanner.idl )
 
 install(FILES ${idls} DESTINATION ${INC_INSTALL_DIR}/idl
     COMPONENT idl)

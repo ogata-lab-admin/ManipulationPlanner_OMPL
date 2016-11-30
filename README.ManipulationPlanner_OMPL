@@ -11,6 +11,8 @@
 #   --module-category=Category --module-comp-type=STATIC 
 #   --module-act-type=PERIODIC --module-max-inst=1 
 #   --config=PlanningMethod:int:(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST) 
+#   --service-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl 
+#   --service=TrajectoryPlanner:TrajectoryPlanner:RTC::TrajectoryPlanner 
 
 
 ======================================================================
@@ -38,7 +40,7 @@ Lang Type:
 
 [on_initialize]    implemented
 
-[on_finalize]
+[on_finalize]      implemented
 
 [on_startup]
 
@@ -81,6 +83,18 @@ Lang Type:
     Service Port definition
 ======================================================================
 # <rtc-template block="serviceport">
+	PortName:    TrajectoryPlanner
+	Description: 
+	Interface:   
+		[Service Provider Interfaces]
+		Name:          TrajectoryPlanner
+		Type:          RTC::TrajectoryPlanner
+		Description:   
+		Argument:      
+		Return Value:  
+		Exception:     
+		PreCondition:  
+		PostCondition: 
 # </rtc-template> 
 
 ======================================================================
