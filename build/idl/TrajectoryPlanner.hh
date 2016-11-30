@@ -18,18 +18,6 @@
 
 
 
-#ifndef __BasicDataType_hh_EXTERNAL_GUARD__
-#define __BasicDataType_hh_EXTERNAL_GUARD__
-#include "BasicDataType.hh"
-#endif
-#ifndef __ExtendedDataTypes_hh_EXTERNAL_GUARD__
-#define __ExtendedDataTypes_hh_EXTERNAL_GUARD__
-#include "ExtendedDataTypes.hh"
-#endif
-#ifndef __InterfaceDataTypes_hh_EXTERNAL_GUARD__
-#define __InterfaceDataTypes_hh_EXTERNAL_GUARD__
-#include "InterfaceDataTypes.hh"
-#endif
 
 
 
@@ -74,24 +62,6 @@ _CORBA_MODULE_BEG
   typedef RETURN_VALUE& RETURN_VALUE_out;
 
   _CORBA_MODULE_VAR _dyn_attr const ::CORBA::TypeCode_ptr _tc_RETURN_VALUE;
-
-  struct ArmPosition {
-    typedef _CORBA_ConstrType_Fix_Var<ArmPosition> _var_type;
-
-    
-    ::CORBA::Double test;
-
-  
-
-    void operator>>= (cdrStream &) const;
-    void operator<<= (cdrStream &);
-  };
-
-  typedef ArmPosition::_var_type ArmPosition_var;
-
-  typedef ArmPosition& ArmPosition_out;
-
-  _CORBA_MODULE_VAR _dyn_attr const ::CORBA::TypeCode_ptr _tc_ArmPosition;
 
 #ifndef __RTC_mTrajectoryPlanner__
 #define __RTC_mTrajectoryPlanner__
@@ -154,7 +124,7 @@ _CORBA_MODULE_BEG
     public virtual omniObjRef
   {
   public:
-    RETURN_VALUE planTrajectory(const ::RTC::ArmPosition& start, const ::RTC::ArmPosition& goal, ::RTC::Path3D_out trajectory);
+    void test();
 
     inline _objref_TrajectoryPlanner()  { _PR_setobj(0); }  // nil
     _objref_TrajectoryPlanner(omniIOR*, omniIdentity*);
@@ -188,7 +158,7 @@ _CORBA_MODULE_BEG
   public:
     virtual ~_impl_TrajectoryPlanner();
 
-    virtual RETURN_VALUE planTrajectory(const ::RTC::ArmPosition& start, const ::RTC::ArmPosition& goal, ::RTC::Path3D_out trajectory) = 0;
+    virtual void test() = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);
@@ -255,11 +225,6 @@ inline void operator <<= (RTC::RETURN_VALUE& _e, cdrStream& s) {
 
 void operator<<=(::CORBA::Any& _a, RTC::RETURN_VALUE _s);
 _CORBA_Boolean operator>>=(const ::CORBA::Any& _a, RTC::RETURN_VALUE& _s);
-
-extern void operator<<=(::CORBA::Any& _a, const RTC::ArmPosition& _s);
-extern void operator<<=(::CORBA::Any& _a, RTC::ArmPosition* _sp);
-extern _CORBA_Boolean operator>>=(const ::CORBA::Any& _a, RTC::ArmPosition*& _sp);
-extern _CORBA_Boolean operator>>=(const ::CORBA::Any& _a, const RTC::ArmPosition*& _sp);
 
 void operator<<=(::CORBA::Any& _a, RTC::TrajectoryPlanner_ptr _s);
 void operator<<=(::CORBA::Any& _a, RTC::TrajectoryPlanner_ptr* _s);
