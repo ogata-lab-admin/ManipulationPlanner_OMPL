@@ -25,10 +25,9 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
 /*
  * Methods corresponding to IDL attributes and operations
  */
-RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(RTC::Path3D_out trajectory)
+void RTC_TrajectoryPlannerSVC_impl::test()
 {
-	printf("test");
-  return 0;
+    printf("test");
 }
 
 
