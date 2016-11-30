@@ -6,6 +6,7 @@
  */
 
 #include "TrajectoryPlannerSkel.h"
+#include "MotionPlanner.h"
 
 #ifndef TRAJECTORYPLANNERSVC_IMPL_H
 #define TRAJECTORYPLANNERSVC_IMPL_H
@@ -22,6 +23,7 @@ class RTC_TrajectoryPlannerSVC_impl
    // Make sure all instances are built on the heap by making the
    // destructor non-public
    //virtual ~TrajectoryPlannerSVC_impl();
+   int planningMethod = 1;
 
  public:
   /*!
@@ -36,6 +38,7 @@ class RTC_TrajectoryPlannerSVC_impl
    // attributes and operations
    RTC::RETURN_VALUE planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory);
 
+   void setPlanningMethod(int m){planningMethod=m;}
 };
 
 

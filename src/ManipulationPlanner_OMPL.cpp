@@ -38,7 +38,6 @@ static const char* manipulationplanner_ompl_spec[] =
     ""
   };
 // </rtc-template>
-Planning planner("../plot/test_arm1.dat");
 
 /*!
  * @brief constructor
@@ -88,13 +87,13 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   return RTC::RTC_OK;
 }
 
-
+/*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onFinalize()
 {
-  planner.planWithSimpleSetup();
+  //planner.planWithSimpleSetup();
   return RTC::RTC_OK;
 }
-
+*/
 
 /*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onStartup(RTC::UniqueId ec_id)
@@ -114,22 +113,19 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onShutdown(RTC::UniqueId ec_id)
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
 {
   printf("start setting");
-  planner.setPlanningMethod(m_PlanningMethod);
+  m_trajectoryPlanner.setPlanningMethod(m_PlanningMethod);
   return RTC::RTC_OK;
 }
 
-
+/*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onDeactivated(RTC::UniqueId ec_id)
 {
   return RTC::RTC_OK;
 }
-
+*/
 
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onExecute(RTC::UniqueId ec_id)
 {
-  //std::cin >> "Plese press any key";
-  //std::cout << "start planning" << std::endl;
-  //std::cout << "finished" << std::endl;
   return RTC::RTC_OK;
 }
 
