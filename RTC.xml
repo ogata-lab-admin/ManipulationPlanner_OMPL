@@ -94,8 +94,5 @@
             <rtcExt:Properties rtcExt:value="radio" rtcExt:name="__widget__"/>
         </rtc:Configuration>
     </rtc:ConfigurationSet>
-    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtcExt:position="LEFT" rtc:name="TrajectoryPlanner">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="TrajectoryPlanner" rtc:path="/home/ogata/workspace/idl" rtc:type="RTC::TrajectoryPlanner" rtc:idlFile="/home/ogata/workspace/idl/TrajectoryPlanner.idl" rtc:instanceName="TrajectoryPlanner" rtc:direction="Provided" rtc:name="TrajectoryPlanner"/>
-    </rtc:ServicePorts>
     <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="C++"/>
 </rtc:RtcProfile>

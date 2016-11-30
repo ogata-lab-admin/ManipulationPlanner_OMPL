@@ -5,10 +5,6 @@
  *
  */
 
-#include "BasicDataTypeSkel.h"
-#include "ExtendedDataTypesSkel.h"
-#include "InterfaceDataTypesSkel.h"
-
 #include "TrajectoryPlannerSkel.h"
 
 #ifndef TRAJECTORYPLANNERSVC_IMPL_H
@@ -38,7 +34,7 @@ class RTC_TrajectoryPlannerSVC_impl
    virtual ~RTC_TrajectoryPlannerSVC_impl();
 
    // attributes and operations
-   RTC::RETURN_VALUE planTrajectory(RTC::Path3D_out trajectory);
+   void test();
 
 };
 

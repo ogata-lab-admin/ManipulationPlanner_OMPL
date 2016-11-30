@@ -117,6 +117,7 @@ The ports provided by the component are described below:
 =============== =========== ============================== =======
 Name            Type        Data type                      Purpose
 =============== =========== ============================== =======
+TrajectoryPlanner ServicePort RTC::TrajectoryPlanner         
 =============== =========== ============================== =======
 
 Examples

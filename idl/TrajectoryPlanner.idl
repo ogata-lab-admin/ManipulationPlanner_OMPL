@@ -1,10 +1,10 @@
 #ifndef TrajectoryPlanner_idl
 #define TrajectoryPlanner_idl
-
+/*
 #include "BasicDataType.idl"
 #include "ExtendedDataTypes.idl"
 #include "InterfaceDataTypes.idl"
-
+*/
 module RTC {
 
   enum RETURN_VALUE {
@@ -16,16 +16,11 @@ module RTC {
     RETVAL_UNKNOWN_ERROR
   };
 
-  struct ArmPosition{
-    //not defined yet
-    double test;
-  };
-
   interface TrajectoryPlanner {
-    RETURN_VALUE planTrajectory(in ArmPosition start, in ArmPosition goal, out Path3D trajectory);
-  //void test();
-  };
- 
+    //RETURN_VALUE planTrajectory(out Path3D trajectory);
+    void test();  
+};
+  
 
 };
 

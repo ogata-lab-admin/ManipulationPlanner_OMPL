@@ -1,4 +1,4 @@
-set(comp_srcs ManipulationPlanner_OMPL.cpp TrajectoryPlannerSVC_impl.cpp )
+set(comp_srcs ManipulationPlanner_OMPL.cpp MotionPlanner.cpp)
 set(standalone_srcs ManipulationPlanner_OMPLComp.cpp)
 
 add_definitions(-Wall -g -O2 -std=c++11)
