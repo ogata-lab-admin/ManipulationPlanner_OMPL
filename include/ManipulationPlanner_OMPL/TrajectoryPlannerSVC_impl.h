@@ -27,7 +27,7 @@ class RTC_TrajectoryPlannerSVC_impl
   /*!
    * @brief standard constructor
    */
-   TrajectoryPlannerSVC_impl();
+   RTC_TrajectoryPlannerSVC_impl();
   /*!
    * @brief destructor
    */

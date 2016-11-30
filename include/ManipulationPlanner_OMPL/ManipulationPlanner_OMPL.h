@@ -261,7 +261,7 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="service_declare">
   /*!
    */
-  TrajectoryPlannerSVC_impl m_trajectoryPlanner;
+  RTC_TrajectoryPlannerSVC_impl m_trajectoryPlanner;
   
   // </rtc-template>
 

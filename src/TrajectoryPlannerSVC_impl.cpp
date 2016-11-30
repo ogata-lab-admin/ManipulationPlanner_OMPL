@@ -6,6 +6,7 @@
  */
 
 #include "TrajectoryPlannerSVC_impl.h"
+#include "iostream"
 
 /*
  * Example implementational code for IDL interface RTC::TrajectoryPlanner
@@ -27,7 +28,7 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
  */
 void RTC_TrajectoryPlannerSVC_impl::test()
 {
-    printf("test");
+   std::cout << "test" << std::endl;
 }
 
 
