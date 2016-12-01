@@ -3,8 +3,6 @@
 #include <boost/bind.hpp>
 using namespace std;
 
-#define ELEM(array)    (sizeof (array) / sizeof *(array))
-
 // コンストラクタ
 Planning::Planning()
 {
@@ -28,9 +26,9 @@ void Planning::SetArm(){
 	Arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
 }
 
-void Planning::setStartAndGoal(const double* start, const double* goal){
-	assert(ELEM(start)==ELEM(goal));
-	for(unsigned int i=0; i < ELEM(start); i++){
+void Planning::setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose& goal){
+	assert(start.length()==goal.length());
+	for(unsigned int i=0; i < start.length(); i++){
 		Start[i] =start[i];
 		Goal[i]=goal[i];
 	}
@@ -91,7 +89,7 @@ RTC::JointSpaceTrajectory Planning::PathGeo2JSTraje(og::PathGeometric){
 }
 */
 
-bool Planning::planWithSimpleSetup(RTC::JointSpaceTrajectory traj)
+bool Planning::planWithSimpleSetup(RTC::JointTrajectory_out  traj)
 {
 	// Construct the state space where we are planning
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(jointNum));

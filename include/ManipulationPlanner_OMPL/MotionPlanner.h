@@ -31,9 +31,9 @@ class Planning{
     ~Planning();
 
     void setPlanningMethod(int m){selector = m;}
-    void setStartAndGoal(const double* start, const double* goal);
+    void setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose& goal);
 
-    bool planWithSimpleSetup(RTC::JointSpaceTrajectory traj);
+    bool planWithSimpleSetup(RTC::JointTrajectory_out traj);
 
   protected:
     void SetArm();

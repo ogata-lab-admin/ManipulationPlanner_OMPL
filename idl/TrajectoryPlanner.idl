@@ -19,13 +19,12 @@ module RTC {
 
   typedef sequence<Point3D> Mesh;
 
-
   struct Node{
     string name;
-    Mesh mesh;
+    Mesh myMesh;
     Vector3D translation;
     Vector3D rotation;
-    Node child;
+    //Node child; //Cannot create an instance of struct 'Node' inside its own definition
   };
 
   typedef sequence<double> JointPose;
