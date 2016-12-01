@@ -46,7 +46,8 @@ static const char* manipulationplanner_ompl_spec[] =
 ManipulationPlanner_OMPL::ManipulationPlanner_OMPL(RTC::Manager* manager)
     // <rtc-template block="initializer">
   : RTC::DataFlowComponentBase(manager),
-    m_TrajectoryPlannerPort("TrajectoryPlanner")
+    m_TrajectoryPlannerPort("TrajectoryPlanner"),
+    m_MeshServerPort("MeshServer")
 
     // </rtc-template>
 {
@@ -73,9 +74,11 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "RTC::TrajectoryPlanner", m_trajectoryPlanner);
   
   // Set service consumers to Ports
+  m_MeshServerPort.registerConsumer("MeshServer", "RTC::MeshServer", m_meshServer);
   
   // Set CORBA Service Ports
   addPort(m_TrajectoryPlannerPort);
+  addPort(m_MeshServerPort);
   
   // </rtc-template>
 
