@@ -1,10 +1,10 @@
 #ifndef TrajectoryPlanner_idl
 #define TrajectoryPlanner_idl
-/*
+
 #include "BasicDataType.idl"
 #include "ExtendedDataTypes.idl"
 #include "InterfaceDataTypes.idl"
-*/
+
 module RTC {
 
   enum RETURN_VALUE {
@@ -13,20 +13,28 @@ module RTC {
     RETVAL_EMPTY_MAP,
     RETVAL_INVALID_PRECONDITION,
     RETVAL_NOT_IMPL,
+    RETVAL_NOT_FOUND,
     RETVAL_UNKNOWN_ERROR
   };
-  
-  const long jointNum = 7;
-  const long maxWayPoints = 100;
 
-  typedef double JointPose[jointNum];
-  typedef double JointSpaceTrajectory[maxWayPoints][jointNum];
+  typedef sequence<Point3D> Mesh;
+
+
+  struct Node{
+    string name;
+    Mesh mesh;
+    Vector3D translation;
+    Vector3D rotation;
+    Node child;
+  };
+
+  typedef sequence<double> JointPose;
+  typedef sequence<JointPose> JointTrajectory;
 
   interface TrajectoryPlanner {
-    RETURN_VALUE planTrajectory(in JointPose start, in JointPose goal, out JointSpaceTrajectory trajectory);
-};
+    RETURN_VALUE planTrajectory(in JointPose start, in JointPose goal, out JointTrajectory trajectory);
+  };
   
-
 };
 
 
