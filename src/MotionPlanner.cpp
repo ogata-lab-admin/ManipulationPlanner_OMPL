@@ -1,7 +1,5 @@
 #include "MotionPlanner.h"
 
-#include "p3-uav-helper.h"
-#include "p4-arm-helper.h"
 #include <boost/bind.hpp>
 using namespace std;
 
@@ -13,6 +11,10 @@ Planning::Planning()
 	SetArm();
 	armCol = new ArmMeshCollisionChecker(jointNum);
 	armCol->debug_setRobotMesh();
+}
+
+Planning::~Planning(){
+	delete armCol;
 }
 
 void Planning::SetArm(){
@@ -28,7 +30,7 @@ void Planning::SetArm(){
 
 void Planning::setStartAndGoal(const double* start, const double* goal){
 	assert(ELEM(start)==ELEM(goal));
-	for(int i=0; i < ELEM(start); i++){
+	for(unsigned int i=0; i < ELEM(start); i++){
 		Start[i] =start[i];
 		Goal[i]=goal[i];
 	}
@@ -89,7 +91,7 @@ RTC::JointSpaceTrajectory Planning::PathGeo2JSTraje(og::PathGeometric){
 }
 */
 
-bool Planning::planWithSimpleSetup(RTC::JointSpaceTrajectory &traj)
+bool Planning::planWithSimpleSetup(RTC::JointSpaceTrajectory traj)
 {
 	// Construct the state space where we are planning
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(jointNum));
@@ -153,16 +155,13 @@ bool Planning::planWithSimpleSetup(RTC::JointSpaceTrajectory &traj)
 
 	// If we have a solution,
 	if (ss.solve(10)) {
-		og::PathGeometric &path;
-
 		cout << "Found solution:" << endl;
 		ss.simplifySolution();
-		path = ss.getSolutionPath();
-		path.print(cout);
+		ss.getSolutionPath().print(cout);
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
 
-		//traj =PathGeo2JSTraje(og::PathGeometric);
+		//traj =PathGeo2JSTraje(ss.getSolutionPath());
 
 		return true;
 

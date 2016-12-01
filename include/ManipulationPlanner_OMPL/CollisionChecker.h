@@ -1,10 +1,17 @@
+#ifndef INCLUDED_COLLISION_CHECKER
+#define INCLUDED_COLLISION_CHECKER
+
 #include <omplapp/config.h>
 #include <omplapp/apps/AppBase.h>
 #include <omplapp/apps/SE3MultiRigidBodyPlanning.h>
+//#include <omplapp/geometry/detail/FCLStateValidityChecker.h>
 
 #include <iostream>
+#include "p4-arm-helper.h"
 
 namespace oa = ompl::app;
+namespace ob = ompl::base;
+
 
 class ArmMeshCollisionChecker{
 public:
@@ -29,30 +36,6 @@ public:
 
 
 /*
-class JointStateSampler{
-public:
-	JointStateSampler(){debug_setArm();}
-    //void setArm(std::vector<TLink>)
-
-private:
-    TVector ArmBase = V3(-100.0, 445.0, 0.0);
-
-    //Arm(TLink(Directional vector, End-point vector))
-    std::vector<TLink> Arm;
-
-    void debug_setArm(){
-    	//                     r,p,y      x y z
-    	Arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-    	Arm.push_back(TLink(V3(0,1,0), V3(0,0,250.0)));
-    	Arm.push_back(TLink(V3(0,1,0), V3(0,0,130.0)));
-    	Arm.push_back(TLink(V3(0,0,1), V3(0,0,100.0)));
-    	Arm.push_back(TLink(V3(0,1,0), V3(0,0,105.0)));
-    	Arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-    }
-
-};
-
-
 class CollisionChecker{
 public:
 	CollisionChecker();
@@ -91,3 +74,5 @@ public:
 
 
 */
+
+#endif

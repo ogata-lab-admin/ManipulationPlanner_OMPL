@@ -41,7 +41,7 @@ class RTC_TrajectoryPlannerSVC_impl
    void instantiatePlanner(){planner = new Planning();}
 
    // attributes and operations
-   RTC::RETURN_VALUE planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory);
+   RTC::RETURN_VALUE planTrajectory(const RTC::JointPose start, const RTC::JointPose goal, RTC::JointSpaceTrajectory trajectory);
 
    void passPlanningMethod(int m){method=m;}
    //void setConfig(std::string c){config = c;}

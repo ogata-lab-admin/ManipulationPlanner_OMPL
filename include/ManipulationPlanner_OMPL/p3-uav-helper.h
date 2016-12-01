@@ -1,8 +1,8 @@
 #ifndef _P3_UAV_HELPER_H_
 #define _P3_UAV_HELPER_H_
 
+#include <ompl/base/spaces/SO3StateSpace.h>
 namespace ob = ompl::base;
-namespace og = ompl::geometric;
 
 template <typename T>
 inline T Sq(const T &x)
@@ -74,11 +74,11 @@ inline void QuaternionProduct(ob::SO3StateSpace::StateType &q,
   q.z = q0.w * q1.z + q0.z * q1.w + q0.x * q1.y - q0.y * q1.x;
   q.w = q0.w * q1.w - q0.x * q1.x - q0.y * q1.y - q0.z * q1.z;
 }
-
+/*
 std::ostream &operator<<(std::ostream &os, const TVector &x)
 {
   for (std::size_t i(0); i < x.size(); ++i) os << " " << x(i);
   return os;
 }
-
+*/
 #endif

@@ -20,9 +20,10 @@
 #include <fstream>
 #include <ostream>
 
-#include "p4-arm-helper.h"
 #include "CollisionChecker.h"
-
+#include "TrajectoryPlannerSkel.h"
+#include "p4-arm-helper.h"
+namespace og = ompl::geometric;
 
 class Planning{
   public:
@@ -32,7 +33,7 @@ class Planning{
     void setPlanningMethod(int m){selector = m;}
     void setStartAndGoal(const double* start, const double* goal);
 
-    bool planWithSimpleSetup(RTC::JointSpaceTrajectory &traj);
+    bool planWithSimpleSetup(RTC::JointSpaceTrajectory traj);
 
   protected:
     void SetArm();
