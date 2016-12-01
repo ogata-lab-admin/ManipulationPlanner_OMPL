@@ -6,32 +6,22 @@
 
 namespace oa = ompl::app;
 
-class CollisionChecker{
+class ArmMeshCollisionChecker{
 public:
-	virtual bool isNotCollide();
-};
-
-class MeshCollisionChecker:CollisionChecker{
-public:
-	MeshCollisionChecker(int robotNum);
-	~MeshCollisionChecker();
-
+	ArmMeshCollisionChecker(int robotNum);
+	~ArmMeshCollisionChecker();
+    bool isNotCollided(std::vector<TVector> axesPos);
 	void setMeshData(std::vector<std::string> robotsMeshPath, std::string envMeshPath);
-
-private:
-	//oa::RigidBodyGeometry rg(oa::Motion_3D, oa::FCL);
-	oa::SE3MultiRigidBodyPlanning* smbp;
-};
-
-class ArmMeshCollisionChecker:MeshCollisionChecker{
-public:
-    bool isNotCollide(std::vector<TVector> axesPos);
 
 	int jointNum = 6;
 	//joint axis offset
 	double xOffset[6] = {0,0,0,0,0,0};
 	double yOffset[6] = {0,0,0,0,0,0};
 	double zOffset[6] = {0.145,0.105,0.25,0.13,0.1,0105};
+
+private:
+	//oa::RigidBodyGeometry rg(oa::Motion_3D, oa::FCL);
+	oa::SE3MultiRigidBodyPlanning* smbp;
 
 public:
 	void debug_setRobotMesh();
@@ -61,4 +51,43 @@ private:
     }
 
 };
+
+
+class CollisionChecker{
+public:
+	CollisionChecker();
+	~CollisionChecker();
+	virtual bool isNotCollided()=0;
+};
+
+class MeshCollisionChecker:CollisionChecker{
+public:
+	MeshCollisionChecker(int robotNum);
+	~MeshCollisionChecker();
+
+	void setMeshData(std::vector<std::string> robotsMeshPath, std::string envMeshPath);
+
+private:
+	//oa::RigidBodyGeometry rg(oa::Motion_3D, oa::FCL);
+	oa::SE3MultiRigidBodyPlanning* smbp;
+};
+
+class ArmMeshCollisionChecker:MeshCollisionChecker{
+public:
+	ArmMeshCollisionChecker(int robotNum):MeshCollisionChecker(robotNum){};
+	~ArmMeshCollisionChecker();
+    bool isNotCollided(std::vector<TVector> axesPos);
+
+	int jointNum = 6;
+	//joint axis offset
+	double xOffset[6] = {0,0,0,0,0,0};
+	double yOffset[6] = {0,0,0,0,0,0};
+	double zOffset[6] = {0.145,0.105,0.25,0.13,0.1,0105};
+
+public:
+	void debug_setRobotMesh();
+};
+
+
+
 */

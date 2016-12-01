@@ -24,7 +24,7 @@ class RTC_TrajectoryPlannerSVC_impl
    // destructor non-public
    //virtual ~TrajectoryPlannerSVC_impl();
 
-  std::string config = "../plot/test_arm1.dat";
+  //std::string config = "../plot/test_arm1.dat";
   int method = 1;
   Planning* planner;
 
@@ -38,15 +38,13 @@ class RTC_TrajectoryPlannerSVC_impl
    */
    virtual ~RTC_TrajectoryPlannerSVC_impl();
 
-   void instantiatePlanner(){
-	   planner = new Planning(config);
-   }
+   void instantiatePlanner(){planner = new Planning();}
 
    // attributes and operations
    RTC::RETURN_VALUE planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory);
 
    void passPlanningMethod(int m){method=m;}
-   void setConfig(std::string c){config = c;}
+   //void setConfig(std::string c){config = c;}
 
 };
 

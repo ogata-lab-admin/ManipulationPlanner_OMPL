@@ -1,13 +1,13 @@
 #include "CollisionChecker.h"
 
-MeshCollisionChecker::MeshCollisionChecker(int robotNum){
-    smbp = new oa::SE3MultiRigidBodyPlanning(jNum);
+ArmMeshCollisionChecker::ArmMeshCollisionChecker(int robotNum){
+    smbp = new oa::SE3MultiRigidBodyPlanning(robotNum);
 }
 
-MeshCollisionChecker::~MeshCollisionChecker(){
+ArmMeshCollisionChecker::~ArmMeshCollisionChecker(){
 	delete smbp;
 }
-void MeshCollisionChecker::setMeshData(std::vector<std::string> robotsMeshPath, std::string envMeshPath){
+void ArmMeshCollisionChecker::setMeshData(std::vector<std::string> robotsMeshPath, std::string envMeshPath){
     smbp->setEnvironmentMesh(envMeshPath.c_str());
     smbp->setRobotMesh(robotsMeshPath[0].c_str());
 
@@ -17,7 +17,6 @@ void MeshCollisionChecker::setMeshData(std::vector<std::string> robotsMeshPath, 
     		}
     }
 }
-
 
 void ArmMeshCollisionChecker::debug_setRobotMesh(){
 	std::vector<std::string> robot_fname;
@@ -39,20 +38,9 @@ void ArmMeshCollisionChecker::debug_setRobotMesh(){
 }
 
 
-bool ArmMeshCollisionChecker::isNotCollide(std::vector<TVector> axesPos){
+bool ArmMeshCollisionChecker::isNotCollided(std::vector<TVector> axesPos){
 	//軸の三次元座標の値を各メッシュの位置に充てる
-	/*
-	 ob::StateSpacePtr space(new ob::SE3StateSpace());
-	 ob::RealVectorBounds bounds(3);
-	 bounds.setLow(-300);
-	 bounds.setHigh(300);
-	 //smbp.setBoundsAddition(2.0);
-	 space->as<ob::SE3StateSpace>()->setBounds(bounds);
-	*/
-
-	//ob::StateSpacePtr space(smbp.getStateSpace());
-	ob::ScopedState<ob::CompoundStateSpace> SE3State(smbp.getStateSpace());//origin of mesh data
-	//ob::ScopedState<ob::CompoundStateSpace> SE3State(space);//origin of mesh data
+	ob::ScopedState<ob::CompoundStateSpace> SE3State(smbp.getStateSpace());
 	for (int i = 0; i < jointNum; i++){
 		  ob::SE3StateSpace::StateType* link = SE3State.get()->as<ob::SE3StateSpace::StateType>(i);
 	    link->setXYZ(axesPos[i][0]-xOffset[i], axesPos[i][1]-yOffset[i], axesPos[i][2]-zOffset[i]);
@@ -60,14 +48,12 @@ bool ArmMeshCollisionChecker::isNotCollide(std::vector<TVector> axesPos){
 	    //SE3State->as<ob::SE3StateSpace::StateType>(i)->setXYZ(axesPos[i][0]-xOffset[i], axesPos[i][1]-yOffset[i], axesPos[i][2]-zOffset[i]);
 	}
 	smbp.inferEnvironmentBounds();
-	//smbp.setup();
 	//get collision checker
 	//ob::StateValidityCheckerPtr svc = smbp.getStateValidityChecker();//allocStateValidityChecker(smbp.getSpaceInformation(), smbp.getGeometricStateExtractor(), true);
 	oa::FCLStateValidityChecker<oa::Motion_3D> svc(smbp.getSpaceInformation(),smbp.getGeometrySpecification(),smbp.getGeometricStateExtractor(), true);
 
 	assert(smbp.isSelfCollisionEnabled());
 	for(int i =0; i<jointNum; i++){
-		  //std::cout << SE3State->as<ob::State>(i) << std::endl;
 		  if(!svc.isValid(SE3State->as<ob::State>(i))){
 	        return false;
 	    }

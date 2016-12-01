@@ -12,13 +12,12 @@
  */
 RTC_TrajectoryPlannerSVC_impl::RTC_TrajectoryPlannerSVC_impl()
 {
-  instantiatePlanner();
 }
 
 
 RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
 {
-  delete planner;
+
 }
 
 
@@ -27,10 +26,18 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
  */
 RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory)
 {
+  instantiatePlanner();
+
   planner->setPlanningMethod(method);
   //not passed arguments(start, goal, trajectory) yet
-  planner->planWithSimpleSetup();
-  return RTC::RETVAL_OK;
+  planner->setStartAndGoal(start, goal);
+  if(planner->planWithSimpleSetup(trajectory)){
+	  delete planner;
+	  return RTC::RETVAL_OK;
+  }
+
+  delete planner;
+  return RTC::RETVAL_UNKNOWN_ERROR;
 }
 
 

@@ -3,7 +3,6 @@
 
 #include <ompl/base/spaces/RealVectorStateSpace.h>
 
-#include "MotionPlanner.h"
 #include "p3-uav-helper.h"
 
 // Compute a rotation matrix from axis (x,y,z) and angle

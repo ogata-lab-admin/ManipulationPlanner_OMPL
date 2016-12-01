@@ -1,7 +1,35 @@
 #ifndef _P3_UAV_HELPER_H_
 #define _P3_UAV_HELPER_H_
 
-#include "MotionPlanner.h"
+namespace ob = ompl::base;
+namespace og = ompl::geometric;
+
+template <typename T>
+inline T Sq(const T &x)
+{
+  return x * x;
+}
+
+typedef struct{
+  double x;
+  double y;
+  double z;
+} POINT;
+
+typedef struct {
+  double xrange[2];
+  double yrange[2];
+  double zrange[2];
+} RANGE;
+
+typedef boost::numeric::ublas::matrix<double> TMatrix;
+typedef boost::numeric::ublas::vector<double> TVector;
+
+struct TLink {
+  TVector Axis;  // Joint axis
+  TVector End;   // End-point position of the link defined on the local frame
+  TLink(const TVector &a, const TVector &e) : Axis(a), End(e) {}
+};
 
 // Generate a vector with 3-dim
 inline TVector V3(const double &x, const double &y, const double &z)
@@ -12,6 +40,7 @@ inline TVector V3(const double &x, const double &y, const double &z)
   v(2) = z;
   return v;
 }
+
 // Convert a quaternion to a rotation matrix
 // http://simlon.co.jp/quaternion.html
 inline TMatrix QtoR(const double &qx, const double &qy, const double &qz, const double &qw)
