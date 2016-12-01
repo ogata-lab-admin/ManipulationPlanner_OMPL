@@ -32,7 +32,7 @@ class Planning{
     void setPlanningMethod(int m){selector = m;}
     void setStartAndGoal(const double* start, const double* goal);
 
-    bool planWithSimpleSetup(og::PathGeometric &path);
+    bool planWithSimpleSetup(RTC::JointSpaceTrajectory &traj);
 
   protected:
     void SetArm();
@@ -40,6 +40,7 @@ class Planning{
     void ForwardKinematics(const std::vector<TLink> &linkes,
                            const std::vector<double> &angles, const TVector &base,
                            std::vector<TVector> &result);
+    //RTC::JointSpaceTrajectory PathGeo2JSTraje(og::PathGeometric);
 
     ArmMeshCollisionChecker* armCol;
 

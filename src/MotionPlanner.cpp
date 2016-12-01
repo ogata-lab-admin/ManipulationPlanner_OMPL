@@ -83,9 +83,13 @@ void Planning::ForwardKinematics(const std::vector<TLink> &linkes,
 	}
 }
 
+/*
+RTC::JointSpaceTrajectory Planning::PathGeo2JSTraje(og::PathGeometric){
+	return hoge;
+}
+*/
 
-
-bool Planning::planWithSimpleSetup(og::PathGeometric &path)
+bool Planning::planWithSimpleSetup(RTC::JointSpaceTrajectory &traj)
 {
 	// Construct the state space where we are planning
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(jointNum));
@@ -149,12 +153,16 @@ bool Planning::planWithSimpleSetup(og::PathGeometric &path)
 
 	// If we have a solution,
 	if (ss.solve(10)) {
+		og::PathGeometric &path;
+
 		cout << "Found solution:" << endl;
 		ss.simplifySolution();
 		path = ss.getSolutionPath();
 		path.print(cout);
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
+
+		//traj =PathGeo2JSTraje(og::PathGeometric);
 
 		return true;
 
