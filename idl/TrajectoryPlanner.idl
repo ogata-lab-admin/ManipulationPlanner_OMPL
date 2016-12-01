@@ -19,11 +19,11 @@ module RTC {
   const long jointNum = 7;
   const long maxWayPoints = 100;
 
-  typedef double jointPos[jointNum];
-  typedef double jPosTraj[maxWayPoints][jointNum];
+  typedef double JointPose[jointNum];
+  typedef double JointSpaceTrajectory[maxWayPoints][jointNum];
 
   interface TrajectoryPlanner {
-    RETURN_VALUE planTrajectory(in jointPos start, in jointPos goal, out jPosTraj trajectory);
+    RETURN_VALUE planTrajectory(in JointPose start, in JointPose goal, out JointSpaceTrajectory trajectory);
 };
   
 

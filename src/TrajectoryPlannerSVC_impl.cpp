@@ -24,7 +24,7 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
 /*
  * Methods corresponding to IDL attributes and operations
  */
-RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::jointPos start, const RTC::jointPos goal, RTC::jPosTraj trajectory)
+RTC::RETURN_VALUE planTrajectory(const RTC::JointPose start, const RTC::JointPose goal, RTC::JointSpaceTrajectory trajectory);
 {
   instantiatePlanner();
 
