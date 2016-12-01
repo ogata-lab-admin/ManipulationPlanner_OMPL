@@ -110,6 +110,7 @@ PlanningMethod   int                (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,T
 ポート名        ポート型    データ型                       意味
 =============== =========== ============================== ====
 TrajectoryPlanner ServicePort RTC::TrajectoryPlanner         
+MeshServer      ServicePort RTC::MeshServer                
 =============== =========== ============================== ====
 
 例

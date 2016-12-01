@@ -22,6 +22,7 @@
 
 // Service Consumer stub headers
 // <rtc-template block="consumer_stub_h">
+#include "MeshServerStub.h"
 
 // </rtc-template>
 
@@ -254,6 +255,9 @@ class ManipulationPlanner_OMPL
   /*!
    */
   RTC::CorbaPort m_TrajectoryPlannerPort;
+  /*!
+   */
+  RTC::CorbaPort m_MeshServerPort;
   
   // </rtc-template>
 
@@ -261,12 +265,15 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="service_declare">
   /*!
    */
-  RTC_TrajectoryPlannerSVC_impl m_trajectoryPlanner;
+  TrajectoryPlannerSVC_impl m_trajectoryPlanner;
   
   // </rtc-template>
 
   // Consumer declaration
   // <rtc-template block="consumer_declare">
+  /*!
+   */
+  RTC::CorbaConsumer<RTC::MeshServer> m_meshServer;
   
   // </rtc-template>
 
