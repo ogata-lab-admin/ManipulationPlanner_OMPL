@@ -20,6 +20,11 @@
 #include <fstream>
 #include <ostream>
 
+#include <omplapp/config.h>
+#include <omplapp/apps/AppBase.h>
+#include <omplapp/apps/SE3MultiRigidBodyPlanning.h>
+#include <ompl/geometric/planners/rrt/RRTConnect.h>
+
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
 
@@ -53,21 +58,11 @@ struct TLink {
 class Planning{
   public:
     Planning(std::string fileName);
+    void setStartAndGoal(const double* start, const double* goal);
     void setPlanningMethod(int m){selector = m;}
     void SetArm();
-    void PlannerSelector();
     void initFromFile(std::string fileName);
-    void CreateCube(std::ostream &cube);
-    bool clear(const double* xMin, const double* xMax,
-               const double* yMin, const double* yMax,
-               const double* zMin, const double* zMax,
-               int numObstacles,
-               double xTest, double yTest, double zTest);
-    void CreateGridPoint(const double* xMin, const double* xMax,
-                         const double* yMin, const double* yMax,
-                         const double* zMin, const double* zMax, POINT *P, int i);
-    void PlaneEquation(POINT p[], int i0[], int i1[], int i2[], int i, double a[]);
-    void Pcompare(POINT A, POINT B, POINT *compare);
+
     bool link(const double* xMin, const double* xMax,
               const double* yMin, const double* yMax,
               const double* zMin, const double* zMax,
@@ -84,7 +79,7 @@ class Planning{
     // TVector cross_vector(const TVector &vl, const TVector &vr);
     // double Distance_DotAndLine(const TVector &P, const TVector &A, const TVector &B);
     void printDistance();
-    void planWithSimpleSetup();
+    bool planWithSimpleSetup();
 
     void PrintSolution(const char *filename, const og::PathGeometric &path, int skip = 1);
 
