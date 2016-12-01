@@ -74,80 +74,6 @@ void Planning::initFromFile(std::string fileName)
 }
 
 
-
-
-bool Planning::link(const double* xMin, const double* xMax,
-                    const double* yMin, const double* yMax,
-                    const double* zMin, const double* zMax,
-                    int numObstacles,
-                    double xStart, double yStart, double zStart,
-                    double xDest, double yDest, double zDest)
-{
-  int i = 0;
-  bool flag = true;
-  POINT A, B, P, p[8], E, compare[2];
-  double a[4];
-  double t, DE;
-  int i0[6] = {0,0,1,2,3,4}; // 配列の組み合わせはノート見る。
-  int i1[6] = {1,1,2,3,4,5}; // 0から5までの6面定義、3点で考える。
-  int i2[6] = {2,4,5,6,7,6};
-
-  A.x = xStart; A.y = yStart; A.z = zStart;
-  B.x = xDest ; B.y = yDest ; B.z = zDest;
-
-  if (!clear(xMin, xMax, yMin, yMax, zMin, zMax, numObstacles, xStart, yStart, zStart) ||
-      !clear(xMin, xMax, yMin, yMax, zMin, zMax, numObstacles, xDest, yDest, zDest)) {
-    return false;
-  }
-
-  Pcompare(A, B, compare);
-
-  // 平面と直線の交点を導出 (参考サイト：http://www.hiramine.com/programming/graphics/3d_planesegmentintersection.html)
-  E.x = A.x - B.x;
-  E.y = A.y - B.y;
-  E.z = A.z - B.z;
-
-  for (int j = 0; j < numObstacles; ++j) {
-    CreateGridPoint(xMin, xMax, yMin, yMax, zMin, zMax, p, j);
-
-    do{
-      PlaneEquation(p, i0, i1, i2, i, a);
-
-      t = (a[3] - (a[0] * A.x + a[1] * A.y + a[2] * A.z)) / (a[0] * E.x + a[1] * E.y + a[2] * E.z);
-      DE = a[0] * E.x + a[1] * E.y + a[2] * E.z;
-
-      if(DE == 0){
-        // std::cout << j+1 << "番目の障害物: " << i << "面と直線との交点なし" << std::endl;
-      }else{
-        // std::cout << "交点あり" << endl;
-        P.x = A.x + t * E.x;
-        P.y = A.y + t * E.y;
-        P.z = A.z + t * E.z;
-        // std::cout << j+1 << "番目の障害物: " << i << "面, (" << P.x << ", " << P.y << ", " << P.z << ")" << std::endl;
-
-        if (xMin[j] <= P.x && P.x <= xMax[j] &&
-            yMin[j] <= P.y && P.y <= yMax[j] &&
-            zMin[j] <= P.z && P.z <= zMax[j] &&
-            compare[0].x <= P.x && P.x <= compare[1].x &&
-            compare[0].y <= P.y && P.y <= compare[1].y &&
-            compare[0].z <= P.z && P.z <= compare[1].z) {
-          // std::cout << j+1 << "番目の障害物: " << i << "面, 定義した4点内に入っている" << std::endl;
-          flag = false;
-          break;
-        }else{
-          // std::cout << j+1 << "番目の障害物: " << i << "面, 範囲外" << std::endl;
-        }
-      }
-      i++;
-    }while(i<6);
-    i = 0;
-  }
-
-  return flag;
-}
-
-
-
 bool Planning::isStateValid(const ob::State *state)
 {
   const ob::RealVectorStateSpace::StateType *state_vec= state->as<ob::RealVectorStateSpace::StateType>();
@@ -163,9 +89,7 @@ bool Planning::isStateValid(const ob::State *state)
 
 
   for (size_t i = 0; i < result.size()-1; ++i){
-    if(link(xMin, xMax, yMin, yMax, zMin, zMax, numObstacles,
-            result[i](0), result[i](1), result[i](2),
-            result[i+1](0), result[i+1](1), result[i+1](2))==false){
+    if(/*mesh collision check func*/==false){
       // cout << "衝突してます" << endl;
       return false;
     }
@@ -201,22 +125,6 @@ void Planning::ForwardKinematics(const std::vector<TLink> &linkes,
   }
 }
 
-
-
-// Print a vertex to file
-void Planning::printEdge(std::ostream &os, const ob::StateSpacePtr &space, const ob::PlannerDataVertex &vertex)
-{
-  std::vector<double> reals;
-  if(vertex!=ob::PlannerData::NO_VERTEX)// 頂点が存在しない状態じゃなかったら
-  {
-    space->copyToReals(reals, vertex.getState());  // Copy all the real values from a state source
-                                                   // to the array reals using
-                                                   // getValueAddressAtLocation()
-    for (size_t j = 0; j < reals.size(); ++j) {
-      os << " " << reals[j];
-    }
-  }
-}
 
 
 void Planning::planWithSimpleSetup()
@@ -314,134 +222,15 @@ void Planning::planWithSimpleSetup()
       // Print the solution path to a file
       std::ofstream ofs("../plot/path.dat");
       ss.getSolutionPath().printAsMatrix(ofs);
-      OpenGnuplot("../plot/frame_all.dat", ss.getSolutionPath());
 
-      // Get the planner data to visualize the vertices and the edges
-      ob::PlannerData pdat(ss.getSpaceInformation());
-      ss.getPlannerData(pdat);
-
-      // Print the vertices to file
-      std::ofstream ofs_v("../plot/vertices.dat");
-      for (unsigned int i(0); i < pdat.numVertices(); ++i) {
-        printEdge(ofs_v, ss.getStateSpace(), pdat.getVertex(i));
-        ofs_v << endl;
-      }
-
-      // Print the edges to file
-      std::ofstream ofs_e("../plot/edges.dat");
-      std::vector<unsigned int> edge_list;
-      for (unsigned int i(0); i < pdat.numVertices(); ++i) {
-        unsigned int n_edge = pdat.getEdges(i, edge_list);
-        for (unsigned int i2(0); i2 < n_edge; ++i2) {
-          printEdge(ofs_e, ss.getStateSpace(), pdat.getVertex(i));
-          ofs_e << endl;
-          printEdge(ofs_e, ss.getStateSpace(), pdat.getVertex(edge_list[i2]));
-          ofs_e<<endl;
-          ofs_e<<endl<<endl;
         }
       }
       break;
     } else {
       cout << "No solution found" << endl;
-      count++;
-      if(count > 3){
-        cout << "全然経路見つからんし！" << endl;
         break;
       }
     }
 
   }
-}
-
-
-
-
-// 参考：http://www-sens.sys.es.osaka-u.ac.jp/wakate/tutorial/group3/gnuplot/
-int Planning::OpenGnuplot(const char *filename, const og::PathGeometric &path, int skip)
-{
-  // output_plt("../plot/plot.plt");
-  PrintArmSequence(filename, path, skip);
-
-  FILE *fp = popen("cd ../plot && gnuplot -persist", "w");
-  if (fp == NULL) {
-    return -1;
-  }
-  ofstream ofs("../plot/Obstacle.dat");
-  CreateCube(ofs);
-  fputs("set mouse\n", fp);
-  fputs("set view equal xyz\n", fp);
-  fputs("set ticslevel 0\n", fp);
-  fputs("set xrange[-500:500]\n", fp);
-  fputs("set yrange[-110:1000]\n", fp);
-  fputs("set zrange[0:2000]\n", fp);
-  fputs("splot \"frame_all.dat\" w lp lt 3 pt 6 lw 1.5,\\\n", fp);
-  fputs("\"Obstacle.dat\" using 1:2:3 with lines lt rgb \"#FA5B08\" lw 2 \n", fp);
-
-
-  // fflush(fp);
-  // // cin.get();
-  // pclose(fp);
-  return 0;
-}
-
-
-/* Save a sequence of the arm on ``path'' into file that is gnuplot-compatible.
-   The path should be a sequence of joint-angles.
-   The parameter ``skip'' is an interval to sample from ``path'' (1 for every sample). */
-void Planning::PrintArmSequence(const char *filename, const og::PathGeometric &path, int skip)
-{
-  using namespace boost::numeric::ublas;
-  ofstream ofs(filename);
-  std::vector<double> angles(Arm.size());
-  std::vector<TVector> jpos;
-  for (size_t i(0); i < path.getStateCount(); i += skip) {
-    const ob::RealVectorStateSpace::StateType *s = path.getState(i)->as<ob::RealVectorStateSpace::StateType>();
-    for (size_t i(0); i < Arm.size(); ++i) angles[i] = (*s)[i];
-    ForwardKinematics(Arm, angles, ArmBase, jpos);
-    for (size_t i(0); i < jpos.size(); ++i) ofs << jpos[i] << endl;
-    ofs << endl
-        << endl;
-  }
-}
-
-
-void Planning::PrintArmSequenceAnime(const char *filename, const og::PathGeometric &path, int skip)
-{
-  using namespace boost::numeric::ublas;
-  std::vector<double> angles(Arm.size());
-  std::vector<TVector> jpos;
-  for (size_t i(0); i < path.getStateCount(); i += skip) {
-    ofstream ofs(filename);
-    const ob::RealVectorStateSpace::StateType *s = path.getState(i)->as<ob::RealVectorStateSpace::StateType>();
-    for (size_t i(0); i < Arm.size(); ++i) angles[i] = (*s)[i];
-    ForwardKinematics(Arm, angles, ArmBase, jpos);
-    for (size_t i(0); i < jpos.size(); ++i) ofs << jpos[i] << endl;
-    // for(int k=0; k<75; k++) usleep(10000);
-  }
-}
-
-
-void Planning::CheckArmSequence()
-{
-  using namespace boost::numeric::ublas;
-  std::vector<double> angles(Arm.size());
-  std::vector<TVector> jpos;
-    // const ob::RealVectorStateSpace::StateType *s = path.getState(i)->as<ob::RealVectorStateSpace::StateType>();
-    for (size_t i(0); i < Arm.size(); ++i) angles[i] = i;
-    ForwardKinematics(Arm, angles, ArmBase, jpos);
-    for (size_t i(0); i < jpos.size(); ++i) cout << jpos[i] << endl;
-    cout << endl
-        << endl;
-}
-
-
-/* Print the planning result into a file.
-   The resulting file is a gnuplot script that plots the path,
-   the sequence of the arm on the path, and the obstacles.
-   Sequence of the arm on ``path'': stored into "res/frame_all.dat",
-   obstacles: stored into the resulting script.
-   Usage:  gnuplot -persistent filename */
-void Planning::PrintArmSolution(const char *filename, const og::PathGeometric &path, int skip)
-{
-
 }

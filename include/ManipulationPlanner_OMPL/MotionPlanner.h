@@ -73,21 +73,10 @@ class Planning{
     void ForwardKinematics(const std::vector<TLink> &linkes,
                            const std::vector<double> &angles, const TVector &base,
                            std::vector<TVector> &result);
-    void printEdge(std::ostream &os, const ob::StateSpacePtr &space, const ob::PlannerDataVertex &vertex);
-    // double distance_vertex(const TVector &p1, const TVector &p2);
-    // double length_vector(const TVector &v);
-    // TVector cross_vector(const TVector &vl, const TVector &vr);
-    // double Distance_DotAndLine(const TVector &P, const TVector &A, const TVector &B);
-    void printDistance();
+
     bool planWithSimpleSetup();
 
     void PrintSolution(const char *filename, const og::PathGeometric &path, int skip = 1);
-
-    int OpenGnuplot(const char *filename, const og::PathGeometric &path, int skip = 1);
-    void PrintArmSequence(const char *filename, const og::PathGeometric &path, int skip=1);
-    void CheckArmSequence();
-    void PrintArmSolution(const char *filename, const og::PathGeometric &path, int skip=1);
-    void PrintArmSequenceAnime(const char *filename, const og::PathGeometric &path, int skip=1);
 
   protected:
     int m_planningMethod = 1;
