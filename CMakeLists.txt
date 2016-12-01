@@ -62,6 +62,11 @@ include_directories(${OMPL_INCLUDE_DIRS})
 link_directories(${OMPL_LIBRARY_DIRS})
 add_definitions(${OMPL_DEFINITIONS})
 
+find_package(fcl REQUIRED)
+include_directories(${FCL_INCLUDE_DIRS})
+link_directories(${FCL_LIBRARY_DIRS})
+add_definitions(${FCL_DEFINITIONS})
+
 # Universal settings
 #enable_testing()
 

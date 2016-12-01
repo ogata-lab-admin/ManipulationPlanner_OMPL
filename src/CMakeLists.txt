@@ -1,4 +1,4 @@
-set(comp_srcs ManipulationPlanner_OMPL.cpp MotionPlanner.cpp TrajectoryPlannerSVC_impl.cpp CollisionChecker.cpp)
+set(comp_srcs ManipulationPlanner_OMPL.cpp TrajectoryPlannerSVC_impl.cpp MotionPlanner.cpp CollisionChecker.cpp )
 set(standalone_srcs ManipulationPlanner_OMPLComp.cpp)
 
 add_definitions(-Wall -g -O2 -std=c++11)
@@ -46,11 +46,11 @@ if(NOT TARGET ALL_IDL_TGT)
   add_custom_target(ALL_IDL_TGT)
 endif(NOT TARGET ALL_IDL_TGT)
 add_dependencies(${PROJECT_NAME} ALL_IDL_TGT)
-target_link_libraries(${PROJECT_NAME} ${OPENRTM_LIBRARIES} ${Boost_LIBRARIES} ${OMPL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${OPENRTM_LIBRARIES} ${Boost_LIBRARIES} ${OMPL_LIBRARIES} ${OMPLAPP_LIBRARIES} ${FCL_LIBRARIES})
 
 add_executable(${PROJECT_NAME}Comp ${standalone_srcs}
   ${comp_srcs} ${comp_headers} ${ALL_IDL_SRCS})
-target_link_libraries(${PROJECT_NAME}Comp ${OPENRTM_LIBRARIES} ${Boost_LIBRARIES} ${OMPL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}Comp ${OPENRTM_LIBRARIES} ${Boost_LIBRARIES} ${OMPL_LIBRARIES} ${OMPLAPP_LIBRARIES} ${FCL_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}Comp
     EXPORT ${PROJECT_NAME}
