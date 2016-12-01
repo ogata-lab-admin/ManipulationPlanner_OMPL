@@ -25,10 +25,10 @@
 #include "p4-arm-helper.h"
 namespace og = ompl::geometric;
 
-class Planning{
+class JointStateSampler{
   public:
-    Planning();
-    ~Planning();
+    JointStateSampler();
+    ~JointStateSampler();
 
     void setPlanningMethod(int m){selector = m;}
     void setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose& goal);
