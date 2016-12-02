@@ -47,7 +47,6 @@ class JointStateSampler{
     int m_planningMethod = 1;
     std::vector<TLink> m_arm;  // Manipulator
     TVector m_armBase;  // The base position of Manipulator
-    int m_jointNum = 6;//change m_arm.length() in the future
 
     int selector;
 

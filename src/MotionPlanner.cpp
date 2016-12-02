@@ -5,7 +5,7 @@ using namespace std;
 
 JointStateSampler::JointStateSampler()
 {
-	m_armMeshCC = new ArmMeshCollisionChecker(m_jointNum);
+	m_armMeshCC = new ArmMeshCollisionChecker();
 	m_armMeshCC->debug_setRobotMesh();
 }
 
@@ -73,10 +73,10 @@ void JointStateSampler::ForwardKinematics(const std::vector<TLink> &linkes,
 bool JointStateSampler::planWithSimpleSetup(const RTC::JointPose& startPos, const RTC::JointPose& goalPos, RTC::JointTrajectory_out  traj)
 {
 	// Construct the state space where we are planning
-	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum));
+	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_arm.size()));
 
-	ob::RealVectorBounds bounds(m_jointNum);
-	for (int i = 0; i < m_jointNum; ++i){
+	ob::RealVectorBounds bounds(m_arm.size());
+	for (int i = 0; i < m_arm.size(); ++i){
 		bounds.setLow(i, -M_PI);
 		bounds.setHigh(i, M_PI);
 	}
@@ -92,11 +92,11 @@ bool JointStateSampler::planWithSimpleSetup(const RTC::JointPose& startPos, cons
 	assert(startPos.length()==goalPos.length());
 
 	ob::ScopedState<ob::RealVectorStateSpace> start(space);
-	for (int i = 0; i < m_jointNum; ++i){
+	for (int i = 0; i < m_arm.size(); ++i){
 		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = startPos[i];
 	}
 	ob::ScopedState<ob::RealVectorStateSpace> goal(space);
-	for (int i = 0; i < m_jointNum; ++i){
+	for (int i = 0; i < m_arm.size(); ++i){
 		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = goalPos[i];
 	}
 	ss.setStartAndGoalStates(start, goal);
