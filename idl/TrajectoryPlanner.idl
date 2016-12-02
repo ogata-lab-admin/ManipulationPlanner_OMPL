@@ -27,11 +27,18 @@ module RTC {
     //Node child; //Cannot create an instance of struct 'Node' inside its own definition
   };
 
+  typedef sequence<Node> MultiMesh;
+
   typedef sequence<double> JointPose;
   typedef sequence<JointPose> JointTrajectory;
 
   interface TrajectoryPlanner {
     RETURN_VALUE planTrajectory(in JointPose start, in JointPose goal, out JointTrajectory trajectory);
+  };
+
+    interface MeshServer {
+    RETURN_VALUE getRobotMesh(out MultiMesh robots);
+    RETURN_VALUE getEnvMesh(out Node env);
   };
   
 };

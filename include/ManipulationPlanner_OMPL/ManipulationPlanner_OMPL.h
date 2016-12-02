@@ -22,7 +22,6 @@
 
 // Service Consumer stub headers
 // <rtc-template block="consumer_stub_h">
-#include "MeshServerStub.h"
 
 // </rtc-template>
 
@@ -265,7 +264,7 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="service_declare">
   /*!
    */
-  TrajectoryPlannerSVC_impl m_trajectoryPlanner;
+  RTC_TrajectoryPlannerSVC_impl m_trajectoryPlanner;
   
   // </rtc-template>
 

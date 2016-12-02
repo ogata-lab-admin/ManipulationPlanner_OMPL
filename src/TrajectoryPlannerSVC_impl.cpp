@@ -12,31 +12,28 @@
  */
 RTC_TrajectoryPlannerSVC_impl::RTC_TrajectoryPlannerSVC_impl()
 {
+	  createSampler();
 }
 
 
 RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
 {
-
+	  delete jSampler;
 }
 
 
 /*
  * Methods corresponding to IDL attributes and operations
  */
-RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::JointPose& start, const RTC::JointPose& goal, RTC::JointTrajectory_out trajectory){
-	createSampler();
-
+RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::JointPose& start, const RTC::JointPose& goal, RTC::JointTrajectory_out trajectory)
+{
   jSampler->setPlanningMethod(method);
-  //not passed arguments(start, goal, trajectory) yet
-  jSampler->setStartAndGoal(start, goal);
-  if(jSampler->planWithSimpleSetup(trajectory)){
-	  delete jSampler;
+  jSampler->setArm();
+
+  if(jSampler->planWithSimpleSetup(start, goal, trajectory)){
 	  return RTC::RETVAL_OK;
   }
-
-  delete jSampler;
-  return RTC::RETVAL_UNKNOWN_ERROR;
+  return RTC::RETVAL_NOT_FOUND;
 }
 
 

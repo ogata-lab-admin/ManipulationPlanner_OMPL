@@ -24,7 +24,6 @@ class RTC_TrajectoryPlannerSVC_impl
    // destructor non-public
    //virtual ~TrajectoryPlannerSVC_impl();
 
-  //std::string config = "../plot/test_arm1.dat";
   int method = 1;
   JointStateSampler* jSampler;
 
@@ -40,11 +39,9 @@ class RTC_TrajectoryPlannerSVC_impl
 
    void createSampler(){jSampler = new JointStateSampler();}
 
-   // attributes and operations
    RTC::RETURN_VALUE planTrajectory(const RTC::JointPose& start, const RTC::JointPose& goal, RTC::JointTrajectory_out trajectory);
 
    void passPlanningMethod(int m){method=m;}
-   //void setConfig(std::string c){config = c;}
 
 };
 

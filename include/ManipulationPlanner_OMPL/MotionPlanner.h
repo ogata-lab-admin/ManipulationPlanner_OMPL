@@ -31,32 +31,25 @@ class JointStateSampler{
     ~JointStateSampler();
 
     void setPlanningMethod(int m){selector = m;}
-    void setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose& goal);
+    void setArm();
+    void setStartAndGoal();
 
-    bool planWithSimpleSetup(RTC::JointTrajectory_out traj);
+    bool planWithSimpleSetup(const RTC::JointPose& startPos, const RTC::JointPose& goalPos, RTC::JointTrajectory_out traj);
 
   protected:
-    void SetArm();
     bool isStateValid(const ob::State *state);
     void ForwardKinematics(const std::vector<TLink> &linkes,
                            const std::vector<double> &angles, const TVector &base,
                            std::vector<TVector> &result);
-    //RTC::JointSpaceTrajectory PathGeo2JSTraje(og::PathGeometric);
 
-    ArmMeshCollisionChecker* armCol;
+    ArmMeshCollisionChecker* m_armMeshCC;
 
     int m_planningMethod = 1;
-    std::vector<TLink> Arm;  // Manipulator
-    TVector ArmBase;  // The base position of Manipulator
-    int jointNum = 6;//joint num?
+    std::vector<TLink> m_arm;  // Manipulator
+    TVector m_armBase;  // The base position of Manipulator
+    int m_jointNum = 6;//change m_arm.length() in the future
 
     int selector;
-
-    /// Start position in space
-    double* Start;
-
-    /// Goal position in space
-    double* Goal;
 
 };
 #endif

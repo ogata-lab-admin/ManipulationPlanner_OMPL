@@ -3,57 +3,44 @@
 #include <boost/bind.hpp>
 using namespace std;
 
-// コンストラクタ
 JointStateSampler::JointStateSampler()
 {
-	SetArm();
-	armCol = new ArmMeshCollisionChecker(jointNum);
-	armCol->debug_setRobotMesh();
+	m_armMeshCC = new ArmMeshCollisionChecker(m_jointNum);
+	m_armMeshCC->debug_setRobotMesh();
 }
 
 JointStateSampler::~JointStateSampler(){
-	delete armCol;
+	delete m_armMeshCC;
 }
 
-void JointStateSampler::SetArm(){
-	ArmBase = V3(-100.0, 445.0, 0.0);
+//TODO: Generate these params automatically from robot mesh data
+void JointStateSampler::setArm(){
+	m_armBase = V3(-100.0, 445.0, 0.0);
 	//                     r,p,y
-	Arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-	Arm.push_back(TLink(V3(0,1,0), V3(0,0,250.0)));
-	Arm.push_back(TLink(V3(0,1,0), V3(0,0,130.0)));
-	Arm.push_back(TLink(V3(0,0,1), V3(0,0,100.0)));
-	Arm.push_back(TLink(V3(0,1,0), V3(0,0,105.0)));
-	Arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-}
-
-void JointStateSampler::setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose& goal){
-	assert(start.length()==goal.length());
-	for(unsigned int i=0; i < start.length(); i++){
-		Start[i] =start[i];
-		Goal[i]=goal[i];
-	}
-	/*
-	Start.push_back(0.0); Start.push_back(0.0); Start.push_back(0.5); Start.push_back(0.0); Start.push_back(1.0); Start.push_back(0.0);
-	Goal.push_back(0.0);  Goal.push_back(0.2);  Goal.push_back(1.57);  Goal.push_back(0.0);  Goal.push_back(-0.2);  Goal.push_back(0.0);
-	*/
+	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
+	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,250.0)));
+	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,130.0)));
+	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,100.0)));
+	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,105.0)));
+	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
 }
 
 bool JointStateSampler::isStateValid(const ob::State *state)
 {
     //casting: state=>state_vec=>angles
     const ob::RealVectorStateSpace::StateType *state_vec= state->as<ob::RealVectorStateSpace::StateType>();
-	std::vector<double> angles(Arm.size());
+	std::vector<double> angles(m_arm.size());
 
-	for (size_t  i = 0; i < Arm.size(); i++){
+	for (size_t  i = 0; i < m_arm.size(); i++){
 	angles[i] = (*state_vec)[i];
 	}
 
 	//From the joint coordinates to the SE3 coordinate of axes
 	std::vector<TVector> axesPos;//joints coordinate in SE(3) space
-	ForwardKinematics(Arm, angles, ArmBase, axesPos);
+	ForwardKinematics(m_arm, angles, m_armBase, axesPos);
 
 	//call mesh collision check
-	return armCol->isNotCollided(axesPos);
+	return m_armMeshCC->isNotCollided(axesPos);
 
 }
 
@@ -83,19 +70,13 @@ void JointStateSampler::ForwardKinematics(const std::vector<TLink> &linkes,
 	}
 }
 
-/*
-RTC::JointSpaceTrajectory JointStateSampler::PathGeo2JSTraje(og::PathGeometric){
-	return hoge;
-}
-*/
-
-bool JointStateSampler::planWithSimpleSetup(RTC::JointTrajectory_out  traj)
+bool JointStateSampler::planWithSimpleSetup(const RTC::JointPose& startPos, const RTC::JointPose& goalPos, RTC::JointTrajectory_out  traj)
 {
 	// Construct the state space where we are planning
-	ob::StateSpacePtr space(new ob::RealVectorStateSpace(jointNum));
+	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum));
 
-	ob::RealVectorBounds bounds(jointNum);
-	for (int i = 0; i < jointNum; ++i){
+	ob::RealVectorBounds bounds(m_jointNum);
+	for (int i = 0; i < m_jointNum; ++i){
 		bounds.setLow(i, -M_PI);
 		bounds.setHigh(i, M_PI);
 	}
@@ -108,13 +89,15 @@ bool JointStateSampler::planWithSimpleSetup(RTC::JointTrajectory_out  traj)
 	ss.setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
 
     //set start and goal
+	assert(startPos.length()==goalPos.length());
+
 	ob::ScopedState<ob::RealVectorStateSpace> start(space);
-	for (int i = 0; i < jointNum; ++i){
-		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = Start[i];
+	for (int i = 0; i < m_jointNum; ++i){
+		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = startPos[i];
 	}
 	ob::ScopedState<ob::RealVectorStateSpace> goal(space);
-	for (int i = 0; i < jointNum; ++i){
-		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = Goal[i];
+	for (int i = 0; i < m_jointNum; ++i){
+		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = goalPos[i];
 	}
 	ss.setStartAndGoalStates(start, goal);
 
