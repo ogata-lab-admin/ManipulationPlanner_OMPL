@@ -26,7 +26,7 @@ class RTC_TrajectoryPlannerSVC_impl
 
   //std::string config = "../plot/test_arm1.dat";
   int method = 1;
-  JointStateSampler* jSampler;
+  Planning* planner;
 
  public:
   /*!
@@ -38,7 +38,7 @@ class RTC_TrajectoryPlannerSVC_impl
    */
    virtual ~RTC_TrajectoryPlannerSVC_impl();
 
-   void createSampler(){jSampler = new JointStateSampler();}
+   void instantiatePlanner(){planner = new Planning();}
 
    // attributes and operations
    RTC::RETURN_VALUE planTrajectory(const RTC::JointPose& start, const RTC::JointPose& goal, RTC::JointTrajectory_out trajectory);

@@ -25,17 +25,17 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
  * Methods corresponding to IDL attributes and operations
  */
 RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::JointPose& start, const RTC::JointPose& goal, RTC::JointTrajectory_out trajectory){
-	createSampler();
+  instantiatePlanner();
 
-  jSampler->setPlanningMethod(method);
+  planner->setPlanningMethod(method);
   //not passed arguments(start, goal, trajectory) yet
-  jSampler->setStartAndGoal(start, goal);
-  if(jSampler->planWithSimpleSetup(trajectory)){
-	  delete jSampler;
+  planner->setStartAndGoal(start, goal);
+  if(planner->planWithSimpleSetup(trajectory)){
+	  delete planner;
 	  return RTC::RETVAL_OK;
   }
 
-  delete jSampler;
+  delete planner;
   return RTC::RETVAL_UNKNOWN_ERROR;
 }
 
