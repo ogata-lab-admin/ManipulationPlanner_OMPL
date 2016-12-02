@@ -5,6 +5,7 @@
 #include <omplapp/apps/AppBase.h>
 #include <omplapp/apps/SE3MultiRigidBodyPlanning.h>
 //#include <omplapp/geometry/detail/FCLStateValidityChecker.h>
+#include "TrajectoryPlannerSkel.h"
 
 #include <iostream>
 #include "p4-arm-helper.h"
@@ -18,7 +19,7 @@ public:
 	ArmMeshCollisionChecker();
 	~ArmMeshCollisionChecker();
     bool isNotCollided(std::vector<TVector> axesPos);
-	void setMeshData(std::vector<std::string> robotsMesh, std::string envMesh);
+	void setMeshData(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh);
 
 private:
 	int m_jointNum = 6;

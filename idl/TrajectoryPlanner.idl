@@ -5,7 +5,7 @@
 #include "ExtendedDataTypes.idl"
 #include "InterfaceDataTypes.idl"
 
-module RTC {
+module Manipulation {
 
   enum RETURN_VALUE {
     RETVAL_OK,
@@ -17,14 +17,16 @@ module RTC {
     RETVAL_UNKNOWN_ERROR
   };
 
-  typedef sequence<Point3D> Mesh;
+  struct Node;
+  typedef sequence<RTC::Point3D> Mesh;
+  typedef sequence<Node> NodeList;
 
   struct Node{
     string name;
     Mesh myMesh;
-    Vector3D translation;
-    Vector3D rotation;
-    //Node child; //Cannot create an instance of struct 'Node' inside its own definition
+    RTC::Vector3D translation;
+    RTC::Vector3D rotation;
+    NodeList children;
   };
 
   typedef sequence<Node> MultiMesh;

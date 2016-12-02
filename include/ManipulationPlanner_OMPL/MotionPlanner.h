@@ -32,9 +32,9 @@ class JointStateSampler{
 
     void setPlanningMethod(int m){selector = m;}
     void setArm();
-    void setStartAndGoal();
+    void setMesh(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh);
 
-    bool planWithSimpleSetup(const RTC::JointPose& startPos, const RTC::JointPose& goalPos, RTC::JointTrajectory_out traj);
+    bool planWithSimpleSetup(const Manipulation::JointPose& startPos, const Manipulation::JointPose& goalPos, Manipulation::JointTrajectory_out traj);
 
   protected:
     bool isStateValid(const ob::State *state);

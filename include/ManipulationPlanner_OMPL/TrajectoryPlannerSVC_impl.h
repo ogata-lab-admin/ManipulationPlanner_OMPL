@@ -13,10 +13,10 @@
  
 /*!
  * @class TrajectoryPlannerSVC_impl
- * Example class implementing IDL interface RTC::TrajectoryPlanner
+ * Example class implementing IDL interface Manipulation::TrajectoryPlanner
  */
 class RTC_TrajectoryPlannerSVC_impl
- : public virtual POA_RTC::TrajectoryPlanner,
+ : public virtual POA_Manipulation::TrajectoryPlanner,
    public virtual PortableServer::RefCountServantBase
 {
  private:
@@ -39,9 +39,11 @@ class RTC_TrajectoryPlannerSVC_impl
 
    void createSampler(){jSampler = new JointStateSampler();}
 
-   RTC::RETURN_VALUE planTrajectory(const RTC::JointPose& start, const RTC::JointPose& goal, RTC::JointTrajectory_out trajectory);
+   Manipulation::RETURN_VALUE planTrajectory(const Manipulation::JointPose& start, const Manipulation::JointPose& goal, Manipulation::JointTrajectory_out trajectory);
 
    void passPlanningMethod(int m){method=m;}
+   void setMesh(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh);
+
 
 };
 

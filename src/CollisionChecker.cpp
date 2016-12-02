@@ -7,7 +7,9 @@ ArmMeshCollisionChecker::~ArmMeshCollisionChecker(){
 	delete m_S3MultiRBodyPlanner;
 }
 
-void ArmMeshCollisionChecker::setMeshData(std::vector<std::string> robotsMesh, std::string envMesh){
+void ArmMeshCollisionChecker::setMeshData(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh){
+	std::cout << "not implemented" << std::endl;
+	/*
 	m_jointNum = robotsMesh.size();
     m_S3MultiRBodyPlanner = new oa::SE3MultiRigidBodyPlanning(m_jointNum);
 
@@ -19,9 +21,12 @@ void ArmMeshCollisionChecker::setMeshData(std::vector<std::string> robotsMesh, s
     		m_S3MultiRBodyPlanner->addRobotMesh(robotsMesh[i].c_str());
     		}
     }
+    */
 }
 
 void ArmMeshCollisionChecker::debug_setRobotMesh(){
+    m_S3MultiRBodyPlanner = new oa::SE3MultiRigidBodyPlanning(6);
+
 	std::vector<std::string> robot_fname;
 	std::string env_fname;
 	robot_fname[0] = "/home/ogata/Models/orochi_dae/J1.dae";

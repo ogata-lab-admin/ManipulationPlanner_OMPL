@@ -25,6 +25,11 @@ void JointStateSampler::setArm(){
 	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
 }
 
+void JointStateSampler::setMesh(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh){
+	m_armMeshCC.setMeshData(robotsMesh,envMesh);
+}
+
+
 bool JointStateSampler::isStateValid(const ob::State *state)
 {
     //casting: state=>state_vec=>angles
@@ -70,7 +75,7 @@ void JointStateSampler::ForwardKinematics(const std::vector<TLink> &linkes,
 	}
 }
 
-bool JointStateSampler::planWithSimpleSetup(const RTC::JointPose& startPos, const RTC::JointPose& goalPos, RTC::JointTrajectory_out  traj)
+bool JointStateSampler::planWithSimpleSetup(const Manipulation::JointPose& startPos, const Manipulation::JointPose& goalPos, Manipulation::JointTrajectory_out  traj)
 {
 	// Construct the state space where we are planning
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_arm.size()));

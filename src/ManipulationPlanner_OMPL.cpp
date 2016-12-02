@@ -114,8 +114,15 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onShutdown(RTC::UniqueId ec_id)
 
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
 {
+	Manipulation::MultiMesh robots = new Manipulation::MultiMesh();
+	Manipulation::Node env = new Manipulation::Node();
+
+  m_meshServer->getRobotMesh(robots);
+  m_meshServer->getEnvMesh(env);
+
   //send config param to m_trajectoryPlanner
   m_trajectoryPlanner.passPlanningMethod(m_PlanningMethod);
+  m_trajectoryPlanner.setMesh(robots,env);
   return RTC::RTC_OK;
 }
 

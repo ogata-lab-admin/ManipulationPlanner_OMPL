@@ -272,7 +272,7 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="consumer_declare">
   /*!
    */
-  RTC::CorbaConsumer<RTC::MeshServer> m_meshServer;
+  RTC::CorbaConsumer<Manipulation::MeshServer> m_meshServer;
   
   // </rtc-template>
 
