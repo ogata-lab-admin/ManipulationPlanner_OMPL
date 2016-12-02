@@ -90,11 +90,11 @@ void Planning::initFromFile(std::string fileName)
     input >> xMin[i] >> xMax[i] >> yMin[i] >> yMax[i] >> zMin[i] >> zMax[i];
   }
 
-  Start = new double[num];
-  Goal = new double[num];
+  //Start = new double[num];
+  //Goal = new double[num];
 
-  input >> Start[0] >> Start[1] >> Start[2] >> Start[3]>> Start[4]>> Start[5]
-        >> Goal[0] >> Goal[1] >> Goal[2] >> Goal[3]>> Goal[4]>> Goal[5];
+  //input >> Start[0] >> Start[1] >> Start[2] >> Start[3]>> Start[4]>> Start[5]
+  //      >> Goal[0] >> Goal[1] >> Goal[2] >> Goal[3]>> Goal[4]>> Goal[5];
 
   input.close();
 
@@ -104,7 +104,7 @@ void Planning::initFromFile(std::string fileName)
   for (int i = 0; i < numObstacles; ++i){
     printf("             障害物%d: x[%5.2lf, %5.2lf] y[%5.2lf, %5.2lf] z[%5.2lf, %5.2lf]\n", i+1, xMin[i], xMax[i], yMin[i], yMax[i], zMin[i], zMax[i]);
   }
-
+/*
   printf("\nスタートとゴール    :Start[");
   for(int i=0;i<num;i++){
 	  printf("%5.2lf, ", Start[i]);
@@ -114,6 +114,7 @@ void Planning::initFromFile(std::string fileName)
 	  printf("%5.2lf, ", Goal[i]);
   }
   printf("]\n");
+*/
 }
 
 
@@ -370,7 +371,7 @@ void Planning::printEdge(std::ostream &os, const ob::StateSpacePtr &space, const
 }
 
 
-void Planning::planWithSimpleSetup()
+void Planning::planWithSimpleSetup(const RTC::JointPose& Start, const RTC::JointPose& Goal, RTC::JointTrajectory_out trajectory)
 {
   // Construct the state space where we are planning
   ob::StateSpacePtr space(new ob::RealVectorStateSpace(num));
@@ -460,12 +461,19 @@ void Planning::planWithSimpleSetup()
       cout << "----------------" << endl;
       cout << "Found solution:" << endl;
       // Print the solution path to screen
-      ss.getSolutionPath().print(cout);
+     // ss.getSolutionPath().print(cout);
 
       // Print the solution path to a file
       std::ofstream ofs("../plot/path.dat");
       ss.getSolutionPath().printAsMatrix(ofs);
       OpenGnuplot("../plot/frame_all.dat", ss.getSolutionPath());
+
+      for(int i=0; i<ss.getSolutionPath().length() ;i++){
+    	  for(int j=0; j<num; j++){
+    		  trajectory[i][j] =ss.getSolutionPath().getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
+    		  std::cout << trajectory[i][j];
+    	  }std::cout <<std::endl;
+      }
 
       // Get the planner data to visualize the vertices and the edges
       ob::PlannerData pdat(ss.getSpaceInformation());
@@ -489,6 +497,7 @@ void Planning::planWithSimpleSetup()
           printEdge(ofs_e, ss.getStateSpace(), pdat.getVertex(edge_list[i2]));
           ofs_e<<endl;
           ofs_e<<endl<<endl;
+
         }
       }
       break;

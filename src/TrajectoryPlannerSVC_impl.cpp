@@ -29,7 +29,7 @@ RTC::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const RTC::Joint
 {
   planner->setPlanningMethod(method);
   //not passed arguments(start, goal, trajectory) yet
-  planner->planWithSimpleSetup();
+  planner->planWithSimpleSetup(start, goal, trajectory);
   return RTC::RETVAL_OK;
 }
 

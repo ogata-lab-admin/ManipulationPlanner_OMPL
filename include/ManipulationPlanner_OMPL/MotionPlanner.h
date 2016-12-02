@@ -23,6 +23,8 @@
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
 
+#include "TrajectoryPlannerSkel.h"
+
 template <typename T>
 inline T Sq(const T &x)
 {
@@ -84,7 +86,7 @@ class Planning{
     // TVector cross_vector(const TVector &vl, const TVector &vr);
     // double Distance_DotAndLine(const TVector &P, const TVector &A, const TVector &B);
     void printDistance();
-    void planWithSimpleSetup();
+    void planWithSimpleSetup(const RTC::JointPose& start, const RTC::JointPose& goal, RTC::JointTrajectory_out trajectory);
 
     void PrintSolution(const char *filename, const og::PathGeometric &path, int skip = 1);
 
@@ -116,10 +118,10 @@ class Planning{
     int numObstacles;
 
     /// Start position in space
-    double* Start;
+    //double* Start;
 
     /// Goal position in space
-    double* Goal;
+    //double* Goal;
 
     /// Boundaries of the space
     double xLeft;
