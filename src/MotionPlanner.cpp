@@ -4,18 +4,18 @@
 using namespace std;
 
 // コンストラクタ
-Planning::Planning()
+JointStateSampler::JointStateSampler()
 {
 	SetArm();
 	armCol = new ArmMeshCollisionChecker(jointNum);
 	armCol->debug_setRobotMesh();
 }
 
-Planning::~Planning(){
+JointStateSampler::~JointStateSampler(){
 	delete armCol;
 }
 
-void Planning::SetArm(){
+void JointStateSampler::SetArm(){
 	ArmBase = V3(-100.0, 445.0, 0.0);
 	//                     r,p,y
 	Arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
@@ -26,7 +26,7 @@ void Planning::SetArm(){
 	Arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
 }
 
-void Planning::setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose& goal){
+void JointStateSampler::setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose& goal){
 	assert(start.length()==goal.length());
 	for(unsigned int i=0; i < start.length(); i++){
 		Start[i] =start[i];
@@ -38,7 +38,7 @@ void Planning::setStartAndGoal(const RTC::JointPose& start, const RTC::JointPose
 	*/
 }
 
-bool Planning::isStateValid(const ob::State *state)
+bool JointStateSampler::isStateValid(const ob::State *state)
 {
     //casting: state=>state_vec=>angles
     const ob::RealVectorStateSpace::StateType *state_vec= state->as<ob::RealVectorStateSpace::StateType>();
@@ -64,7 +64,7 @@ The result is stored into ``result'' that contains
 the base position and every position of the end-points.
 
 i.e. result.size()==linkes.size()+1 */
-void Planning::ForwardKinematics(const std::vector<TLink> &linkes,
+void JointStateSampler::ForwardKinematics(const std::vector<TLink> &linkes,
                                  const std::vector<double> &angles, const TVector &base,
                                  std::vector<TVector> &result)
 {
@@ -84,12 +84,12 @@ void Planning::ForwardKinematics(const std::vector<TLink> &linkes,
 }
 
 /*
-RTC::JointSpaceTrajectory Planning::PathGeo2JSTraje(og::PathGeometric){
+RTC::JointSpaceTrajectory JointStateSampler::PathGeo2JSTraje(og::PathGeometric){
 	return hoge;
 }
 */
 
-bool Planning::planWithSimpleSetup(RTC::JointTrajectory_out  traj)
+bool JointStateSampler::planWithSimpleSetup(RTC::JointTrajectory_out  traj)
 {
 	// Construct the state space where we are planning
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(jointNum));
@@ -105,7 +105,7 @@ bool Planning::planWithSimpleSetup(RTC::JointTrajectory_out  traj)
 	og::SimpleSetup ss(space);
 
 	// Setup the StateValidityChecker
-	ss.setStateValidityChecker(boost::bind(&Planning::isStateValid, this, _1));
+	ss.setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
 
     //set start and goal
 	ob::ScopedState<ob::RealVectorStateSpace> start(space);
