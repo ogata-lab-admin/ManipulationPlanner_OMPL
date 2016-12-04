@@ -117,8 +117,9 @@ The ports provided by the component are described below:
 =============== =========== ============================== =======
 Name            Type        Data type                      Purpose
 =============== =========== ============================== =======
-TrajectoryPlanner ServicePort RTC::TrajectoryPlanner         
-MeshServer      ServicePort RTC::MeshServer                
+TrajectoryPlanner ServicePort Manipulation::TrajectoryPlanner 
+MeshServer      ServicePort Manipulation::MeshServer       
+CollisionDetector ServicePort OpenHRP::CollisionDetector     
 =============== =========== ============================== =======
 
 Examples

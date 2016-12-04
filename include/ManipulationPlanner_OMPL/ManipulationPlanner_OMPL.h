@@ -22,6 +22,7 @@
 
 // Service Consumer stub headers
 // <rtc-template block="consumer_stub_h">
+#include "CollisionDetectorStub.h"
 
 // </rtc-template>
 
@@ -257,6 +258,9 @@ class ManipulationPlanner_OMPL
   /*!
    */
   RTC::CorbaPort m_MeshServerPort;
+  /*!
+   */
+  RTC::CorbaPort m_CollisionDetectorPort;
   
   // </rtc-template>
 
@@ -273,6 +277,9 @@ class ManipulationPlanner_OMPL
   /*!
    */
   RTC::CorbaConsumer<Manipulation::MeshServer> m_meshServer;
+  /*!
+   */
+  RTC::CorbaConsumer<OpenHRP::CollisionDetector> m_collisionDetector;
   
   // </rtc-template>
 

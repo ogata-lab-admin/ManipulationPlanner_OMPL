@@ -90,7 +90,7 @@ Lang Type:
 	Interface:   
 		[Service Provider Interfaces]
 		Name:          TrajectoryPlanner
-		Type:          RTC::TrajectoryPlanner
+		Type:          Manipulation::TrajectoryPlanner
 		Description:   
 		Argument:      
 		Return Value:  
@@ -102,7 +102,19 @@ Lang Type:
 	Interface:   
 		[Service Consumer Interfaces]
 		Name:          MeshServer
-		Type:          RTC::MeshServer
+		Type:          Manipulation::MeshServer
+		Description:   
+		Argument:      
+		Return Value:  
+		Exception:     
+		PreCondition:  
+		PostCondition: 
+	PortName:    CollisionDetector
+	Description: 
+	Interface:   
+		[Service Consumer Interfaces]
+		Name:          CollisionDetector
+		Type:          OpenHRP::CollisionDetector
 		Description:   
 		Argument:      
 		Return Value:  

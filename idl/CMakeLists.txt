@@ -1,4 +1,4 @@
-set(idls ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryPlanner.idl ${CMAKE_CURRENT_SOURCE_DIR}/BasicDataType.idl ${CMAKE_CURRENT_SOURCE_DIR}/ExtendedDataTypes.idl ${CMAKE_CURRENT_SOURCE_DIR}/InterfaceDataTypes.idl )
+set(idls ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryPlanner.idl ${CMAKE_CURRENT_SOURCE_DIR}/CollisionDetector.idl ${CMAKE_CURRENT_SOURCE_DIR}/ModelLoader.idl ${CMAKE_CURRENT_SOURCE_DIR}/OpenHRPCommon.idl ${CMAKE_CURRENT_SOURCE_DIR}/World.idl ${CMAKE_CURRENT_SOURCE_DIR}/BasicDataType.idl ${CMAKE_CURRENT_SOURCE_DIR}/ExtendedDataTypes.idl ${CMAKE_CURRENT_SOURCE_DIR}/InterfaceDataTypes.idl )
 
 install(FILES ${idls} DESTINATION ${INC_INSTALL_DIR}/idl
     COMPONENT idl)

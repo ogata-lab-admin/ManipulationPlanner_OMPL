@@ -47,7 +47,8 @@ ManipulationPlanner_OMPL::ManipulationPlanner_OMPL(RTC::Manager* manager)
     // <rtc-template block="initializer">
   : RTC::DataFlowComponentBase(manager),
     m_TrajectoryPlannerPort("TrajectoryPlanner"),
-    m_MeshServerPort("MeshServer")
+    m_MeshServerPort("MeshServer"),
+    m_CollisionDetectorPort("CollisionDetector")
 
     // </rtc-template>
 {
@@ -71,14 +72,16 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   // Set OutPort buffer
   
   // Set service provider to Ports
-  m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "RTC::TrajectoryPlanner", m_trajectoryPlanner);
+  m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "Manipulation::TrajectoryPlanner", m_trajectoryPlanner);
   
   // Set service consumers to Ports
-  m_MeshServerPort.registerConsumer("MeshServer", "RTC::MeshServer", m_meshServer);
+  m_MeshServerPort.registerConsumer("MeshServer", "Manipulation::MeshServer", m_meshServer);
+  m_CollisionDetectorPort.registerConsumer("CollisionDetector", "OpenHRP::CollisionDetector", m_collisionDetector);
   
   // Set CORBA Service Ports
   addPort(m_TrajectoryPlannerPort);
   addPort(m_MeshServerPort);
+  addPort(m_CollisionDetectorPort);
   
   // </rtc-template>
 
