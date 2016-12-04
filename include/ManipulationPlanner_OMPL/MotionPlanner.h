@@ -20,7 +20,7 @@
 #include <fstream>
 #include <ostream>
 
-#include "CollisionChecker.h"
+//#include "CollisionChecker.h"
 #include "TrajectoryPlannerSkel.h"
 #include "p4-arm-helper.h"
 #include <rtm/DataFlowComponentBase.h>
@@ -46,7 +46,7 @@ class JointStateSampler{
                            const std::vector<double> &angles, const TVector &base,
                            std::vector<TVector> &result);
 
-    ArmMeshCollisionChecker* m_armMeshCC;
+    //ArmMeshCollisionChecker* m_armMeshCC;
 
     RTC::DataFlowComponentBase* m_rtcomp;
 

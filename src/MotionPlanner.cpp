@@ -5,12 +5,12 @@ using namespace std;
 
 JointStateSampler::JointStateSampler()
 {
-	m_armMeshCC = new ArmMeshCollisionChecker();
-	m_armMeshCC->debug_setRobotMesh();
+	//m_armMeshCC = new ArmMeshCollisionChecker();
+	//m_armMeshCC->debug_setRobotMesh();
 }
 
 JointStateSampler::~JointStateSampler(){
-	delete m_armMeshCC;
+	//delete m_armMeshCC;
 }
 
 //TODO: Generate these params automatically from robot mesh data
@@ -26,7 +26,9 @@ void JointStateSampler::setArm(){
 }
 
 void JointStateSampler::setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
-	m_armMeshCC->setMeshData(robotsMesh,envMesh);
+	//m_armMeshCC->setMeshData(robotsMesh,envMesh);
+	//for(int i=0;i<21;i++){
+	m_rtcomp->m_collisionDetector->addCollisionPair();
 }
 
 
@@ -45,7 +47,8 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 	ForwardKinematics(m_arm, angles, m_armBase, axesPos);
 
 	//call mesh collision check
-	return m_armMeshCC->isNotCollided(axesPos);
+	//return m_armMeshCC->isNotCollided(axesPos);
+	return queryIntersectionForDefinedPairs(true,CharacterPositionSequence positions,LinkPairSequence collidedPairs)
 
 }
 
