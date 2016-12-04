@@ -44,6 +44,7 @@ class RTC_TrajectoryPlannerSVC_impl
    void passPlanningMethod(int m){method=m;}
    void setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh);
 
+   void setComp(RTC::DataFlowComponentBase* ptr){jSampler->setComp(ptr);}
 
 };
 

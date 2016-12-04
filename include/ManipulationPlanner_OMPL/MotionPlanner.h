@@ -23,6 +23,8 @@
 #include "CollisionChecker.h"
 #include "TrajectoryPlannerSkel.h"
 #include "p4-arm-helper.h"
+#include <rtm/DataFlowComponentBase.h>
+
 namespace og = ompl::geometric;
 
 class JointStateSampler{
@@ -36,6 +38,8 @@ class JointStateSampler{
 
     bool planWithSimpleSetup(const Manipulation::JointPose& startPos, const Manipulation::JointPose& goalPos, Manipulation::JointTrajectory_out traj);
 
+    void setComp(RTC::DataFlowComponentBase* ptr){m_rtcomp = ptr;}
+
   protected:
     bool isStateValid(const ob::State *state);
     void ForwardKinematics(const std::vector<TLink> &linkes,
@@ -43,6 +47,8 @@ class JointStateSampler{
                            std::vector<TVector> &result);
 
     ArmMeshCollisionChecker* m_armMeshCC;
+
+    RTC::DataFlowComponentBase* m_rtcomp;
 
     int m_planningMethod = 1;
     std::vector<TLink> m_arm;  // Manipulator

@@ -126,6 +126,8 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
   //send config param to m_trajectoryPlanner
   m_trajectoryPlanner.passPlanningMethod(m_PlanningMethod);
   m_trajectoryPlanner.setMesh(robots,env);
+
+  m_trajectoryPlanner.setComp(this);
   return RTC::RTC_OK;
 }
 

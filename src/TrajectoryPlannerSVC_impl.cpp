@@ -6,6 +6,7 @@
  */
 
 #include "TrajectoryPlannerSVC_impl.h"
+#include <rtm/DataFlowComponentBase.h>
 
 /*
  * Example implementational code for IDL interface Manipulation::TrajectoryPlanner
