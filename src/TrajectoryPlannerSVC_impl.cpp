@@ -21,7 +21,7 @@ RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
 	  delete jSampler;
 }
 
-void RTC_TrajectoryPlannerSVC_impl::setMesh(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh){
+void RTC_TrajectoryPlannerSVC_impl::setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
 	jSampler->setMesh(robotsMesh,envMesh);
 }
 /*

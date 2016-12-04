@@ -7,7 +7,7 @@ ArmMeshCollisionChecker::~ArmMeshCollisionChecker(){
 	delete m_S3MultiRBodyPlanner;
 }
 
-void ArmMeshCollisionChecker::setMeshData(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh){
+void ArmMeshCollisionChecker::setMeshData(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
 	std::cout << "not implemented" << std::endl;
 	/*
 	m_jointNum = robotsMesh.size();

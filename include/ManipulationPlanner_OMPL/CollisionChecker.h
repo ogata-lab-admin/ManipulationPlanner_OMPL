@@ -19,7 +19,7 @@ public:
 	ArmMeshCollisionChecker();
 	~ArmMeshCollisionChecker();
     bool isNotCollided(std::vector<TVector> axesPos);
-	void setMeshData(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh);
+	void setMeshData(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh);
 
 private:
 	int m_jointNum = 6;

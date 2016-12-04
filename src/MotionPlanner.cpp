@@ -25,8 +25,8 @@ void JointStateSampler::setArm(){
 	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
 }
 
-void JointStateSampler::setMesh(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh){
-	m_armMeshCC.setMeshData(robotsMesh,envMesh);
+void JointStateSampler::setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
+	m_armMeshCC->setMeshData(robotsMesh,envMesh);
 }
 
 

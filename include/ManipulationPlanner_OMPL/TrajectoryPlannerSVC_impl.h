@@ -42,7 +42,7 @@ class RTC_TrajectoryPlannerSVC_impl
    Manipulation::RETURN_VALUE planTrajectory(const Manipulation::JointPose& start, const Manipulation::JointPose& goal, Manipulation::JointTrajectory_out trajectory);
 
    void passPlanningMethod(int m){method=m;}
-   void setMesh(Manipulation::MultiMesh robotsMesh, Manipulation::Node envMesh);
+   void setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh);
 
 
 };
