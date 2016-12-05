@@ -26,6 +26,8 @@ class RTC_TrajectoryPlannerSVC_impl
 
   int method = 1;
   JointStateSampler* jSampler;
+  Manipulation::MultiMesh* m_robotsMesh;
+  Manipulation::Node* m_envMesh;
 
  public:
   /*!
