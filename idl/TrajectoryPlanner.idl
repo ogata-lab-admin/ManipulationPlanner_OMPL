@@ -17,13 +17,46 @@ module Manipulation {
     RETVAL_UNKNOWN_ERROR
   };
 
+  typedef string RobotIdentifier;
+
+  typedef sequence<double> JointInfo;
+
+  struct RobotInfo{
+	RobotIdentifier RobotID;
+    sequence<JointInfo> JointInfoSeq;
+  }
+
+  typedef sequence<RTC::Point3D> MeshInfo;
+
+  struct CollisionInfo{
+	  /*
+	  */
+  }
+  struct ManipulationPlan{
+	  /*
+	  */
+  }
+
+  interface CollisionDetectionService{
+	RETURN_VALUE isCollide(in ManipulationPlan manipInfo, in RobotInfo jointSeq, out CollisionInfo collisionInfo);
+  }
+
+  interface ManipulationPlannerService{
+	RETURN_VALUE planManipulation(in RobotIdentifier robotID, in RTC::Pose3D goalPose, out ManipulatorPlan manipPlan);
+  }
+
+  interface ModelServerService{
+	RETURN_VALUE getModelInfo(in RobotIdentifier robotID, out RobotInfo robotInfo);
+	RETURN_VALUE getMeshInfo(in RobotIdentifier robotID, out MeshInfo meshInfo);
+  }
+
+  
   struct Node;
-  typedef sequence<RTC::Point3D> Mesh;
   typedef sequence<Node> NodeList;
 
   struct Node{
     string name;
-    Mesh myMesh;
+    MeshInfo Mesh;
     RTC::Vector3D translation;
     RTC::Vector3D rotation;
     NodeList children;
@@ -31,8 +64,6 @@ module Manipulation {
 
   typedef sequence<Node> MultiMesh;
 
-  typedef sequence<double> JointPose;
-  typedef sequence<JointPose> JointTrajectory;
 
   interface TrajectoryPlanner {
     RETURN_VALUE planTrajectory(in JointPose start, in JointPose goal, out JointTrajectory trajectory);
@@ -42,6 +73,7 @@ module Manipulation {
     RETURN_VALUE getRobotMesh(out MultiMesh robots);
     RETURN_VALUE getEnvMesh(out Node env);
   };
+	  
   
 };
 
