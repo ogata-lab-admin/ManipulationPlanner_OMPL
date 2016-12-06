@@ -46,9 +46,9 @@ static const char* manipulationplanner_ompl_spec[] =
 ManipulationPlanner_OMPL::ManipulationPlanner_OMPL(RTC::Manager* manager)
     // <rtc-template block="initializer">
   : RTC::DataFlowComponentBase(manager),
-    m_TrajectoryPlannerPort("TrajectoryPlanner"),
-    m_MeshServerPort("MeshServer"),
-    m_CollisionDetectorPort("CollisionDetector")
+    m_ManipulationPlannerServicePort("ManipulationPlannerService"),
+    m_ModelServerServicePort("ModelServerService"),
+    m_CollisionDetectionServicePort("CollisionDetectionService")
 
     // </rtc-template>
 {
@@ -72,16 +72,16 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   // Set OutPort buffer
   
   // Set service provider to Ports
-  m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "Manipulation::TrajectoryPlanner", m_trajectoryPlanner);
+  m_ManipulationPlannerServicePort.registerProvider("ManipulationPlannerService", "Manipulation::ManipulationPlannerService", m_manipulationPlanner);
   
   // Set service consumers to Ports
-  m_MeshServerPort.registerConsumer("MeshServer", "Manipulation::MeshServer", m_meshServer);
-  m_CollisionDetectorPort.registerConsumer("CollisionDetector", "OpenHRP::CollisionDetector", m_collisionDetector);
+  m_ModelServerServicePort.registerConsumer("ModelServerService", "Manipulation::ModelServerService", m_modelServer);
+  m_CollisionDetectionServicePort.registerConsumer("CollisionDetectionService", "Manipulation::CollisionDetectionService", m_collisionDetection);
   
   // Set CORBA Service Ports
-  addPort(m_TrajectoryPlannerPort);
-  addPort(m_MeshServerPort);
-  addPort(m_CollisionDetectorPort);
+  addPort(m_ManipulationPlannerServicePort);
+  addPort(m_ModelServerServicePort);
+  addPort(m_CollisionDetectionServicePort);
   
   // </rtc-template>
 

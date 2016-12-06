@@ -9,34 +9,41 @@
 #include <rtm/DataFlowComponentBase.h>
 
 /*
- * Example implementational code for IDL interface Manipulation::TrajectoryPlanner
+ * Example implementational code for IDL interface Manipulation::ManipulationPlannerService
  */
-RTC_TrajectoryPlannerSVC_impl::RTC_TrajectoryPlannerSVC_impl()
+Manipulation_ManipulationPlannerServiceSVC_impl::Manipulation_ManipulationPlannerServiceSVC_impl()
 {
-	  createSampler();
+  // Please add extra constructor code here.
 }
 
 
-RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
+Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlannerServiceSVC_impl()
 {
-	  delete jSampler;
+  // Please add extra destructor code here.
 }
 
-void RTC_TrajectoryPlannerSVC_impl::setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
-	jSampler->setMesh(robotsMesh,envMesh);
-}
+
 /*
  * Methods corresponding to IDL attributes and operations
  */
-Manipulation::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const Manipulation::JointPose& start, const Manipulation::JointPose& goal, Manipulation::JointTrajectory_out trajectory)
+void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, RTC::Pose3D goalPose, Manipulation::ManipulationPlan_out manipPlan)
 {
-  jSampler->setPlanningMethod(method);
-  jSampler->setArm();
+	  createSampler();
+	  jSampler->setPlanningMethod(method);
+	  jSampler->setArm();
 
-  if(jSampler->planWithSimpleSetup(start, goal, trajectory)){
-	  return Manipulation::RETVAL_OK;
-  }
-  return Manipulation::RETVAL_NOT_FOUND;
+	  if(jSampler->planWithSimpleSetup(start, goal, trajectory)){
+		  delete jSampler;
+		  return Manipulation::RETVAL_OK;
+	  }
+	  delete jSampler;
+	  return Manipulation::RETVAL_NOT_FOUND;
+
+}
+
+
+void Manipulation_ManipulationPlannerServiceSVC_impl::setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
+	jSampler->setMesh(robotsMesh,envMesh);
 }
 
 

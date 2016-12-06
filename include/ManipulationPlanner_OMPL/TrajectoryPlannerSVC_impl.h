@@ -10,45 +10,38 @@
 
 #ifndef TRAJECTORYPLANNERSVC_IMPL_H
 #define TRAJECTORYPLANNERSVC_IMPL_H
- 
+
 /*!
- * @class TrajectoryPlannerSVC_impl
- * Example class implementing IDL interface Manipulation::TrajectoryPlanner
+ * @class ManipulationPlannerServiceSVC_impl
+ * Example class implementing IDL interface Manipulation::ManipulationPlannerService
  */
-class RTC_TrajectoryPlannerSVC_impl
- : public virtual POA_Manipulation::TrajectoryPlanner,
+class Manipulation_ManipulationPlannerServiceSVC_impl
+ : public virtual POA_Manipulation::ManipulationPlannerService,
    public virtual PortableServer::RefCountServantBase
 {
  private:
    // Make sure all instances are built on the heap by making the
    // destructor non-public
-   //virtual ~TrajectoryPlannerSVC_impl();
-
-  int method = 1;
-  JointStateSampler* jSampler;
+   //virtual ~ManipulationPlannerServiceSVC_impl();
+	  int method = 1;
+	  JointStateSampler* jSampler;
 
  public:
   /*!
    * @brief standard constructor
    */
-   RTC_TrajectoryPlannerSVC_impl();
+   ManipulationPlannerServiceSVC_impl();
   /*!
    * @brief destructor
    */
-   virtual ~RTC_TrajectoryPlannerSVC_impl();
+   virtual ~Manipulation_ManipulationPlannerServiceSVC_impl();
+
+   // attributes and operations
+   void planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, RTC::Pose3D goalPose, Manipulation::ManipulationPlan_out manipPlan);
 
    void createSampler(){jSampler = new JointStateSampler();}
-
-   Manipulation::RETURN_VALUE planTrajectory(const Manipulation::JointPose& start, const Manipulation::JointPose& goal, Manipulation::JointTrajectory_out trajectory);
-
    void passPlanningMethod(int m){method=m;}
-   void setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh);
-
-   void setComp(RTC::DataFlowComponentBase* ptr){jSampler->setComp(ptr);}
-
 };
-
-
 
 #endif // TRAJECTORYPLANNERSVC_IMPL_H
 

@@ -12,9 +12,10 @@
 #   --module-act-type=PERIODIC --module-max-inst=1 
 #   --config=PlanningMethod:int:(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST) 
 #   --service-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl 
-#   --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl 
-#   --service=TrajectoryPlanner:TrajectoryPlanner:RTC::TrajectoryPlanner 
-#   --consumer=MeshServer:MeshServer:RTC::MeshServer 
+#   --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl 
+#   --service=ManipulationPlannerService:ManipulationPlannerService:Manipulation::ManipulationPlannerService 
+#   --consumer=ModelServerService:ModelServerService:Manipulation::ModelServerService 
+#   --consumer=CollisionDetectionService:CollisionDetectionService:Manipulation::CollisionDetectionService 
 
 
 ======================================================================
@@ -85,36 +86,36 @@ Lang Type:
     Service Port definition
 ======================================================================
 # <rtc-template block="serviceport">
-	PortName:    TrajectoryPlanner
+	PortName:    ManipulationPlannerService
 	Description: 
 	Interface:   
 		[Service Provider Interfaces]
-		Name:          TrajectoryPlanner
-		Type:          Manipulation::TrajectoryPlanner
+		Name:          ManipulationPlannerService
+		Type:          Manipulation::ManipulationPlannerService
 		Description:   
 		Argument:      
 		Return Value:  
 		Exception:     
 		PreCondition:  
 		PostCondition: 
-	PortName:    MeshServer
+	PortName:    ModelServerService
 	Description: 
 	Interface:   
 		[Service Consumer Interfaces]
-		Name:          MeshServer
-		Type:          Manipulation::MeshServer
+		Name:          ModelServerService
+		Type:          Manipulation::ModelServerService
 		Description:   
 		Argument:      
 		Return Value:  
 		Exception:     
 		PreCondition:  
 		PostCondition: 
-	PortName:    CollisionDetector
+	PortName:    CollisionDetectionService
 	Description: 
 	Interface:   
 		[Service Consumer Interfaces]
-		Name:          CollisionDetector
-		Type:          OpenHRP::CollisionDetector
+		Name:          CollisionDetectionService
+		Type:          Manipulation::CollisionDetectionService
 		Description:   
 		Argument:      
 		Return Value:  
