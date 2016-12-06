@@ -1,9 +1,9 @@
 #ifndef TrajectoryPlanner_idl
 #define TrajectoryPlanner_idl
 
-#include "BasicDataType.idl"
-#include "ExtendedDataTypes.idl"
-#include "InterfaceDataTypes.idl"
+#include <BasicDataType.idl>
+#include <ExtendedDataTypes.idl>
+#include <InterfaceDataTypes.idl>
 
 module Manipulation {
 
