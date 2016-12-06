@@ -34,7 +34,6 @@ class JointStateSampler{
 
     void setPlanningMethod(int m){selector = m;}
     void setArm();
-    void setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh);
 
     bool planWithSimpleSetup(const Manipulation::JointPose& startPos, const Manipulation::JointPose& goalPos, Manipulation::JointTrajectory_out traj);
 

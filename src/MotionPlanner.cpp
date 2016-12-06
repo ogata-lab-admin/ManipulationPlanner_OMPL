@@ -13,7 +13,6 @@ JointStateSampler::~JointStateSampler(){
 	//delete m_armMeshCC;
 }
 
-//TODO: Generate these params automatically from robot mesh data
 void JointStateSampler::setArm(){
 	m_armBase = V3(-100.0, 445.0, 0.0);
 	//                     r,p,y
@@ -24,13 +23,6 @@ void JointStateSampler::setArm(){
 	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,105.0)));
 	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
 }
-
-void JointStateSampler::setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
-	//m_armMeshCC->setMeshData(robotsMesh,envMesh);
-	//for(int i=0;i<21;i++){
-	m_rtcomp->m_collisionDetector->addCollisionPair();
-}
-
 
 bool JointStateSampler::isStateValid(const ob::State *state)
 {
