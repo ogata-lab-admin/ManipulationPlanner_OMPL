@@ -267,7 +267,7 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="service_declare">
   /*!
    */
-  ManipulationPlannerServiceSVC_impl m_manipulationPlanner;
+  Manipulation_ManipulationPlannerServiceSVC_impl m_manipulationPlanner;
   
   // </rtc-template>
 

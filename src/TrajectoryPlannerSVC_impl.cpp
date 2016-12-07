@@ -6,7 +6,6 @@
  */
 
 #include "TrajectoryPlannerSVC_impl.h"
-#include <rtm/DataFlowComponentBase.h>
 
 /*
  * Example implementational code for IDL interface Manipulation::ManipulationPlannerService
@@ -22,10 +21,12 @@ Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlann
   // Please add extra destructor code here.
 }
 
+/*
 Manipulation::RobotJointInfo Manipulation_ManipulationPlannerServiceSVC_impl::invKinematics(RTC::Pose3D pose)
 {
 	//;
 }
+*/
 
 /*
  * Methods corresponding to IDL attributes and operations
@@ -38,13 +39,12 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 	  m_rtcPtr->m_modelServer->getModelInfo(robotID, m_robotJointInfo);
 	  m_jointSampler->setAngleLimits(m_robotJointInfo);
 
-	  if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, invKinematics(goalPose), manipPlan)){
-		  delete m_jointSampler;
-		  return Manipulation::RETVAL_OK;
-	  }
+	  //if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, invKinematics(goalPose), manipPlan)){
+		//  delete m_jointSampler;
+		  //return Manipulation::RETVAL_OK;
+	  //}
 	  delete m_jointSampler;
-	  return Manipulation::RETVAL_NOT_FOUND;
-
+	  //return Manipulation::RETVAL_NOT_FOUND;
 }
 
 

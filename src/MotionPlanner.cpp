@@ -5,12 +5,9 @@ using namespace std;
 
 JointStateSampler::JointStateSampler()
 {
-	//m_armMeshCC = new ArmMeshCollisionChecker();
-	//m_armMeshCC->debug_setRobotMesh();
 }
 
 JointStateSampler::~JointStateSampler(){
-	//delete m_armMeshCC;
 }
 
 void JointStateSampler::setAngleLimits(Manipulation::RobotJointInfo joints){

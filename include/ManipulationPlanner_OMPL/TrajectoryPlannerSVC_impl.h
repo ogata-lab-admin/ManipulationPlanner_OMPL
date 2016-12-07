@@ -4,13 +4,17 @@
  * @brief Service implementation header of TrajectoryPlanner.idl
  *
  */
-
+#include "BasicDataTypeSkel.h"
+#include "ExtendedDataTypesSkel.h"
+#include "InterfaceDataTypesSkel.h"
 #include "TrajectoryPlannerSkel.h"
 #include "ManipulationPlanner_OMPL.h"
 #include "MotionPlanner.h"
+//#include <rtm/Manager.h>
 
 #ifndef TRAJECTORYPLANNERSVC_IMPL_H
 #define TRAJECTORYPLANNERSVC_IMPL_H
+
 
 /*!
  * @class ManipulationPlannerServiceSVC_impl
@@ -24,16 +28,16 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
    // Make sure all instances are built on the heap by making the
    // destructor non-public
    //virtual ~ManipulationPlannerServiceSVC_impl();
-	  int m_planningMethod = 1;
-	  JointStateSampler* m_jointSampler;
-	  ManipulationPlanner_OMPL* m_rtcPtr;
-	  Manipulation::RobotJointInfo m_robotJointInfo;
+  int m_planningMethod = 1;
+  JointStateSampler* m_jointSampler;
+  RTC::RtcBase* m_rtcPtr;
+  Manipulation::RobotJointInfo m_robotJointInfo;
 
  public:
   /*!
    * @brief standard constructor
    */
-   ManipulationPlannerServiceSVC_impl();
+   Manipulation_ManipulationPlannerServiceSVC_impl();
   /*!
    * @brief destructor
    */
@@ -43,9 +47,9 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
    void planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, RTC::Pose3D goalPose, Manipulation::ManipulationPlan_out manipPlan);
 
    void setPlanningMethod(int m){m_planningMethod=m;}
-   void setComp(ManipulationPlanner_OMPL* rtc){m_rtcPtr=rtc;}
+   void setComp(RTC::RtcBase* rtc){m_rtcPtr=rtc;}
 
-   Manipulation::RobotJointInfo invKinematics(RTC::Pose3D pose, Manipulation::RobotJointInfo joints);
+   //Manipulation::RobotJointInfo invKinematics(RTC::Pose3D pose, Manipulation::RobotJointInfo joints);
 
 };
 

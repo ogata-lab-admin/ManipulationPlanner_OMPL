@@ -20,10 +20,10 @@
 #include <fstream>
 #include <ostream>
 
-//#include "CollisionChecker.h"
 #include "TrajectoryPlannerSkel.h"
 #include "p4-arm-helper.h"
-#include <rtm/DataFlowComponentBase.h>
+#include "ManipulationPlanner_OMPL.h"
+#include <rtm/Manager.h>
 
 namespace og = ompl::geometric;
 
@@ -42,7 +42,7 @@ class JointStateSampler{
 
     bool planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
 
-    void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
+    void setComp(RTC::RtcBase* rtc){m_rtcomp = rtc;}
 
   protected:
 
@@ -53,7 +53,7 @@ class JointStateSampler{
 
     //ArmMeshCollisionChecker* m_armMeshCC;
 
-    RTC::ManipulationPlanner_OMPL* m_rtcomp;
+    RTC::RtcBase* m_rtcomp;
     int m_jointNum;
     int m_planningMethod = 1;
     std::vector<JointLimit> m_jointLimits;

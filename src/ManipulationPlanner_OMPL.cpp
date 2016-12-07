@@ -93,12 +93,12 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   return RTC::RTC_OK;
 }
 
-
+/*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onFinalize()
 {
 	  return RTC::RTC_OK;
 }
-
+*/
 
 /*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onStartup(RTC::UniqueId ec_id)
@@ -130,10 +130,12 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onDeactivated(RTC::UniqueId ec_id)
 }
 */
 
+/*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onExecute(RTC::UniqueId ec_id)
 {
   return RTC::RTC_OK;
 }
+*/
 
 /*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onAborting(RTC::UniqueId ec_id)
