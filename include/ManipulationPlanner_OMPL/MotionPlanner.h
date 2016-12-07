@@ -35,9 +35,9 @@ class JointStateSampler{
     void setPlanningMethod(int m){selector = m;}
     void setArm();
 
-    bool planWithSimpleSetup(const Manipulation::JointPose& startPos, const Manipulation::JointPose& goalPos, Manipulation::JointTrajectory_out traj);
+    bool planWithSimpleSetup( const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
 
-    void setComp(RTC::DataFlowComponentBase* ptr){m_rtcomp = ptr;}
+    void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
 
   protected:
     bool isStateValid(const ob::State *state);
@@ -47,7 +47,7 @@ class JointStateSampler{
 
     //ArmMeshCollisionChecker* m_armMeshCC;
 
-    RTC::DataFlowComponentBase* m_rtcomp;
+    RTC::ManipulationPlanner_OMPL* m_rtcomp;
 
     int m_planningMethod = 1;
     std::vector<TLink> m_arm;  // Manipulator
