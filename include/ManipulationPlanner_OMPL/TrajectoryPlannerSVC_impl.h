@@ -20,6 +20,7 @@
 
 
 class JointStateSampler;
+class ManipulationPlanner_OMPL;
 
 /*!
  * @class ManipulationPlannerServiceSVC_impl
@@ -35,8 +36,8 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
    //virtual ~ManipulationPlannerServiceSVC_impl();
   int m_planningMethod = 1;
   JointStateSampler* m_jointSampler;
-  //ManipulationPlanner_OMPL* m_rtcPtr;
-  Manipulation::RobotJointInfo m_robotJointInfo;
+  ManipulationPlanner_OMPL* m_rtcPtr;
+  Manipulation::RobotJointInfo* m_robotJointInfo;
 
  public:
   /*!
@@ -52,7 +53,7 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
    void planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const RTC::Pose3D& goalPose, Manipulation::ManipulationPlan_out manipPlan);
 
    void setPlanningMethod(int m){m_planningMethod=m;}
-   //void setComp(ManipulationPlanner_OMPL* rtc){m_rtcPtr=rtc;}
+   void setComp(ManipulationPlanner_OMPL* rtc){m_rtcPtr=rtc;}
 
    //Manipulation::RobotJointInfo invKinematics(RTC::Pose3D pose, Manipulation::RobotJointInfo joints);
 

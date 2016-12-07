@@ -32,6 +32,7 @@ namespace ob = ompl::base;
 
 
 class Manipulation_ManipulationPlannerServiceSVC_impl;
+class ManipulationPlanner_OMPL;
 
 struct JointLimit{
     double max;
@@ -44,17 +45,17 @@ class JointStateSampler{
     ~JointStateSampler();
 
     void setPlanningMethod(int m){selector = m;}
-    void setAngleLimits(Manipulation::RobotJointInfo robotJointInfo);
+    void setAngleLimits(Manipulation::RobotJointInfo_out robotJointInfo);
 
     bool planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
 
-    //void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
+    void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
 
   protected:
 
     bool isStateValid(const ob::State *state);
 
-    //ManipulationPlanner_OMPL* m_rtcomp;
+    ManipulationPlanner_OMPL* m_rtcomp;
     int m_jointNum;
     int m_planningMethod = 1;
     std::vector<JointLimit> m_jointLimits;

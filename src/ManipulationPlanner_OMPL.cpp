@@ -172,7 +172,9 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onRateChanged(RTC::UniqueId ec_id)
 }
 */
 
-
+void ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo){
+	m_modelServer->getModelInfo(robotID, robotJointInfo);
+}
 
 extern "C"
 {

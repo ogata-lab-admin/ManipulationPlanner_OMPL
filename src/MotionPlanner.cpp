@@ -10,11 +10,11 @@ JointStateSampler::JointStateSampler()
 JointStateSampler::~JointStateSampler(){
 }
 
-void JointStateSampler::setAngleLimits(Manipulation::RobotJointInfo joints){
-	m_jointNum = joints.jointInfoSeq.length();
+void JointStateSampler::setAngleLimits(Manipulation::RobotJointInfo_out joints){
+	m_jointNum = joints->jointInfoSeq.length();
 
 	for (size_t  i = 0; i < m_jointNum; i++){
-		JointLimit limit = {joints.jointInfoSeq[i].minAngle, joints.jointInfoSeq[i].maxAngle};
+		JointLimit limit = {joints->jointInfoSeq[i].minAngle, joints->jointInfoSeq[i].maxAngle};
 		m_jointLimits.push_back(limit);
 	}
 	/*
