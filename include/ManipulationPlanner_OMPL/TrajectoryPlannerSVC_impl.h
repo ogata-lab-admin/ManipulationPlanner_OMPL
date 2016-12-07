@@ -34,10 +34,11 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
    // Make sure all instances are built on the heap by making the
    // destructor non-public
    //virtual ~ManipulationPlannerServiceSVC_impl();
-  int m_planningMethod = 1;
-  JointStateSampler* m_jointSampler;
-  ManipulationPlanner_OMPL* m_rtcPtr;
-  Manipulation::RobotJointInfo* m_robotJointInfo;
+
+   int m_planningMethod = 1;
+   JointStateSampler* m_jointSampler;
+   ManipulationPlanner_OMPL* m_rtcPtr;
+   Manipulation::RobotJointInfo* m_robotJointInfo;
 
  public:
   /*!

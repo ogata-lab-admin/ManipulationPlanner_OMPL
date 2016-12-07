@@ -41,11 +41,11 @@ struct JointLimit{
 
 class JointStateSampler{
   public:
-    JointStateSampler();
+    JointStateSampler(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo* joints);
     ~JointStateSampler();
 
     void setPlanningMethod(int m){selector = m;}
-    void setAngleLimits(Manipulation::RobotJointInfo_out robotJointInfo);
+    void setAngleLimits();
 
     bool planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
 
@@ -59,7 +59,9 @@ class JointStateSampler{
     int m_jointNum;
     int m_planningMethod = 1;
     std::vector<JointLimit> m_jointLimits;
-
+    Manipulation::RobotIdentifier m_robotID;
+    Manipulation::RobotJointInfo* m_robotJointInfo;
+    Manipulation::CollisionInfo* m_collision;
 
     int selector;
 

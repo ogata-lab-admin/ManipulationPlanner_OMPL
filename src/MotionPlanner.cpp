@@ -3,18 +3,22 @@
 #include <boost/bind.hpp>
 using namespace std;
 
-JointStateSampler::JointStateSampler()
+JointStateSampler::JointStateSampler(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo* joints)
 {
+	m_robotID = robotID;
+	m_robotJointInfo = joints;
+	setAngleLimits();
+	m_collision = new Manipulation::CollisionInfo();
 }
 
 JointStateSampler::~JointStateSampler(){
 }
 
-void JointStateSampler::setAngleLimits(Manipulation::RobotJointInfo_out joints){
-	m_jointNum = joints->jointInfoSeq.length();
+void JointStateSampler::setAngleLimits(){
+	m_jointNum = m_robotJointInfo->jointInfoSeq.length();
 
 	for (size_t  i = 0; i < m_jointNum; i++){
-		JointLimit limit = {joints->jointInfoSeq[i].minAngle, joints->jointInfoSeq[i].maxAngle};
+		JointLimit limit = {m_robotJointInfo->jointInfoSeq[i].minAngle, m_robotJointInfo->jointInfoSeq[i].maxAngle};
 		m_jointLimits.push_back(limit);
 	}
 	/*
@@ -32,15 +36,15 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 {
     //casting: state=>state_vec=>angles
     const ob::RealVectorStateSpace::StateType *state_vec= state->as<ob::RealVectorStateSpace::StateType>();
-	std::vector<double> angles(m_jointNum);
+	//std::vector<double> angles(m_jointNum);
 
 	for (size_t  i = 0; i < m_jointNum; i++){
-	angles[i] = (*state_vec)[i];
+	//angles[i] = (*state_vec)[i];
+	    m_robotJointInfo->jointInfoSeq[i].jointAngle= (*state_vec)[i];
 	}
 
 //	angles=>Manipulation::RobotJointInfo
-//	return !isCollide();
-	return true;
+	return !m_rtcomp->callIsCollide(m_robotID, *m_robotJointInfo, m_collision);
 
 }
 

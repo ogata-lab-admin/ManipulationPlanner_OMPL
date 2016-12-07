@@ -176,6 +176,10 @@ void ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentif
 	m_modelServer->getModelInfo(robotID, robotJointInfo);
 }
 
+bool ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::RobotJointInfo& jointSeq, Manipulation::CollisionInfo_out collision){
+	return m_collisionDetection->isCollide(manipInfo, jointSeq, collision);
+}
+
 extern "C"
 {
  
