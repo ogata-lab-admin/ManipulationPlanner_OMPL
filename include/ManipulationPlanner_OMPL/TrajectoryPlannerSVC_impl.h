@@ -8,7 +8,7 @@
 #include "ExtendedDataTypesSkel.h"
 #include "InterfaceDataTypesSkel.h"
 #include "TrajectoryPlannerSkel.h"
-//#include "ManipulationPlanner_OMPL.h"
+#include "ManipulationPlanner_OMPL.h"
 #include "MotionPlanner.h"
 #include <rtm/Manager.h>
 
