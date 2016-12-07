@@ -36,7 +36,7 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 
 	  m_jointSampler->setPlanningMethod(m_planningMethod);
 	  m_rtcPtr->m_modelServer->getModelInfo(robotID, m_robotJointInfo);
-	  m_jointSampler->setArm(m_robotJointInfo);
+	  m_jointSampler->setAngleLimits(m_robotJointInfo);
 
 	  if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, invKinematics(goalPose), manipPlan)){
 		  delete m_jointSampler;

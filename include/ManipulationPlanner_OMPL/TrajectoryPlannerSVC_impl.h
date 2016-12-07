@@ -27,7 +27,7 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
 	  int m_planningMethod = 1;
 	  JointStateSampler* m_jointSampler;
 	  ManipulationPlanner_OMPL* m_rtcPtr;
-	  RobotJointInfo m_robotJointInfo;
+	  Manipulation::RobotJointInfo m_robotJointInfo;
 
  public:
   /*!

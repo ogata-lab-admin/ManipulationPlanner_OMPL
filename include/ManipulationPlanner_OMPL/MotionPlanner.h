@@ -27,19 +27,25 @@
 
 namespace og = ompl::geometric;
 
+struct JointLimit{
+    double max;
+    double min;
+};
+
 class JointStateSampler{
   public:
     JointStateSampler();
     ~JointStateSampler();
 
     void setPlanningMethod(int m){selector = m;}
-    void setArm();
+    void setAngleLimits(Manipulation::RobotJointInfo robotJointInfo);
 
-    bool planWithSimpleSetup( const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
+    bool planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
 
     void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
 
   protected:
+
     bool isStateValid(const ob::State *state);
     void ForwardKinematics(const std::vector<TLink> &linkes,
                            const std::vector<double> &angles, const TVector &base,
@@ -48,10 +54,10 @@ class JointStateSampler{
     //ArmMeshCollisionChecker* m_armMeshCC;
 
     RTC::ManipulationPlanner_OMPL* m_rtcomp;
-
+    int m_jointNum;
     int m_planningMethod = 1;
-    std::vector<TLink> m_arm;  // Manipulator
-    TVector m_armBase;  // The base position of Manipulator
+    std::vector<JointLimit> m_jointLimits;
+
 
     int selector;
 
