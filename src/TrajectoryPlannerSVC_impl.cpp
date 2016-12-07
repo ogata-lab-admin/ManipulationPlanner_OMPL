@@ -31,12 +31,12 @@ Manipulation::RobotJointInfo Manipulation_ManipulationPlannerServiceSVC_impl::in
 /*
  * Methods corresponding to IDL attributes and operations
  */
-void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, RTC::Pose3D goalPose, Manipulation::ManipulationPlan_out manipPlan)
+void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const RTC::Pose3D& goalPose, Manipulation::ManipulationPlan_out manipPlan)
 {
 	  m_jointSampler = new JointStateSampler();
 
 	  m_jointSampler->setPlanningMethod(m_planningMethod);
-	  m_rtcPtr->m_modelServer->getModelInfo(robotID, m_robotJointInfo);
+	  //m_rtcPtr->m_modelServer->getModelInfo(robotID, m_robotJointInfo);
 	  m_jointSampler->setAngleLimits(m_robotJointInfo);
 
 	  //if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, invKinematics(goalPose), manipPlan)){

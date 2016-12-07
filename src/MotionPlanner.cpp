@@ -11,11 +11,11 @@ JointStateSampler::~JointStateSampler(){
 }
 
 void JointStateSampler::setAngleLimits(Manipulation::RobotJointInfo joints){
-	m_jointNum = joints.size();
+	m_jointNum = joints.jointInfoSeq.length();
 
 	for (size_t  i = 0; i < m_jointNum; i++){
-		JointLimit limit = {joints.minAngl, joints.maxAngle};
-		m_jointLimits[i].push_back(limit);
+		JointLimit limit = {joints.jointInfoSeq[i].minAngle, joints.jointInfoSeq[i].maxAngle};
+		m_jointLimits.push_back(limit);
 	}
 	/*
  	m_armBase = V3(-100.0, 445.0, 0.0);
@@ -47,7 +47,7 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan)
 {
 	// Construct the state space where we are planning
-	ob::StateSpacePtr space(new ob::RealVectorStateSpm_jointNumze()));
+	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum));
 
 	ob::RealVectorBounds bounds(m_jointNum);
 	for (int i = 0; i < m_jointNum; ++i){
@@ -63,15 +63,15 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	ss.setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
 
     //set start and goal
-	assert(startPos.length()==goalPos.length());
+	assert(startRobotJointInfo.jointInfoSeq.length()==goalRobotJointInfo.jointInfoSeq.length());
 
 	ob::ScopedState<ob::RealVectorStateSpace> start(space);
 	for (int i = 0; i < m_jointNum; ++i){
-		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = startPos[i];
+		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = startRobotJointInfo.jointInfoSeq[i].jointAngle;
 	}
 	ob::ScopedState<ob::RealVectorStateSpace> goal(space);
 	for (int i = 0; i < m_jointNum; ++i){
-		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = goalPos[i];
+		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = goalRobotJointInfo.jointInfoSeq[i].jointAngle;
 	}
 	ss.setStartAndGoalStates(start, goal);
 

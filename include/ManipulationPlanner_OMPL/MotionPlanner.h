@@ -15,6 +15,7 @@
 #include <ompl/geometric/planners/est/EST.h>
 
 #include <ompl/base/spaces/SE3StateSpace.h>
+#include <ompl/base/spaces/RealVectorStateSpace.h>
 #include <ompl/base/PlannerData.h>
 #include <cmath>
 #include <ctime>
@@ -28,6 +29,9 @@
 
 namespace og = ompl::geometric;
 namespace ob = ompl::base;
+
+
+class Manipulation_ManipulationPlannerServiceSVC_impl;
 
 struct JointLimit{
     double max;
@@ -44,13 +48,13 @@ class JointStateSampler{
 
     bool planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
 
-    void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
+    //void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
 
   protected:
 
     bool isStateValid(const ob::State *state);
 
-    ManipulationPlanner_OMPL* m_rtcomp;
+    //ManipulationPlanner_OMPL* m_rtcomp;
     int m_jointNum;
     int m_planningMethod = 1;
     std::vector<JointLimit> m_jointLimits;

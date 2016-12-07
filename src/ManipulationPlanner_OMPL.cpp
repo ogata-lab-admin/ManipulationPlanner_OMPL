@@ -119,7 +119,7 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
 {
   //send config param to m_trajectoryPlanner
   m_manipulationPlanner.setPlanningMethod(m_PlanningMethod);
-  m_manipulationPlanner.setComp(this);
+  //m_manipulationPlanner.setComp(this);
   return RTC::RTC_OK;
 }
 
