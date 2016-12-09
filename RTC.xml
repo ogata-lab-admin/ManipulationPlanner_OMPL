@@ -96,13 +96,13 @@
         </rtc:Configuration>
     </rtc:ConfigurationSet>
     <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtcExt:position="LEFT" rtc:name="ManipulationPlannerService">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="manipulationPlanner" rtc:path="/home/ogata/workspace/ManipulationPlanner_OMPL/idl" rtc:type="Manipulation::ManipulationPlannerService" rtc:idlFile="/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl" rtc:instanceName="manipulationPlanner" rtc:direction="Provided" rtc:name="ManipulationPlannerService"/>
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="manipulationPlanner" rtc:path="/home/ogata/workspace/ManipulationPlanner_OMPL/idl" rtc:type="Manipulation::ManipulationPlannerService" rtc:idlFile="/home/ogata/workspace/ManipulationPlanner_OMPL/idl/Manipulation.idl" rtc:instanceName="manipulationPlanner" rtc:direction="Provided" rtc:name="ManipulationPlannerService"/>
     </rtc:ServicePorts>
     <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtcExt:position="LEFT" rtc:name="ModelServerService">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="modelServer" rtc:path="/home/ogata/workspace/ManipulationPlanner_OMPL/idl" rtc:type="Manipulation::ModelServerService" rtc:idlFile="/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl" rtc:instanceName="modelServer" rtc:direction="Required" rtc:name="ModelServerService"/>
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="modelServer" rtc:path="/home/ogata/workspace/ManipulationPlanner_OMPL/idl" rtc:type="Manipulation::ModelServerService" rtc:idlFile="/home/ogata/workspace/ManipulationPlanner_OMPL/idl/Manipulation.idl" rtc:instanceName="modelServer" rtc:direction="Required" rtc:name="ModelServerService"/>
     </rtc:ServicePorts>
     <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtcExt:position="LEFT" rtc:name="CollisionDetectionService">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="collisionDetection" rtc:path="/home/ogata/workspace/ManipulationPlanner_OMPL/idl" rtc:type="Manipulation::CollisionDetectionService" rtc:idlFile="/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl" rtc:instanceName="collisionDetection" rtc:direction="Required" rtc:name="CollisionDetectionService"/>
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="collisionDetection" rtc:path="/home/ogata/workspace/ManipulationPlanner_OMPL/idl" rtc:type="Manipulation::CollisionDetectionService" rtc:idlFile="/home/ogata/workspace/ManipulationPlanner_OMPL/idl/Manipulation.idl" rtc:instanceName="collisionDetection" rtc:direction="Required" rtc:name="CollisionDetectionService"/>
     </rtc:ServicePorts>
     <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="C++"/>
 </rtc:RtcProfile>

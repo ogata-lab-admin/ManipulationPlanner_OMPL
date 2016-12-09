@@ -16,7 +16,7 @@
 
 // Service implementation headers
 // <rtc-template block="service_impl_h">
-#include "TrajectoryPlannerSVC_impl.h"
+#include "ManipulationSVC_impl.h"
 
 // </rtc-template>
 

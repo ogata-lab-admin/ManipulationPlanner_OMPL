@@ -11,8 +11,8 @@
 #   --module-category=Category --module-comp-type=STATIC 
 #   --module-act-type=PERIODIC --module-max-inst=1 
 #   --config=PlanningMethod:int:(PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,TRRT,pRRT,EST) 
-#   --service-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl 
-#   --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl 
+#   --service-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/Manipulation.idl 
+#   --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/Manipulation.idl --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/Manipulation.idl 
 #   --service=ManipulationPlannerService:ManipulationPlannerService:Manipulation::ManipulationPlannerService 
 #   --consumer=ModelServerService:ModelServerService:Manipulation::ModelServerService 
 #   --consumer=CollisionDetectionService:CollisionDetectionService:Manipulation::CollisionDetectionService 
@@ -43,7 +43,7 @@ Lang Type:
 
 [on_initialize]    implemented
 
-[on_finalize]      implemented
+[on_finalize]
 
 [on_startup]
 
@@ -51,9 +51,9 @@ Lang Type:
 
 [on_activated]     implemented
 
-[on_deactivated]   implemented
+[on_deactivated]
 
-[on_execute]       implemented
+[on_execute]
 
 [on_aborting]
 

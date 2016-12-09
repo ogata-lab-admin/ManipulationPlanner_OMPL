@@ -1,4 +1,4 @@
-set(idls ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryPlanner.idl )
+set(idls ${CMAKE_CURRENT_SOURCE_DIR}/Manipulation.idl ${CMAKE_CURRENT_SOURCE_DIR}/BasicDataType.idl ${CMAKE_CURRENT_SOURCE_DIR}/ExtendedDataTypes.idl ${CMAKE_CURRENT_SOURCE_DIR}/InterfaceDataTypes.idl )
 
 install(FILES ${idls} DESTINATION ${INC_INSTALL_DIR}/idl
     COMPONENT idl)

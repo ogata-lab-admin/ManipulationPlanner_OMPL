@@ -23,7 +23,7 @@
 #include <fstream>
 #include <ostream>
 
-#include "TrajectoryPlannerSkel.h"
+#include "ManipulationSkel.h"
 #include "ManipulationPlanner_OMPL.h"
 #include <rtm/Manager.h>
 
