@@ -85,7 +85,7 @@ class ManipulationPlanner_OMPL
    * 
    * 
    */
-   virtual RTC::ReturnCode_t onFinalize();
+   //virtual RTC::ReturnCode_t onFinalize();
 
   /***
    *
@@ -150,7 +150,7 @@ class ManipulationPlanner_OMPL
    * 
    * 
    */
-   virtual RTC::ReturnCode_t onExecute(RTC::UniqueId ec_id);
+   //virtual RTC::ReturnCode_t onExecute(RTC::UniqueId ec_id);
 
   /***
    *
@@ -217,6 +217,9 @@ class ManipulationPlanner_OMPL
    */
   // virtual RTC::ReturnCode_t onRateChanged(RTC::UniqueId ec_id);
 
+   void callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo);
+
+   bool callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::RobotJointInfo& jointSeq, Manipulation::CollisionInfo_out collision);
 
  protected:
   // <rtc-template block="protected_attribute">
@@ -253,10 +256,13 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="corbaport_declare">
   /*!
    */
-  RTC::CorbaPort m_TrajectoryPlannerPort;
+  RTC::CorbaPort m_ManipulationPlannerServicePort;
   /*!
    */
-  RTC::CorbaPort m_MeshServerPort;
+  RTC::CorbaPort m_ModelServerServicePort;
+  /*!
+   */
+  RTC::CorbaPort m_CollisionDetectionServicePort;
   
   // </rtc-template>
 
@@ -264,7 +270,7 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="service_declare">
   /*!
    */
-  RTC_TrajectoryPlannerSVC_impl m_trajectoryPlanner;
+  Manipulation_ManipulationPlannerServiceSVC_impl m_manipulationPlanner;
   
   // </rtc-template>
 
@@ -272,7 +278,10 @@ class ManipulationPlanner_OMPL
   // <rtc-template block="consumer_declare">
   /*!
    */
-  RTC::CorbaConsumer<Manipulation::MeshServer> m_meshServer;
+  RTC::CorbaConsumer<Manipulation::ModelServerService> m_modelServer;
+  /*!
+   */
+  RTC::CorbaConsumer<Manipulation::CollisionDetectionService> m_collisionDetection;
   
   // </rtc-template>
 

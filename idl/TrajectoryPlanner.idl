@@ -5,44 +5,77 @@
 #include "ExtendedDataTypes.idl"
 #include "InterfaceDataTypes.idl"
 
-module Manipulation {
+module Manipulation{
 
-  enum RETURN_VALUE {
-    RETVAL_OK,
-    RETVAL_INVALID_PARAMETER,
-    RETVAL_EMPTY_MAP,
-    RETVAL_INVALID_PRECONDITION,
-    RETVAL_NOT_IMPL,
-    RETVAL_NOT_FOUND,
-    RETVAL_UNKNOWN_ERROR
+  struct ObjectIdentifier{
+	string name;
   };
 
-  struct Node;
-  typedef sequence<RTC::Point3D> Mesh;
-  typedef sequence<Node> NodeList;
-
-  struct Node{
-    string name;
-    Mesh myMesh;
-    RTC::Vector3D translation;
-    RTC::Vector3D rotation;
-    NodeList children;
-  };
-
-  typedef sequence<Node> MultiMesh;
-
-  typedef sequence<double> JointPose;
-  typedef sequence<JointPose> JointTrajectory;
-
-  interface TrajectoryPlanner {
-    RETURN_VALUE planTrajectory(in JointPose start, in JointPose goal, out JointTrajectory trajectory);
-  };
-
-    interface MeshServer {
-    RETURN_VALUE getRobotMesh(out MultiMesh robots);
-    RETURN_VALUE getEnvMesh(out Node env);
+  struct ObjectInfo{
+	ObjectIdentifier objectID;
+	RTC::Pose3D pose;
   };
   
+  struct JointInfo{
+	string name;
+        double jointAngle;
+	double jointDistance;
+	double linkLength;
+	double linkTwist;
+	double maxAngle;
+	double minAngle;
+  };
+    
+  struct RobotJointInfo{
+        sequence<JointInfo> jointInfoSeq;
+  };
+
+  struct RobotIdentifier{
+	string name;
+  };
+
+  struct ManipulationPlan{
+        RobotIdentifier robotID;
+	sequence<RobotJointInfo> robotJointInfoSeq;
+  };
+ 
+  //underdeveloped
+  struct CollisionInfo{
+	string name;
+  };
+ 
+  //underdeveloped
+  struct MeshInfo{
+	string name;
+  };
+
+  interface ObjectDetectionService{
+	void detectObject(in ObjectIdentifier objectID, out ObjectInfo objInfo);
+	void setGeometry(in RTC::Geometry3D geometry);
+  };
+
+  interface CurrentStateService{
+	void getCurrentState(out RobotJointInfo robotJoint);
+  };
+
+  interface CollisionDetectionService{
+	boolean isCollide(in RobotIdentifier manipInfo, in RobotJointInfo jointSeq, out CollisionInfo collision);
+  };
+
+  interface ManipulationPlannerService{
+	void planManipulation(in RobotIdentifier robotID, in RobotJointInfo startRobotJointInfo, in RTC::Pose3D goalPose, out ManipulationPlan manipPlan);
+  };
+
+  interface ModelServerService{
+	void getModelInfo(in RobotIdentifier robotID, out RobotJointInfo robotInfo);
+	void getMeshInfo(in RobotIdentifier robotID, out MeshInfo mesh);
+  };
+
+  interface MotionGeneratorService{
+	void followManipPlan(in ManipulationPlan manipPlan);
+	void getCurrentRobotJointInfo(in RobotIdentifier robotID, out RobotJointInfo robotJoint);
+  };
+
 };
 
 

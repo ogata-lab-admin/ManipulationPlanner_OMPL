@@ -3,6 +3,7 @@
 
 #include <ompl/geometric/SimpleSetup.h>
 
+//Planning Methods
 #include <ompl/geometric/planners/prm/PRM.h>
 #include <ompl/geometric/planners/rrt/RRTstar.h>
 #include <ompl/geometric/planners/rrt/LBTRRT.h>
@@ -12,7 +13,9 @@
 #include <ompl/geometric/planners/rrt/TRRT.h>
 #include <ompl/geometric/planners/rrt/pRRT.h>
 #include <ompl/geometric/planners/est/EST.h>
+
 #include <ompl/base/spaces/SE3StateSpace.h>
+#include <ompl/base/spaces/RealVectorStateSpace.h>
 #include <ompl/base/PlannerData.h>
 #include <cmath>
 #include <ctime>
@@ -20,33 +23,45 @@
 #include <fstream>
 #include <ostream>
 
-#include "CollisionChecker.h"
 #include "TrajectoryPlannerSkel.h"
-#include "p4-arm-helper.h"
+#include "ManipulationPlanner_OMPL.h"
+#include <rtm/Manager.h>
+
 namespace og = ompl::geometric;
+namespace ob = ompl::base;
+
+
+class Manipulation_ManipulationPlannerServiceSVC_impl;
+class ManipulationPlanner_OMPL;
+
+struct JointLimit{
+    double max;
+    double min;
+};
 
 class JointStateSampler{
   public:
-    JointStateSampler();
+    JointStateSampler(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo* joints);
     ~JointStateSampler();
 
     void setPlanningMethod(int m){selector = m;}
-    void setArm();
-    void setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh);
+    void setAngleLimits();
 
-    bool planWithSimpleSetup(const Manipulation::JointPose& startPos, const Manipulation::JointPose& goalPos, Manipulation::JointTrajectory_out traj);
+    bool planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
+
+    void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
 
   protected:
+
     bool isStateValid(const ob::State *state);
-    void ForwardKinematics(const std::vector<TLink> &linkes,
-                           const std::vector<double> &angles, const TVector &base,
-                           std::vector<TVector> &result);
 
-    ArmMeshCollisionChecker* m_armMeshCC;
-
+    ManipulationPlanner_OMPL* m_rtcomp;
+    int m_jointNum;
     int m_planningMethod = 1;
-    std::vector<TLink> m_arm;  // Manipulator
-    TVector m_armBase;  // The base position of Manipulator
+    std::vector<JointLimit> m_jointLimits;
+    Manipulation::RobotIdentifier m_robotID;
+    Manipulation::RobotJointInfo* m_robotJointInfo;
+    Manipulation::CollisionInfo* m_collision;
 
     int selector;
 

@@ -109,8 +109,9 @@ PlanningMethod   int                (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,T
 =============== =========== ============================== ====
 ポート名        ポート型    データ型                       意味
 =============== =========== ============================== ====
-TrajectoryPlanner ServicePort RTC::TrajectoryPlanner         
-MeshServer      ServicePort RTC::MeshServer                
+ManipulationPlannerService ServicePort Manipulation::ManipulationPlannerService 
+ModelServerService ServicePort Manipulation::ModelServerService 
+CollisionDetectionService ServicePort Manipulation::CollisionDetectionService 
 =============== =========== ============================== ====
 
 例

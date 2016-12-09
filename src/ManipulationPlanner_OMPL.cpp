@@ -46,8 +46,9 @@ static const char* manipulationplanner_ompl_spec[] =
 ManipulationPlanner_OMPL::ManipulationPlanner_OMPL(RTC::Manager* manager)
     // <rtc-template block="initializer">
   : RTC::DataFlowComponentBase(manager),
-    m_TrajectoryPlannerPort("TrajectoryPlanner"),
-    m_MeshServerPort("MeshServer")
+    m_ManipulationPlannerServicePort("ManipulationPlannerService"),
+    m_ModelServerServicePort("ModelServerService"),
+    m_CollisionDetectionServicePort("CollisionDetectionService")
 
     // </rtc-template>
 {
@@ -71,14 +72,16 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   // Set OutPort buffer
   
   // Set service provider to Ports
-  m_TrajectoryPlannerPort.registerProvider("TrajectoryPlanner", "RTC::TrajectoryPlanner", m_trajectoryPlanner);
+  m_ManipulationPlannerServicePort.registerProvider("ManipulationPlannerService", "Manipulation::ManipulationPlannerService", m_manipulationPlanner);
   
   // Set service consumers to Ports
-  m_MeshServerPort.registerConsumer("MeshServer", "RTC::MeshServer", m_meshServer);
+  m_ModelServerServicePort.registerConsumer("ModelServerService", "Manipulation::ModelServerService", m_modelServer);
+  m_CollisionDetectionServicePort.registerConsumer("CollisionDetectionService", "Manipulation::CollisionDetectionService", m_collisionDetection);
   
   // Set CORBA Service Ports
-  addPort(m_TrajectoryPlannerPort);
-  addPort(m_MeshServerPort);
+  addPort(m_ManipulationPlannerServicePort);
+  addPort(m_ModelServerServicePort);
+  addPort(m_CollisionDetectionServicePort);
   
   // </rtc-template>
 
@@ -90,12 +93,12 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   return RTC::RTC_OK;
 }
 
-
+/*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onFinalize()
 {
 	  return RTC::RTC_OK;
 }
-
+*/
 
 /*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onStartup(RTC::UniqueId ec_id)
@@ -114,15 +117,9 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onShutdown(RTC::UniqueId ec_id)
 
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onActivated(RTC::UniqueId ec_id)
 {
-	Manipulation::MultiMesh* robots = new Manipulation::MultiMesh();
-	Manipulation::Node* env = new Manipulation::Node();
-
-  m_meshServer->getRobotMesh(robots);
-  m_meshServer->getEnvMesh(env);
-
   //send config param to m_trajectoryPlanner
-  m_trajectoryPlanner.passPlanningMethod(m_PlanningMethod);
-  m_trajectoryPlanner.setMesh(robots,env);
+  m_manipulationPlanner.setPlanningMethod(m_PlanningMethod);
+  //m_manipulationPlanner.setComp(this);
   return RTC::RTC_OK;
 }
 
@@ -133,10 +130,12 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onDeactivated(RTC::UniqueId ec_id)
 }
 */
 
+/*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onExecute(RTC::UniqueId ec_id)
 {
   return RTC::RTC_OK;
 }
+*/
 
 /*
 RTC::ReturnCode_t ManipulationPlanner_OMPL::onAborting(RTC::UniqueId ec_id)
@@ -173,7 +172,13 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onRateChanged(RTC::UniqueId ec_id)
 }
 */
 
+void ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo){
+	m_modelServer->getModelInfo(robotID, robotJointInfo);
+}
 
+bool ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::RobotJointInfo& jointSeq, Manipulation::CollisionInfo_out collision){
+	return m_collisionDetection->isCollide(manipInfo, jointSeq, collision);
+}
 
 extern "C"
 {

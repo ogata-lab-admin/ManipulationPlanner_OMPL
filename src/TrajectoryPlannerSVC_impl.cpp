@@ -8,40 +8,49 @@
 #include "TrajectoryPlannerSVC_impl.h"
 
 /*
- * Example implementational code for IDL interface Manipulation::TrajectoryPlanner
+ * Example implementational code for IDL interface Manipulation::ManipulationPlannerService
  */
-RTC_TrajectoryPlannerSVC_impl::RTC_TrajectoryPlannerSVC_impl()
+Manipulation_ManipulationPlannerServiceSVC_impl::Manipulation_ManipulationPlannerServiceSVC_impl()
 {
+  // Please add extra constructor code here.
 }
 
 
-RTC_TrajectoryPlannerSVC_impl::~RTC_TrajectoryPlannerSVC_impl()
+Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlannerServiceSVC_impl()
 {
+  // Please add extra destructor code here.
 }
 
-void RTC_TrajectoryPlannerSVC_impl::setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh){
-	m_robotsMesh = robotsMesh;
-	m_envMesh = envMesh;
+/*
+Manipulation::RobotJointInfo Manipulation_ManipulationPlannerServiceSVC_impl::invKinematics(RTC::Pose3D pose)
+{
+	//;
 }
+*/
+
 /*
  * Methods corresponding to IDL attributes and operations
  */
-Manipulation::RETURN_VALUE RTC_TrajectoryPlannerSVC_impl::planTrajectory(const Manipulation::JointPose& start, const Manipulation::JointPose& goal, Manipulation::JointTrajectory_out trajectory)
+void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const RTC::Pose3D& goalPose, Manipulation::ManipulationPlan_out manipPlan)
 {
-  createSampler();
+	  m_robotJointInfo = new Manipulation::RobotJointInfo();
+	  m_rtcPtr->callGetModelInfo(robotID, m_robotJointInfo);
 
-  jSampler->setPlanningMethod(method);
-  jSampler->setArm();
-  jSampler->setMesh(m_robotsMesh,m_envMesh);
+	  m_jointSampler = new JointStateSampler(robotID, m_robotJointInfo);
 
-  if(jSampler->planWithSimpleSetup(start, goal, trajectory)){
-	  delete jSampler;
-	  return Manipulation::RETVAL_OK;
-  }
-  delete jSampler;
-  return Manipulation::RETVAL_NOT_FOUND;
+	  m_jointSampler->setComp(m_rtcPtr);
+	  m_jointSampler->setPlanningMethod(m_planningMethod);
+
+
+	  //m_jointSampler->setAngleLimits(m_robotJointInfo);
+
+	  //if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, invKinematics(goalPose), manipPlan)){
+		//  delete m_jointSampler;
+		  //return Manipulation::RETVAL_OK;
+	  //}
+	  delete m_jointSampler;
+	  //return Manipulation::RETVAL_NOT_FOUND;
 }
-
 
 
 // End of example implementational code

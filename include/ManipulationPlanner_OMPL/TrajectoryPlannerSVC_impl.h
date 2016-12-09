@@ -4,52 +4,61 @@
  * @brief Service implementation header of TrajectoryPlanner.idl
  *
  */
+/*
+#include "BasicDataTypeSkel.h"
+#include "ExtendedDataTypesSkel.h"
+#include "InterfaceDataTypesSkel.h"
+*/
 
 #include "TrajectoryPlannerSkel.h"
+#include "ManipulationPlanner_OMPL.h"
 #include "MotionPlanner.h"
+#include <rtm/Manager.h>
 
 #ifndef TRAJECTORYPLANNERSVC_IMPL_H
 #define TRAJECTORYPLANNERSVC_IMPL_H
- 
+
+
+class JointStateSampler;
+class ManipulationPlanner_OMPL;
+
 /*!
- * @class TrajectoryPlannerSVC_impl
- * Example class implementing IDL interface Manipulation::TrajectoryPlanner
+ * @class ManipulationPlannerServiceSVC_impl
+ * Example class implementing IDL interface Manipulation::ManipulationPlannerService
  */
-class RTC_TrajectoryPlannerSVC_impl
- : public virtual POA_Manipulation::TrajectoryPlanner,
+class Manipulation_ManipulationPlannerServiceSVC_impl
+ : public virtual POA_Manipulation::ManipulationPlannerService,
    public virtual PortableServer::RefCountServantBase
 {
  private:
    // Make sure all instances are built on the heap by making the
    // destructor non-public
-   //virtual ~TrajectoryPlannerSVC_impl();
+   //virtual ~ManipulationPlannerServiceSVC_impl();
 
-  int method = 1;
-  JointStateSampler* jSampler;
-  Manipulation::MultiMesh* m_robotsMesh;
-  Manipulation::Node* m_envMesh;
+   int m_planningMethod = 1;
+   JointStateSampler* m_jointSampler;
+   ManipulationPlanner_OMPL* m_rtcPtr;
+   Manipulation::RobotJointInfo* m_robotJointInfo;
 
  public:
   /*!
    * @brief standard constructor
    */
-   RTC_TrajectoryPlannerSVC_impl();
+   Manipulation_ManipulationPlannerServiceSVC_impl();
   /*!
    * @brief destructor
    */
-   virtual ~RTC_TrajectoryPlannerSVC_impl();
+   virtual ~Manipulation_ManipulationPlannerServiceSVC_impl();
 
-   void createSampler(){jSampler = new JointStateSampler();}
+   // attributes and operations
+   void planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const RTC::Pose3D& goalPose, Manipulation::ManipulationPlan_out manipPlan);
 
-   Manipulation::RETURN_VALUE planTrajectory(const Manipulation::JointPose& start, const Manipulation::JointPose& goal, Manipulation::JointTrajectory_out trajectory);
+   void setPlanningMethod(int m){m_planningMethod=m;}
+   void setComp(ManipulationPlanner_OMPL* rtc){m_rtcPtr=rtc;}
 
-   void passPlanningMethod(int m){method=m;}
-   void setMesh(Manipulation::MultiMesh* robotsMesh, Manipulation::Node* envMesh);
-
+   //Manipulation::RobotJointInfo invKinematics(RTC::Pose3D pose, Manipulation::RobotJointInfo joints);
 
 };
-
-
 
 #endif // TRAJECTORYPLANNERSVC_IMPL_H
 
