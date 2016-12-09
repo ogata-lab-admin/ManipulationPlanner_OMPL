@@ -51,12 +51,10 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
    virtual ~Manipulation_ManipulationPlannerServiceSVC_impl();
 
    // attributes and operations
-   void planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const RTC::Pose3D& goalPose, Manipulation::ManipulationPlan_out manipPlan);
+   void planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
 
    void setPlanningMethod(int m){m_planningMethod=m;}
    void setComp(ManipulationPlanner_OMPL* rtc){m_rtcPtr=rtc;}
-
-   //Manipulation::RobotJointInfo invKinematics(RTC::Pose3D pose, Manipulation::RobotJointInfo joints);
 
 };
 

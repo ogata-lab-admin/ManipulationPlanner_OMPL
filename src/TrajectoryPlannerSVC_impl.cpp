@@ -22,16 +22,9 @@ Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlann
 }
 
 /*
-Manipulation::RobotJointInfo Manipulation_ManipulationPlannerServiceSVC_impl::invKinematics(RTC::Pose3D pose)
-{
-	//;
-}
-*/
-
-/*
  * Methods corresponding to IDL attributes and operations
  */
-void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const RTC::Pose3D& goalPose, Manipulation::ManipulationPlan_out manipPlan)
+void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan)
 {
 	  m_robotJointInfo = new Manipulation::RobotJointInfo();
 	  m_rtcPtr->callGetModelInfo(robotID, m_robotJointInfo);
@@ -41,15 +34,10 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 	  m_jointSampler->setComp(m_rtcPtr);
 	  m_jointSampler->setPlanningMethod(m_planningMethod);
 
-
-	  //m_jointSampler->setAngleLimits(m_robotJointInfo);
-
-	  //if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, invKinematics(goalPose), manipPlan)){
-		//  delete m_jointSampler;
-		  //return Manipulation::RETVAL_OK;
-	  //}
+	  if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, goalRobotJointInfo, manipPlan)){
+		  delete m_jointSampler;
+	  }
 	  delete m_jointSampler;
-	  //return Manipulation::RETVAL_NOT_FOUND;
 }
 
 

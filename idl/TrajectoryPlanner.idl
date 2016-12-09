@@ -63,7 +63,7 @@ module Manipulation{
   };
 
   interface ManipulationPlannerService{
-	void planManipulation(in RobotIdentifier robotID, in RobotJointInfo startRobotJointInfo, in RTC::Pose3D goalPose, out ManipulationPlan manipPlan);
+	void planManipulation(in RobotIdentifier robotID, in RobotJointInfo startRobotJointInfo, in RobotJointInfo goalRobotJointInfo, out ManipulationPlan manipPlan);
   };
 
   interface ModelServerService{
