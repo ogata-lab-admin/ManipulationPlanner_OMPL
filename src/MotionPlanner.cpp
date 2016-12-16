@@ -21,15 +21,6 @@ void JointStateSampler::setAngleLimits(){
 		JointLimit limit = {m_robotJointInfo->jointInfoSeq[i].minAngle, m_robotJointInfo->jointInfoSeq[i].maxAngle};
 		m_jointLimits.push_back(limit);
 	}
-	/*
- 	m_armBase = V3(-100.0, 445.0, 0.0);
-	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,250.0)));
-	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,130.0)));
-	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,100.0)));
-	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,105.0)));
-	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-	*/
 }
 
 bool JointStateSampler::isStateValid(const ob::State *state)
@@ -117,21 +108,17 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 		cout << "Found solution:" << endl;
 		ss.simplifySolution();
 		
-		/*
-                og::PathGeometric path;
-                path = ss.getSolutionPath()
-                path.getSolutionPath().print(cout);
-		*/
-		ss.getSolutionPath().print(cout);
+
+        og::PathGeometric path(ss.getSolutionPath());
+        path.print(cout);
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
-		/*
-                for(int i=0; i<path.length(); i++){
-                        for(int j =0; j<m_jointNum; j++){
-                                manipPlan->robotJointInfoSeq[i].jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j]
-                        }
-                }
-		*/
+
+        for(int i=0; i<path.length(); i++){
+            for(int j =0; j<m_jointNum; j++){
+                 manipPlan->robotJointInfoSeq[i].jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
+            }
+        }
 
 		return true;
 
