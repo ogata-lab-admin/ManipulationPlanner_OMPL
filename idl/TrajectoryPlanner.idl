@@ -55,7 +55,7 @@ module Manipulation{
   };
 
   interface KinematicsSolverService{
-	void solveInveerseKinematics(in ObjectInfo objectInfo out RobotJointInfo goalRobotJointInfo);
+	void solveInverseKinematics(in ObjectInfo objInfo, out RobotJointInfo goalRobotJointInfo);
   };
 
   interface CollisionDetectionService{
