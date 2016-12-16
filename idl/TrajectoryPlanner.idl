@@ -54,8 +54,8 @@ module Manipulation{
 	void setGeometry(in RTC::Geometry3D geometry);
   };
 
-  interface CurrentStateService{
-	void getCurrentState(out RobotJointInfo robotJoint);
+  interface KinematicsSolverService{
+	void solveInveerseKinematics(in ObjectInfo objectInfo out RobotJointInfo goalRobotJointInfo);
   };
 
   interface CollisionDetectionService{
