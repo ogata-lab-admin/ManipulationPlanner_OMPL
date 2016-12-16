@@ -116,11 +116,22 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	if (ss.solve(10)) {
 		cout << "Found solution:" << endl;
 		ss.simplifySolution();
+		
+		/*
+                og::PathGeometric path;
+                path = ss.getSolutionPath()
+                path.getSolutionPath().print(cout);
+		*/
 		ss.getSolutionPath().print(cout);
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
-
-		//traj =PathGeo2JSTraje(ss.getSolutionPath());
+		/*
+                for(int i=0; i<path.length(); i++){
+                        for(int j =0; j<m_jointNum; j++){
+                                manipPlan->robotJointInfoSeq[i].jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j]
+                        }
+                }
+		*/
 
 		return true;
 
