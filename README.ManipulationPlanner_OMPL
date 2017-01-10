@@ -15,7 +15,7 @@
 #   --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl --consumer-idl=/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl 
 #   --service=ManipulationPlannerService:ManipulationPlannerService:Manipulation::ManipulationPlannerService 
 #   --consumer=ModelServerService:ModelServerService:Manipulation::ModelServerService 
-#   --consumer=CollisionDetectionService:CollisionDetectionService:Manipulation::CollisionDetectionService 
+#   --consumer=CollisionDetectionService:Manipulation_CollisionDetectionService:Manipulation::CollisionDetectionService 
 
 
 ======================================================================
@@ -43,7 +43,7 @@ Lang Type:
 
 [on_initialize]    implemented
 
-[on_finalize]      implemented
+[on_finalize]
 
 [on_startup]
 
@@ -51,9 +51,9 @@ Lang Type:
 
 [on_activated]     implemented
 
-[on_deactivated]   implemented
+[on_deactivated]
 
-[on_execute]       implemented
+[on_execute]
 
 [on_aborting]
 
@@ -114,7 +114,7 @@ Lang Type:
 	Description: 
 	Interface:   
 		[Service Consumer Interfaces]
-		Name:          CollisionDetectionService
+		Name:          Manipulation_CollisionDetectionService
 		Type:          Manipulation::CollisionDetectionService
 		Description:   
 		Argument:      

@@ -111,7 +111,7 @@ PlanningMethod   int                (PRM,RRT,RRTConnect,RRTstar,LBTRRT,LaxyRRT,T
 =============== =========== ============================== ====
 ManipulationPlannerService ServicePort Manipulation::ManipulationPlannerService 
 ModelServerService ServicePort Manipulation::ModelServerService 
-CollisionDetectionService ServicePort Manipulation::CollisionDetectionService 
+Manipulation_CollisionDetectionService ServicePort Manipulation::CollisionDetectionService 
 =============== =========== ============================== ====
 
 例

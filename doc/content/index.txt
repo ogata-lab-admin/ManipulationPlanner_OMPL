@@ -119,7 +119,7 @@ Name            Type        Data type                      Purpose
 =============== =========== ============================== =======
 ManipulationPlannerService ServicePort Manipulation::ManipulationPlannerService 
 ModelServerService ServicePort Manipulation::ModelServerService 
-CollisionDetectionService ServicePort Manipulation::CollisionDetectionService 
+Manipulation_CollisionDetectionService ServicePort Manipulation::CollisionDetectionService 
 =============== =========== ============================== =======
 
 Examples
