@@ -75,7 +75,7 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onInitialize()
   m_ManipulationPlannerServicePort.registerProvider("ManipulationPlannerService", "Manipulation::ManipulationPlannerService", m_manipulationPlanner);
   
   // Set service consumers to Ports
-  m_ModelServerServicePort.registerConsumer("ModelServerService", "Manipulation::ModelServerService", m_modelServer);
+  m_ModelServerServicePort.registerConsumer("Manipulation_ModelServerService", "Manipulation::ModelServerService", m_modelServer);
   m_CollisionDetectionServicePort.registerConsumer("Manipulation_CollisionDetectionService", "Manipulation::CollisionDetectionService", m_collisionDetection);
   
   // Set CORBA Service Ports

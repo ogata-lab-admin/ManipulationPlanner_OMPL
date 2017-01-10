@@ -32,8 +32,8 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 	  m_jointSampler = new JointStateSampler(robotID, m_robotJointInfo);
 
 	  m_jointSampler->setComp(m_rtcPtr);
-	  m_jointSampler->setPlanningMethod(m_planningMethod);
 
+	  m_jointSampler->setPlanningMethod(m_planningMethod);
 	  if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, goalRobotJointInfo, manipPlan)){
 		  delete m_jointSampler;
 	  }
