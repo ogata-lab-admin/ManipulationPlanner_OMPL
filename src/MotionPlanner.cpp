@@ -21,15 +21,6 @@ void JointStateSampler::setAngleLimits(){
 		JointLimit limit = {m_robotJointInfo->jointInfoSeq[i].minAngle, m_robotJointInfo->jointInfoSeq[i].maxAngle};
 		m_jointLimits.push_back(limit);
 	}
-	/*
- 	m_armBase = V3(-100.0, 445.0, 0.0);
-	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,250.0)));
-	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,130.0)));
-	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,100.0)));
-	m_arm.push_back(TLink(V3(0,1,0), V3(0,0,105.0)));
-	m_arm.push_back(TLink(V3(0,0,1), V3(0,0,0.0)));
-	*/
 }
 
 bool JointStateSampler::isStateValid(const ob::State *state)
@@ -50,7 +41,6 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 
 bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan)
 {
-	// Construct the state space where we are planning
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum));
 
 	ob::RealVectorBounds bounds(m_jointNum);
@@ -60,13 +50,10 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	}
 	space->as<ob::RealVectorStateSpace>()->setBounds(bounds);
 
-	// Instantiate SimpleSetup
 	og::SimpleSetup ss(space);
 
-	// Setup the StateValidityChecker
 	ss.setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
 
-    //set start and goal
 	assert(startRobotJointInfo.jointInfoSeq.length()==goalRobotJointInfo.jointInfoSeq.length());
 
 	ob::ScopedState<ob::RealVectorStateSpace> start(space);
@@ -79,8 +66,6 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	}
 	ss.setStartAndGoalStates(start, goal);
 
-
-	// setting collision checking resolution to 1% of the space extent
 	ss.getSpaceInformation()->setStateValidityCheckingResolution(0.01);
 
 	if (selector == 1) {
@@ -112,15 +97,14 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 		ss.setPlanner(planner);
 	}
 
-	// If we have a solution,
 	if (ss.solve(10)) {
 		cout << "Found solution:" << endl;
 		ss.simplifySolution();
 		
 		/*
-                og::PathGeometric path;
-                path = ss.getSolutionPath()
-                path.getSolutionPath().print(cout);
+        og::PathGeometric path;
+        path = ss.getSolutionPath()
+        path.getSolutionPath().print(cout);
 		*/
 		ss.getSolutionPath().print(cout);
 		//std::ofstream ofs("../plot/path.dat");
