@@ -33,12 +33,6 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 
 	for (size_t  i = 0; i < m_jointNum-1; i++){
 	    m_robotJointInfo->jointInfoSeq[i].jointAngle= (*state_vec)[i];
-	    m_robotJointInfo->jointInfoSeq[i].name = "";
-	    m_robotJointInfo->jointInfoSeq[i].jointDistance = 0;
-	    m_robotJointInfo->jointInfoSeq[i].linkLength = 0;
-	    m_robotJointInfo->jointInfoSeq[i].linkTwist = 0;
-	    m_robotJointInfo->jointInfoSeq[i].maxAngle = 0;
-	    m_robotJointInfo->jointInfoSeq[i].minAngle = 0;
 	}
 
 	return !m_rtcomp->callIsCollide(m_robotID, *m_robotJointInfo, m_collision);
