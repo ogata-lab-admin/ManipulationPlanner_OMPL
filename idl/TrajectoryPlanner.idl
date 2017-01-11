@@ -1,3 +1,9 @@
+/******
+ * @author Yuki Suga, Tao Asato
+ * @copyright Ogata-lab 2016
+ * @lisence public domain
+ *****/
+
 #ifndef TrajectoryPlanner_idl
 #define TrajectoryPlanner_idl
 
@@ -5,78 +11,128 @@
 #include "ExtendedDataTypes.idl"
 #include "InterfaceDataTypes.idl"
 
-module Manipulation{
+module Manipulation {
 
-  struct ObjectIdentifier{
-	string name;
-  };
-
-  struct ObjectInfo{
-	ObjectIdentifier objectID;
-	RTC::Pose3D pose;
+  typedef double Vector3[3];
+  
+  typedef double Matrix34[3][4];
+  
+  struct ObjectIdentifier {
+    string name;
   };
   
-  struct JointInfo{
-	string name;
-        double jointAngle;
-	double jointDistance;
-	double linkLength;
-	double linkTwist;
-	double maxAngle;
-	double minAngle;
+  struct ObjectInfo {
+    ObjectIdentifier objectID;
+    RTC::Pose3D pose;
   };
-    
-  struct RobotJointInfo{
-        sequence<JointInfo> jointInfoSeq;
+  
+  struct JointAngle {
+    double data;
   };
 
-  struct RobotIdentifier{
-	string name;
+  typedef sequence<JointAngle> JointAngleSeq;
+
+  struct LimitValue {
+    double upper;
+    double lower;
   };
 
-  struct ManipulationPlan{
-        RobotIdentifier robotID;
-	sequence<RobotJointInfo> robotJointInfoSeq;
+  enum JOINT_TYPE {
+    JOINT_ROTATE,
+    JOINT_SLIDE,
+    JOINT_FIXED,
+    JOINT_FREE,
+    JOINT_UNKNOWN
   };
- 
-  //underdeveloped
-  struct CollisionInfo{
-	string name;
-  };
- 
-  //underdeveloped
-  struct MeshInfo{
-	string name;
-  };
-
-  interface ObjectDetectionService{
-	void detectObject(in ObjectIdentifier objectID, out ObjectInfo objInfo);
-	void setGeometry(in RTC::Geometry3D geometry);
+  
+  struct JointParameter {
+    string name;
+    JOINT_TYPE jointType;
+    Vector3 axis;
+    Matrix34 offset;
+    LimitValue limit;
   };
 
-  interface KinematicsSolverService{
-	void solveInverseKinematics(in ObjectInfo objInfo, out RobotJointInfo goalRobotJointInfo);
+  struct RobotJointInfo {
+    sequence<JointParameter> jointParameterSeq;
+  };
+  
+  struct RobotIdentifier {
+    string name;
+  };
+  
+  struct ManipulationPlan {
+    RobotIdentifier robotID;
+    sequence<JointAngleSeq> manipPath;
   };
 
-  interface CollisionDetectionService{
-	boolean isCollide(in RobotIdentifier manipInfo, in RobotJointInfo jointSeq, out CollisionInfo collision);
+  struct CollisionPair {
+    string name0;
+    string name1;
   };
 
-  interface ManipulationPlannerService{
-	void planManipulation(in RobotIdentifier robotID, in RobotJointInfo startRobotJointInfo, in RobotJointInfo goalRobotJointInfo, out ManipulationPlan manipPlan);
+  typedef sequence<CollisionPair> CollisionPairSeq;
+  
+  struct MeshInfo {
+    string name;
   };
 
-  interface ModelServerService{
-	void getModelInfo(in RobotIdentifier robotID, out RobotJointInfo robotInfo);
-	void getMeshInfo(in RobotIdentifier robotID, out MeshInfo mesh);
+  enum RETURN_ID {
+    OK,
+    MODEL_NOT_FOUND,
+    INVALID_SETTING,
+    INVALID_ARGUMENT,
+    ERROR_UNKNOWN
+  };
+  
+  struct ReturnValue {
+    RETURN_ID id;
+    string message;
   };
 
-  interface MotionGeneratorService{
-	void followManipPlan(in ManipulationPlan manipPlan);
-	void getCurrentRobotJointInfo(in RobotIdentifier robotID, out RobotJointInfo robotJoint);
+  struct EndEffectorPose {
+    RTC::Pose3D pose;
+  };
+  
+  
+  interface ObjectDetectionService {
+    ReturnValue detectObject(in ObjectIdentifier objectID, out ObjectInfo objInfo);
+    ReturnValue setBaseFrame(in Matrix34 frame);
   };
 
+  interface ObjectHandleStrategyService {
+    ReturnValue getApproachOrientation(in ObjectInfo objInfo, out EndEffectorPose eePos);
+  };
+
+  interface KinematicSolverService {
+    ReturnValue solveKinematics(in EndEffectorPose targetPose, in JointAngleSeq startJointAngles, out JointAngleSeq targetJointAngles);
+  };
+  
+  /** This might be unused.
+  interface CurrentStateService {
+    ReturnValue getCurrentState(out RobotJointInfo robotJoint);
+  };
+  */
+  
+  interface CollisionDetectionService {
+    ReturnValue isCollide(in RobotIdentifier robotID, in JointAngleSeq jointAngles, out CollisionPairSeq collisions);
+  };
+  
+  interface ManipulationPlannerService {
+    ReturnValue planManipulation(in RobotJointInfo jointsInfo, in JointAngleSeq startJointAngles, in JointAngleSeq goalJointAngles, out ManipulationPlan manipPlan);
+  };
+  
+  interface ModelServerService {
+    ReturnValue getModelInfo(in RobotIdentifier robotID, out RobotJointInfo jointsInfo);
+    ReturnValue getMeshInfo(in RobotIdentifier robotID, out MeshInfo mesh);
+  };
+  
+  interface MotionGeneratorService {
+    ReturnValue followManipPlan(in ManipulationPlan manipPlan);
+    ReturnValue getCurrentRobotJointAngles(out JointAngleSeq jointAngles);
+  };
+  
 };
 
-
 #endif
+
