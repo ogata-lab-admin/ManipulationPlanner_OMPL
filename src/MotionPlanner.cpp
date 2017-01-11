@@ -43,7 +43,9 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 
 }
 
-bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan)
+
+bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo,
+											Manipulation::ManipulationPlan_out manipPlan)
 {
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum-1));
 
@@ -58,6 +60,7 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	og::SimpleSetupPtr sampler(new og::SimpleSetup(space));
 
 	sampler->setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
+
 
 	//Set start and goal states
 	assert(startRobotJointInfo.jointInfoSeq.length()==goalRobotJointInfo.jointInfoSeq.length());
@@ -102,7 +105,11 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 		sampler->setPlanner(planner);
 	}
 
-	if (sampler->solve(30)) {
+
+    Manipulation::ManipulationPlan_var mp(new Manipulation::ManipulationPlan());
+
+    bool result = sampler->solve(30);
+	if (result) {
 		cout << "Found solution:" << endl;
 		sampler->simplifySolution();
 		
@@ -111,16 +118,25 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
 
+        mp->robotJointInfoSeq.length(path.length());
+
         for(int i=0; i<path.length(); i++){
+    		cout << i << endl;
+
+            Manipulation::RobotJointInfo_var rj(new Manipulation::RobotJointInfo());
+            rj->jointInfoSeq.length(m_jointNum-1);
             for(int j =0; j<m_jointNum-1; j++){
-                 manipPlan->robotJointInfoSeq[i].jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
+        		cout << j << endl;
+        		rj->jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
             }
+            mp->robotJointInfoSeq[i] = rj;
         }
-		return true;
 
 	} else {
 		cout << "No solution found" << endl;
-		return false;
 	}
+
+    manipPlan = mp._retn();
+	return result;
 
 }
