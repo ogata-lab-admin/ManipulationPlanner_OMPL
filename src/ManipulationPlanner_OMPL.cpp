@@ -174,11 +174,64 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onRateChanged(RTC::UniqueId ec_id)
 
 void ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo){
 	m_modelServer->getModelInfo(robotID, robotJointInfo);
+/*
+	m_robotJointInfo->jointInfoSeq.length(7);
+	m_robotJointInfo->jointInfoSeq[0].jointAngle=0;
+	m_robotJointInfo->jointInfoSeq[0].jointDistance=0;
+	m_robotJointInfo->jointInfoSeq[0].linkLength=0;
+	m_robotJointInfo->jointInfoSeq[0].linkTwist=0;
+	m_robotJointInfo->jointInfoSeq[0].minAngle = -2.792;
+	m_robotJointInfo->jointInfoSeq[0].maxAngle = 2.792;
+
+	m_robotJointInfo->jointInfoSeq[1].jointAngle=0;
+	m_robotJointInfo->jointInfoSeq[1].jointDistance=0;
+	m_robotJointInfo->jointInfoSeq[1].linkLength=0;
+	m_robotJointInfo->jointInfoSeq[1].linkTwist=0;
+	m_robotJointInfo->jointInfoSeq[1].minAngle = -1.134;
+	m_robotJointInfo->jointInfoSeq[1].maxAngle = 2.268;
+
+	m_robotJointInfo->jointInfoSeq[2].jointAngle=0;
+	m_robotJointInfo->jointInfoSeq[2].jointDistance=0;
+	m_robotJointInfo->jointInfoSeq[2].linkLength=0;
+	m_robotJointInfo->jointInfoSeq[2].linkTwist=0;
+	m_robotJointInfo->jointInfoSeq[2].minAngle = -0.1745;
+	m_robotJointInfo->jointInfoSeq[2].maxAngle = 2.617;
+
+	m_robotJointInfo->jointInfoSeq[3].jointAngle=0;
+	m_robotJointInfo->jointInfoSeq[3].jointDistance=0;
+	m_robotJointInfo->jointInfoSeq[3].linkLength=0;
+	m_robotJointInfo->jointInfoSeq[3].linkTwist=0;
+	m_robotJointInfo->jointInfoSeq[3].minAngle = -2.792;
+	m_robotJointInfo->jointInfoSeq[3].maxAngle = 2.792;
+
+	m_robotJointInfo->jointInfoSeq[4].jointAngle=0;
+	m_robotJointInfo->jointInfoSeq[4].jointDistance=0;
+	m_robotJointInfo->jointInfoSeq[4].linkLength=0;
+	m_robotJointInfo->jointInfoSeq[4].linkTwist=0;
+	m_robotJointInfo->jointInfoSeq[4].minAngle = -1.658;
+	m_robotJointInfo->jointInfoSeq[4].maxAngle = 2.356;
+
+	m_robotJointInfo->jointInfoSeq[5].jointAngle=0;
+	m_robotJointInfo->jointInfoSeq[5].jointDistance=0;
+	m_robotJointInfo->jointInfoSeq[5].linkLength=0;
+	m_robotJointInfo->jointInfoSeq[5].linkTwist=0;
+	m_robotJointInfo->jointInfoSeq[5].minAngle = -2.967;
+	m_robotJointInfo->jointInfoSeq[5].maxAngle = 2.967;
+
+	//gripper
+	m_robotJointInfo->jointInfoSeq[6].jointAngle=0;
+	m_robotJointInfo->jointInfoSeq[6].jointDistance=0;
+	m_robotJointInfo->jointInfoSeq[6].linkLength=0;
+	m_robotJointInfo->jointInfoSeq[6].linkTwist=0;
+	m_robotJointInfo->jointInfoSeq[6].minAngle = 0.0;
+	m_robotJointInfo->jointInfoSeq[6].maxAngle = 90.0;
+*/
 }
 
 bool ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::RobotJointInfo& jointSeq, Manipulation::CollisionInfo_out collision){
 	for(int i=0;i<7;i++){
-		std::cout <<"J"<<i<<" is: "<<jointSeq.jointInfoSeq[i].jointAngle<<std::endl;
+		//std::cout <<""<<std::endl;
+		//std::cout <<"J"<<i<<" is: "<<jointSeq.jointInfoSeq[i].jointAngle<<std::endl;
 	}
 	return m_collisionDetection->isCollide(manipInfo, jointSeq, collision);
 }
