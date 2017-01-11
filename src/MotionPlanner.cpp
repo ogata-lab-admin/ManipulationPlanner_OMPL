@@ -28,12 +28,10 @@ void JointStateSampler::setAngleLimits(){
 
 bool JointStateSampler::isStateValid(const ob::State *state)
 {
-    //casting: state=>state_vec=>angles
+    //Cast state=>state_vec=>jointAngle
     const ob::RealVectorStateSpace::StateType *state_vec= state->as<ob::RealVectorStateSpace::StateType>();
-	//std::vector<double> angles(m_jointNum);
 
 	for (size_t  i = 0; i < m_jointNum-1; i++){
-	//angles[i] = (*state_vec)[i];
 	    m_robotJointInfo->jointInfoSeq[i].jointAngle= (*state_vec)[i];
 	    m_robotJointInfo->jointInfoSeq[i].name = "";
 	    m_robotJointInfo->jointInfoSeq[i].jointDistance = 0;
@@ -43,7 +41,6 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 	    m_robotJointInfo->jointInfoSeq[i].minAngle = 0;
 	}
 
-//	angles=>Manipulation::RobotJointInfo
 	return !m_rtcomp->callIsCollide(m_robotID, *m_robotJointInfo, m_collision);
 
 }
@@ -53,6 +50,7 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 {
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum-1));
 
+	//Set joint limits
 	ob::RealVectorBounds bounds(m_jointNum-1);
 	for (int i = 0; i < m_jointNum; ++i){
 		bounds.setLow(i, m_jointLimits[i].min);
@@ -60,15 +58,12 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	}
 	space->as<ob::RealVectorStateSpace>()->setBounds(bounds);
 
-	// Instantiate SimpleSetup
 	og::SimpleSetup sampler(space);
 
-	// Setup the StateValidityChecker
 	sampler.setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
 
-    //set start and goal
+	//Set start and goal states
 	assert(startRobotJointInfo.jointInfoSeq.length()==goalRobotJointInfo.jointInfoSeq.length());
-
 	ob::ScopedState<ob::RealVectorStateSpace> start(space);
 	for (int i = 0; i < m_jointNum-1; ++i){
 		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = startRobotJointInfo.jointInfoSeq[i].jointAngle;
