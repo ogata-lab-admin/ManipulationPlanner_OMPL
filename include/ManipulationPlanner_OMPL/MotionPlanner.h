@@ -41,8 +41,10 @@ struct JointLimit{
 
 class JointStateSampler{
   public:
-    JointStateSampler(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo* joints);
+    JointStateSampler();
     ~JointStateSampler();
+
+    void initSampler(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo* joints);
 
     void setPlanningMethod(int m){selector = m;}
     void setAngleLimits();

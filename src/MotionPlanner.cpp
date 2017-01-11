@@ -3,15 +3,19 @@
 #include <boost/bind.hpp>
 using namespace std;
 
-JointStateSampler::JointStateSampler(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo* joints)
+JointStateSampler::JointStateSampler()
 {
-	m_robotID = robotID;
-	m_robotJointInfo = joints;
-	setAngleLimits();
 	m_collision = new Manipulation::CollisionInfo();
 }
 
 JointStateSampler::~JointStateSampler(){
+}
+
+void JointStateSampler::initSampler(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo* joints)
+{
+	m_robotID = robotID;
+	m_robotJointInfo = joints;
+	setAngleLimits();
 }
 
 void JointStateSampler::setAngleLimits(){

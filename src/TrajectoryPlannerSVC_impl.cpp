@@ -13,6 +13,7 @@
 Manipulation_ManipulationPlannerServiceSVC_impl::Manipulation_ManipulationPlannerServiceSVC_impl()
 {
 	m_robotJointInfo = new Manipulation::RobotJointInfo();
+	m_jointSampler = new JointStateSampler();
 }
 
 
@@ -28,7 +29,7 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 {
 	m_rtcPtr->callGetModelInfo(robotID, m_robotJointInfo);
 
-	m_jointSampler = new JointStateSampler(robotID, m_robotJointInfo);
+	m_jointSampler->initSampler(robotID, m_robotJointInfo);
 	m_jointSampler->setComp(m_rtcPtr);
 	m_jointSampler->setPlanningMethod(m_planningMethod);
 
