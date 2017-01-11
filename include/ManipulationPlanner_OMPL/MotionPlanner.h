@@ -49,7 +49,7 @@ class JointStateSampler{
     void setPlanningMethod(int m){selector = m;}
     void setAngleLimits();
 
-    bool planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan);
+    bool planWithSimpleSetup(const Manipulation::JointAngleSeq& startJointAngleSeq, const Manipulation::JointAngleSeq& goalJointAngleSeq, Manipulation::ManipulationPlan_out manipPlan);
 
     void setComp(ManipulationPlanner_OMPL* rtc){m_rtcomp = rtc;}
 
@@ -63,7 +63,7 @@ class JointStateSampler{
     std::vector<JointLimit> m_jointLimits;
     Manipulation::RobotIdentifier m_robotID;
     Manipulation::RobotJointInfo* m_robotJointInfo;
-    Manipulation::CollisionInfo* m_collision;
+    Manipulation::CollisionPairSeq* m_collision;
 
     int selector;
 

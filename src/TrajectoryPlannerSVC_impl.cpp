@@ -37,14 +37,16 @@ Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlann
 Manipulation::ReturnValue* Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotJointInfo& jointsInfo, const Manipulation::JointAngleSeq& startJointAngles, const Manipulation::JointAngleSeq& goalJointAngles, Manipulation::ManipulationPlan_out manipPlan)
 {
 	Manipulation::ReturnValue* result;
+    Manipulation::RobotIdentifier* robotID;
+    robotID = new Manipulation::RobotIdentifier();
 
-	m_rtcPtr->callGetModelInfo(robotID, m_robotJointInfo);
+	m_rtcPtr->callGetModelInfo((*robotID), m_robotJointInfo);
 
-	m_jointSampler->initSampler(robotID, m_robotJointInfo);
+	m_jointSampler->initSampler((*robotID), m_robotJointInfo);
 	m_jointSampler->setComp(m_rtcPtr);
 	m_jointSampler->setPlanningMethod(m_planningMethod);
 
-	m_jointSampler->planWithSimpleSetup(startRobotJointInfo, goalRobotJointInfo, manipPlan);
+	m_jointSampler->planWithSimpleSetup(startJointAngles, goalJointAngles, manipPlan);
 	std::cout << "Finish Planning"<<std::endl;
   return result;
 }

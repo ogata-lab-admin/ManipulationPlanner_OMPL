@@ -175,7 +175,7 @@ void ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentif
 	m_modelServer->getModelInfo(robotID, robotJointInfo);
 }
 
-bool ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::RobotJointInfo& jointSeq, Manipulation::CollisionInfo_out collision){
+bool ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::JointAngleSeq& jointSeq, Manipulation::CollisionPairSeq_out collision){
 	for(int i=0;i<7;i++){
 		//std::cout <<""<<std::endl;
 		//std::cout <<"J"<<i<<" is: "<<jointSeq.jointInfoSeq[i].jointAngle<<std::endl;

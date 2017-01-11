@@ -5,7 +5,7 @@ using namespace std;
 
 JointStateSampler::JointStateSampler()
 {
-	m_collision = new Manipulation::CollisionInfo();
+	m_collision = new Manipulation::CollisionPairSeq();
 }
 
 JointStateSampler::~JointStateSampler(){
@@ -19,12 +19,12 @@ void JointStateSampler::initSampler(const Manipulation::RobotIdentifier& robotID
 }
 
 void JointStateSampler::setAngleLimits(){
-	m_jointNum = m_robotJointInfo->jointInfoSeq.length();
+	m_jointNum = m_robotJointInfo->jointParameterSeq.length();
 
 	for (size_t  i = 0; i < m_jointNum; i++){
 		JointLimit limit;
-		limit.max = m_robotJointInfo->jointInfoSeq[i].maxAngle;
-		limit.min = m_robotJointInfo->jointInfoSeq[i].minAngle;
+		limit.max = m_robotJointInfo->jointParameterSeq[i].limit.upper;
+		limit.min = m_robotJointInfo->jointParameterSeq[i].limit.lower;
 		m_jointLimits.push_back(limit);
 		//std::cout << "max:" << m_jointLimits[i].max << " min:" << m_jointLimits[i].min << std::endl;
 	}
@@ -34,17 +34,19 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 {
     //Cast state=>state_vec=>jointAngle
     const ob::RealVectorStateSpace::StateType *state_vec= state->as<ob::RealVectorStateSpace::StateType>();
+    Manipulation::JointAngleSeq jointAngleSeq;
+    jointAngleSeq.length(m_jointNum-1);
 
 	for (size_t  i = 0; i < m_jointNum-1; i++){
-	    m_robotJointInfo->jointInfoSeq[i].jointAngle= (*state_vec)[i];
+		jointAngleSeq[i].data= (*state_vec)[i];
 	}
 
-	return !m_rtcomp->callIsCollide(m_robotID, *m_robotJointInfo, m_collision);
+	return !m_rtcomp->callIsCollide(m_robotID, jointAngleSeq, m_collision);
 
 }
 
 
-bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo,
+bool JointStateSampler::planWithSimpleSetup(const Manipulation::JointAngleSeq& startJointAngleSeq, const Manipulation::JointAngleSeq& goalJointAngleSeq,
 											Manipulation::ManipulationPlan_out manipPlan)
 {
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum-1));
@@ -63,14 +65,14 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 
 
 	//Set start and goal states
-	assert(startRobotJointInfo.jointInfoSeq.length()==goalRobotJointInfo.jointInfoSeq.length());
+	assert(startJointAngleSeq.length()==goalJointAngleSeq.length());
 	ob::ScopedState<ob::RealVectorStateSpace> start(space);
 	for (int i = 0; i < m_jointNum-1; ++i){
-		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = startRobotJointInfo.jointInfoSeq[i].jointAngle;
+		start->as<ob::RealVectorStateSpace::StateType>()->values[i] = startJointAngleSeq[i].data;
 	}
 	ob::ScopedState<ob::RealVectorStateSpace> goal(space);
 	for (int i = 0; i < m_jointNum-1; ++i){
-		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = goalRobotJointInfo.jointInfoSeq[i].jointAngle;
+		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = goalJointAngleSeq[i].data;
 	}
 	sampler->setStartAndGoalStates(start, goal);
 
@@ -118,18 +120,18 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
 
-        mp->robotJointInfoSeq.length(path.length());
+        mp->manipPath.length(path.length());
 
         for(int i=0; i<path.length(); i++){
     		cout << i << endl;
 
-            Manipulation::RobotJointInfo_var rj(new Manipulation::RobotJointInfo());
-            rj->jointInfoSeq.length(m_jointNum-1);
+            //Manipulation::JointAngleSeq rj(new Manipulation::RobotJointInfo());
+            //rj->jointInfoSeq.length(m_jointNum-1);
             for(int j =0; j<m_jointNum-1; j++){
         		cout << j << endl;
-        		rj->jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
+        		//rj->jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
             }
-            mp->robotJointInfoSeq[i] = rj;
+            //mp->robotJointInfoSeq[i] = rj;
         }
 
 	} else {
