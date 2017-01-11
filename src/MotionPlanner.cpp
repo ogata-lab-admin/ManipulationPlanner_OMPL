@@ -44,7 +44,6 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 	}
 
 //	angles=>Manipulation::RobotJointInfo
-	std::cout<<m_rtcomp<<std::endl;
 	return !m_rtcomp->callIsCollide(m_robotID, *m_robotJointInfo, m_collision);
 
 }
@@ -111,7 +110,7 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 		sampler.setPlanner(planner);
 	}
 
-	if (sampler.solve(10)) {
+	if (sampler.solve(30)) {
 		cout << "Found solution:" << endl;
 		sampler.simplifySolution();
 		
@@ -125,7 +124,6 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
                  manipPlan->robotJointInfoSeq[i].jointInfoSeq[j].jointAngle = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
             }
         }
-
 		return true;
 
 	} else {

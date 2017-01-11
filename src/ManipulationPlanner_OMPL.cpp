@@ -177,34 +177,10 @@ void ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentif
 }
 
 bool ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::RobotJointInfo& jointSeq, Manipulation::CollisionInfo_out collision){
-	std::cout << "[TrajectoryPlannerTester] Start Collision Test." << std::endl;
-
-	    Manipulation::RobotIdentifier m;
-	    m.name = CORBA::string_dup("orochi");
-	    Manipulation::RobotJointInfo j;
-	    j.jointInfoSeq.length(7);
-	    for(int i = 0;i < 7;i++) {
-	      j.jointInfoSeq[i].name = "";
-	      j.jointInfoSeq[i].jointAngle = 90;
-	      j.jointInfoSeq[i].jointDistance = 0;
-	      j.jointInfoSeq[i].linkLength = 0;
-	      j.jointInfoSeq[i].linkTwist = 0;
-	      j.jointInfoSeq[i].maxAngle = 0;
-	      j.jointInfoSeq[i].minAngle = 0;
-	    }
-
-	    Manipulation::CollisionInfo_var c;
-
-	    bool r;
-	    r = m_collisionDetection->isCollide(m, j, c);
-	    std::cout<<r<<std::endl;
-	    return r;
-	/*
 	for(int i=0;i<7;i++){
 		std::cout <<"J"<<i<<" is: "<<jointSeq.jointInfoSeq[i].jointAngle<<std::endl;
 	}
 	return m_collisionDetection->isCollide(manipInfo, jointSeq, collision);
-	*/
 }
 
 extern "C"
