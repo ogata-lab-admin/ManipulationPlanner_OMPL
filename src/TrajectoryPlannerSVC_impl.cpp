@@ -7,6 +7,14 @@
 
 #include "TrajectoryPlannerSVC_impl.h"
 
+
+
+
+
+
+
+// End of example implementational code
+
 /*
  * Example implementational code for IDL interface Manipulation::ManipulationPlannerService
  */
@@ -22,11 +30,14 @@ Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlann
   // Please add extra destructor code here.
 }
 
+
 /*
  * Methods corresponding to IDL attributes and operations
  */
-void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan)
+Manipulation::ReturnValue* Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotJointInfo& jointsInfo, const Manipulation::JointAngleSeq& startJointAngles, const Manipulation::JointAngleSeq& goalJointAngles, Manipulation::ManipulationPlan_out manipPlan)
 {
+	Manipulation::ReturnValue* result;
+
 	m_rtcPtr->callGetModelInfo(robotID, m_robotJointInfo);
 
 	m_jointSampler->initSampler(robotID, m_robotJointInfo);
@@ -35,7 +46,9 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 
 	m_jointSampler->planWithSimpleSetup(startRobotJointInfo, goalRobotJointInfo, manipPlan);
 	std::cout << "Finish Planning"<<std::endl;
+  return result;
 }
+
 
 
 // End of example implementational code
