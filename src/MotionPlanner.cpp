@@ -44,7 +44,7 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 	}
 
 //	angles=>Manipulation::RobotJointInfo
-
+	std::cout<<m_rtcomp<<std::endl;
 	return !m_rtcomp->callIsCollide(m_robotID, *m_robotJointInfo, m_collision);
 
 }

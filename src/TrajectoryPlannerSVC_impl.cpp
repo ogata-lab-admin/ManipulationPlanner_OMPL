@@ -26,7 +26,7 @@ Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlann
  */
 void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan)
 {
-	  m_robotJointInfo = new Manipulation::RobotJointInfo();
+	m_robotJointInfo = new Manipulation::RobotJointInfo();
 
 	//m_rtcPtr->callGetModelInfo(robotID, m_robotJointInfo);
 
@@ -93,6 +93,7 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 
 	  m_jointSampler->setComp(m_rtcPtr);
 
+		std::cout<<m_rtcPtr<<std::endl;
 	  m_jointSampler->setPlanningMethod(m_planningMethod);
 	  if(m_jointSampler->planWithSimpleSetup(startRobotJointInfo, goalRobotJointInfo, manipPlan)){
 		  delete m_jointSampler;
