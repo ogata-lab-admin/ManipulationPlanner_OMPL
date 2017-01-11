@@ -43,7 +43,6 @@ bool JointStateSampler::isStateValid(const ob::State *state)
 
 }
 
-
 bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& startRobotJointInfo, const Manipulation::RobotJointInfo& goalRobotJointInfo, Manipulation::ManipulationPlan_out manipPlan)
 {
 	ob::StateSpacePtr space(new ob::RealVectorStateSpace(m_jointNum-1));
@@ -56,9 +55,9 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	}
 	space->as<ob::RealVectorStateSpace>()->setBounds(bounds);
 
-	og::SimpleSetup sampler(space);
+	og::SimpleSetupPtr sampler(new og::SimpleSetup(space));
 
-	sampler.setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
+	sampler->setStateValidityChecker(boost::bind(&JointStateSampler::isStateValid, this, _1));
 
 	//Set start and goal states
 	assert(startRobotJointInfo.jointInfoSeq.length()==goalRobotJointInfo.jointInfoSeq.length());
@@ -70,44 +69,44 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::RobotJointInfo& 
 	for (int i = 0; i < m_jointNum-1; ++i){
 		goal->as<ob::RealVectorStateSpace::StateType>()->values[i] = goalRobotJointInfo.jointInfoSeq[i].jointAngle;
 	}
-	sampler.setStartAndGoalStates(start, goal);
+	sampler->setStartAndGoalStates(start, goal);
 
-	sampler.getSpaceInformation()->setStateValidityCheckingResolution(0.01);
+	sampler->getSpaceInformation()->setStateValidityCheckingResolution(0.01);
 
 	if (selector == 1) {
-		ob::PlannerPtr planner(new og::PRM(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::PRM(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 2) {
-		ob::PlannerPtr planner(new og::RRT(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::RRT(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 3) {
-		ob::PlannerPtr planner(new og::RRTConnect(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::RRTConnect(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 4) {
-		ob::PlannerPtr planner(new og::RRTstar(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::RRTstar(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 5) {
-		ob::PlannerPtr planner(new og::LBTRRT(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::LBTRRT(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 6) {
-		ob::PlannerPtr planner(new og::LazyRRT(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::LazyRRT(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 7) {
-		ob::PlannerPtr planner(new og::TRRT(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::TRRT(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 8) {
-		ob::PlannerPtr planner(new og::pRRT(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::pRRT(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	} else if (selector == 9) {
-		ob::PlannerPtr planner(new og::EST(sampler.getSpaceInformation()));
-		sampler.setPlanner(planner);
+		ob::PlannerPtr planner(new og::EST(sampler->getSpaceInformation()));
+		sampler->setPlanner(planner);
 	}
 
-	if (sampler.solve(30)) {
+	if (sampler->solve(30)) {
 		cout << "Found solution:" << endl;
-		sampler.simplifySolution();
+		sampler->simplifySolution();
 		
-        og::PathGeometric path(sampler.getSolutionPath());
+        og::PathGeometric path(sampler->getSolutionPath());
         path.print(cout);
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);

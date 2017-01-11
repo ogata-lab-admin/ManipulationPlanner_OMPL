@@ -33,8 +33,8 @@ void Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Man
 	m_jointSampler->setComp(m_rtcPtr);
 	m_jointSampler->setPlanningMethod(m_planningMethod);
 
-	std::cout << m_jointSampler->planWithSimpleSetup(startRobotJointInfo, goalRobotJointInfo, manipPlan) << std::endl;
-
+	m_jointSampler->planWithSimpleSetup(startRobotJointInfo, goalRobotJointInfo, manipPlan);
+	std::cout << "Finish Planning"<<std::endl;
 }
 
 
