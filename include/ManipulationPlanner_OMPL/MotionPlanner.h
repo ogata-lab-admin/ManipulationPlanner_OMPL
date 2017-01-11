@@ -56,7 +56,7 @@ class JointStateSampler{
     bool isStateValid(const ob::State *state);
 
     ManipulationPlanner_OMPL* m_rtcomp;
-    int m_jointNum;
+    int m_jointNum = 6;
     int m_planningMethod = 1;
     std::vector<JointLimit> m_jointLimits;
     Manipulation::RobotIdentifier m_robotID;
