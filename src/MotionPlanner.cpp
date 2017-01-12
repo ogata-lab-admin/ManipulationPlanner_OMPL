@@ -35,13 +35,13 @@ bool JointStateSampler::isStateValid(const ob::State *state)
     //Cast state=>state_vec=>jointAngle
     const ob::RealVectorStateSpace::StateType *state_vec= state->as<ob::RealVectorStateSpace::StateType>();
     Manipulation::JointAngleSeq jointAngleSeq;
-    jointAngleSeq.length(m_jointNum-1);
+    jointAngleSeq.length(m_jointNum);
 
 	for (size_t  i = 0; i < m_jointNum-1; i++){
 		jointAngleSeq[i].data= (*state_vec)[i];
 	}
 	//Gripper
-	//jointAngleSeq[m_jointNum-1].data = 0.0;
+	jointAngleSeq[m_jointNum-1].data = 0.090;
 
 	m_rtcomp->callIsCollide(m_robotID, jointAngleSeq, m_collision);
 	bool result;
@@ -135,18 +135,12 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::JointAngleSeq& s
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
 
-        mp->manipPath.length(path.length());
-
+        mp->manipPath.length(path.length()*(1+(m_jointNum-1)));
         for(int i=0; i<path.length(); i++){
-    		cout << i << endl;
-
-            //Manipulation::JointAngleSeq rj(new Manipulation::RobotJointInfo());
-            //rj->jointInfoSeq.length(m_jointNum-1);
+            mp->manipPath[i].length(m_jointNum-1);
             for(int j =0; j<m_jointNum-1; j++){
-        		cout << j << endl;
-        		//mp->manipPath[i][j].data = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
+        		mp->manipPath[i][j].data = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
             }
-            //mp->robotJointInfoSeq[i] = rj;
         }
 
 	} else {
