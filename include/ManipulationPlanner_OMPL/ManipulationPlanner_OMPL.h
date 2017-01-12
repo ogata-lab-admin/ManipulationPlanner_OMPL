@@ -217,10 +217,9 @@ class ManipulationPlanner_OMPL
    */
   // virtual RTC::ReturnCode_t onRateChanged(RTC::UniqueId ec_id);
 
-   //Manipulation::ReturnValue*
-   void callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo);
+   Manipulation::ReturnValue* callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo);
 
-   void callIsCollide(const Manipulation::RobotIdentifier& robotID,const Manipulation::JointAngleSeq& jointSeq, Manipulation::CollisionPairSeq_out collision);
+   Manipulation::ReturnValue* callIsCollide(const Manipulation::RobotIdentifier& robotID,const Manipulation::JointAngleSeq& jointSeq, Manipulation::CollisionPairSeq_out collision);
 
  protected:
   // <rtc-template block="protected_attribute">

@@ -171,12 +171,12 @@ RTC::ReturnCode_t ManipulationPlanner_OMPL::onRateChanged(RTC::UniqueId ec_id)
 }
 */
 
-void ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo){
-	m_modelServer->getModelInfo(robotID, robotJointInfo);
+Manipulation::ReturnValue*  ManipulationPlanner_OMPL::callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo){
+	return m_modelServer->getModelInfo(robotID, robotJointInfo);
 }
 
-void ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& robotID,const Manipulation::JointAngleSeq& jointSeq, Manipulation::CollisionPairSeq_out collision){
-	m_collisionDetection->isCollide(robotID, jointSeq, collision);
+Manipulation::ReturnValue*  ManipulationPlanner_OMPL::callIsCollide(const Manipulation::RobotIdentifier& robotID,const Manipulation::JointAngleSeq& jointSeq, Manipulation::CollisionPairSeq_out collision){
+	return m_collisionDetection->isCollide(robotID, jointSeq, collision);
 }
 
 extern "C"
