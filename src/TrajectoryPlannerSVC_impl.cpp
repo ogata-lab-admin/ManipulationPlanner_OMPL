@@ -34,7 +34,7 @@ Manipulation_ManipulationPlannerServiceSVC_impl::~Manipulation_ManipulationPlann
 /*
  * Methods corresponding to IDL attributes and operations
  */
-Manipulation::ReturnValue* Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotJointInfo& jointsInfo, const Manipulation::JointAngleSeq& startJointAngles, const Manipulation::JointAngleSeq& goalJointAngles, Manipulation::ManipulationPlan_out manipPlan)
+Manipulation::ReturnValue* Manipulation_ManipulationPlannerServiceSVC_impl::planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::JointAngleSeq& startJointAngles, const Manipulation::JointAngleSeq& goalJointAngles, Manipulation::ManipulationPlan_out manipPlan)
 {
 	Manipulation::ReturnValue_var result(new Manipulation::ReturnValue());
 	result->id = Manipulation::OK;
@@ -42,15 +42,11 @@ Manipulation::ReturnValue* Manipulation_ManipulationPlannerServiceSVC_impl::plan
 
 	std::cout << "---Start Path Planning---" << std::endl;
 
-    Manipulation::RobotIdentifier* robotID;
-    robotID = new Manipulation::RobotIdentifier();
-    robotID->name = CORBA::string_dup("orochi");
-
 	std::cout << "---Get Robot Joints Data--" << std::endl;
-	m_rtcPtr->callGetModelInfo((*robotID), m_robotJointInfo);
+	m_rtcPtr->callGetModelInfo(robotID, m_robotJointInfo);
 	//showJointsData();
 
-	m_jointSampler->initSampler((*robotID), m_robotJointInfo);
+	m_jointSampler->initSampler(robotID, m_robotJointInfo);
 	m_jointSampler->setComp(m_rtcPtr);
 	m_jointSampler->setPlanningMethod(m_planningMethod);
 

@@ -119,7 +119,7 @@ module Manipulation {
   };
   
   interface ManipulationPlannerService {
-    ReturnValue planManipulation(in RobotJointInfo jointsInfo, in JointAngleSeq startJointAngles, in JointAngleSeq goalJointAngles, out ManipulationPlan manipPlan);
+    ReturnValue planManipulation(in RobotIdentifier robotID, in JointAngleSeq startJointAngles, in JointAngleSeq goalJointAngles, out ManipulationPlan manipPlan);
   };
   
   interface ModelServerService {

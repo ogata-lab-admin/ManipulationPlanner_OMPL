@@ -48,7 +48,7 @@ class Manipulation_ManipulationPlannerServiceSVC_impl
    virtual ~Manipulation_ManipulationPlannerServiceSVC_impl();
 
    // attributes and operations
-   Manipulation::ReturnValue* planManipulation(const Manipulation::RobotJointInfo& jointsInfo, const Manipulation::JointAngleSeq& startJointAngles, const Manipulation::JointAngleSeq& goalJointAngles, Manipulation::ManipulationPlan_out manipPlan);
+   Manipulation::ReturnValue* planManipulation(const Manipulation::RobotIdentifier& robotID, const Manipulation::JointAngleSeq& startJointAngles, const Manipulation::JointAngleSeq& goalJointAngles, Manipulation::ManipulationPlan_out manipPlan);
    void setPlanningMethod(int m){m_planningMethod=m;}
    void setComp(ManipulationPlanner_OMPL* rtc){m_rtcPtr=rtc;}
    void showJointsData();
