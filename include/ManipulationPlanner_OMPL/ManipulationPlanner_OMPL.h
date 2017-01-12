@@ -219,7 +219,7 @@ class ManipulationPlanner_OMPL
 
    void callGetModelInfo(const Manipulation::RobotIdentifier& robotID, Manipulation::RobotJointInfo_out robotJointInfo);
 
-   bool callIsCollide(const Manipulation::RobotIdentifier& manipInfo,const Manipulation::JointAngleSeq& jointSeq, Manipulation::CollisionPairSeq_out collision);
+   bool callIsCollide(const Manipulation::RobotIdentifier& robotID,const Manipulation::JointAngleSeq& jointSeq, Manipulation::CollisionPairSeq_out collision);
 
  protected:
   // <rtc-template block="protected_attribute">

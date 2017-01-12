@@ -63,7 +63,7 @@ class JointStateSampler{
     std::vector<JointLimit> m_jointLimits;
     Manipulation::RobotIdentifier m_robotID;
     Manipulation::RobotJointInfo* m_robotJointInfo;
-    Manipulation::CollisionPairSeq* m_collision;
+    Manipulation::CollisionPairSeq_var m_collision;
 
     int selector;
 
