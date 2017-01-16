@@ -134,13 +134,16 @@ bool JointStateSampler::planWithSimpleSetup(const Manipulation::JointAngleSeq& s
         path.print(cout);
 		//std::ofstream ofs("../plot/path.dat");
 		//path.printAsMatrix(ofs);
+        mp->manipPath.length(path.getStates().size());
+	std::cout <<path.getStates().size()<< std::endl;
 
-        mp->manipPath.length(path.length()*(1+(m_jointNum-1)));
-        for(int i=0; i<path.length(); i++){
+        for(int i=0; i<path.getStates().size(); i++){
             mp->manipPath[i].length(m_jointNum-1);
             for(int j =0; j<m_jointNum-1; j++){
-        		mp->manipPath[i][j].data = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
+       		mp->manipPath[i][j].data = path.getState(i)->as<ob::RealVectorStateSpace::StateType>()->values[j];
+		//   std::cout << mp->manipPath[i][j].data<<std::endl;			
             }
+	    // std::cout<<std::endl;
         }
 
 	} else {
