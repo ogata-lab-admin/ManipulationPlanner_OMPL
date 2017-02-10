@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rtc:RtcProfile rtc:version="0.2" rtc:id="RTC:ogata-lab:Category:ManipulationPlanner_OMPL:1.0.0" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="ManipulationPlanner_OMPL" rtc:updateDate="2016-12-07T15:39:19+09:00" rtc:creationDate="2016-11-02T15:51:55+09:00" rtc:version="1.0.0" rtc:vendor="ogata-lab" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="1000.0" rtc:description="ModuleDescription" rtc:category="Category" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="ManipulationPlanner_OMPL">
+    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="ManipulationPlanner_OMPL" rtc:updateDate="2017-02-10T18:13:47.747+09:00" rtc:creationDate="2016-11-02T15:51:55+09:00" rtc:version="1.0.0" rtc:vendor="ogata-lab" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="1000.0" rtc:description="ModuleDescription" rtc:category="Category" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="ManipulationPlanner_OMPL">
         <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
         <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
         <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
@@ -104,5 +104,10 @@
     <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtcExt:position="LEFT" rtc:name="CollisionDetectionService">
         <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="collisionDetection" rtc:path="/home/ogata/workspace/ManipulationPlanner_OMPL/idl" rtc:type="Manipulation::CollisionDetectionService" rtc:idlFile="/home/ogata/workspace/ManipulationPlanner_OMPL/idl/TrajectoryPlanner.idl" rtc:instanceName="collisionDetection" rtc:direction="Required" rtc:name="Manipulation_CollisionDetectionService"/>
     </rtc:ServicePorts>
-    <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="C++"/>
+    <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="C++">
+        <rtcExt:targets rtcExt:os="Ubuntu" rtcExt:langVersion="16.04.1"/>
+        <rtcExt:targets rtcExt:os="The Open Motion Planning Library" rtcExt:langVersion="1.2.1">
+            <rtcExt:libraries rtcExt:other="available at: http://ompl.kavrakilab.org/" rtcExt:version="1.2.1" rtcExt:name="The Open Motion Planning Library"/>
+        </rtcExt:targets>
+    </rtc:Language>
 </rtc:RtcProfile>
